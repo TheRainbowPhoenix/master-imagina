@@ -1,0 +1,252 @@
+#!/bin/bash
+
+SET_MSG=false
+
+for arg in "$@"; do
+	if [ "$arg" = "--help" ]; then
+		
+		echo "USAGE:"
+		echo ""
+		echo "$0 [OPTIONS]..."
+		echo ""
+		echo "DESCRIPTION:"
+		echo "" 
+		echo "Ce script a pour but de mettre à jour la branche locale"
+		echo ""
+		echo "Si la branche locale a du retard par rapport à master alors"
+		echo "les données de la branche locale et de master seront fusionnées"
+		echo ""
+		echo "Si la branche locale a de l'avance par rapport à master alors"
+		echo "les données de la branche locale seront mises en ligne vers master"
+		echo ""
+		echo "Si il y a des fichiers non fusionnés dans la branche locale alors"
+		echo "le script proposera des moyens pour regler les problèmes"
+		echo ""
+		echo "OPTIONS:"
+		echo ""
+		echo "    --help => affiche l'aide du script"
+		echo "    -m <message> => Le message sera envoyées au prochain commit"
+		exit 0
+
+	elif [ "$arg" = "-m" ]; then
+
+		SET_MSG=true
+
+	elif [ "$SET_MSG" = true ] && [ -n "$arg" ]; then
+
+		SET_MSG=false
+		COMMIT_MSG="$arg"
+	fi
+done
+
+############################## DEFINITIONS ######################################
+
+# Couleur à utiliser (ex: echo -e "${COLOR}text${NC}" => affiche "text" en rouge)
+RED='\033[0;31m' # Red color
+GREEN='\033[0;32m' # Green color
+YELLOW='\033[0;33m' # Yellow color
+BLUE='\033[0;34m' # Blue color
+MAGENTA='\033[0;35m' # Magenta color
+CYAN='\033[0;36m' # Cyan color
+NC='\033[0m' # Normal color
+
+# Renvoie vrai si la branche locale a du retard sur master, renvoie faux sinon
+is_behind() {
+	[ -n "$(git log HEAD..origin/master --oneline)" ]
+}
+
+# Renvoie vrai si la branche locale a de l'avance sur master, renvoie faux sinon
+is_ahead() {
+	[ -n "$(git log origin/master..HEAD --oneline)" ]
+}
+
+# Renvoie vrai si des fichiers peuvent être ajouter à l'index "staged", renvoie faux sinon
+exist_unstaged() {
+	[ -n "$(git diff --name-only)" ]
+}
+
+# Renvoie vrai si des fichiers de l'index "staged" peuvent être soumis, renvoie faux sinon
+exist_uncommitted() {
+	[ -n "$(git diff --name-only --cached)" ]
+}
+
+# Renvoie vrai si des fichiers peuvent être envoyez en ligne, renvoie faux sinon
+exist_unpushed() {
+	[ -n "$(git log origin/master..HEAD)" ]
+}
+
+# Renvoie vrai si la branche locale a divergé de la branche distante, renvoie faux sinon
+has_diverged() {
+    [ -n "$(git diff --name-only --diff-filter=U)" ]
+}
+
+# Recupère les changements apportés à la branche distante, et quitte le programme si aucune connexion n'est possible
+fetch() {
+
+	echo -e "${BLUE}Recupération des données en ligne...${NC}"
+
+	connexion=$(git fetch --all 2>&1)
+	failure=$(echo "$connexion" | grep "unable to access")
+
+	if [ -n "$failure" ]
+	then
+		echo "La connexion est impossible ou la remote n'existe pas"
+		echo ""
+		echo "$failure"
+		exit 1
+	else
+		echo "$connexion"
+	fi
+
+	echo ""
+}
+
+get_status() {
+	echo -e "${BLUE}Aquisition du status...${NC}"
+	git status -sb
+	echo ""
+}
+
+push_changes() {
+	echo -e "${BLUE}Mise en ligne des données...${NC}"
+	git push origin master
+	echo ""
+
+	if exist_unpushed; then
+		echo -e "${RED}Mise en ligne des données echouée !${NC}"
+		exit 1
+	fi
+
+	echo -e "${GREEN}Mise en ligne des données reussi !${NC}"
+}
+
+# Ajoute tous les fichiers qui ne le sont pas, dans l'index "staged", puis envoie un commit avec le message passé en paramètre.
+# Si aucun message n'est entré en paramètre alors le commit enverra la date et l'heure en message. 
+send_changes() {
+
+	read -r -p "Soumettre les changements ? [y/n] " response
+	echo ""
+
+	if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+
+		COMMIT_MSG="$1"
+		
+		if [ -z "$COMMIT_MSG" ]; then
+			read -p "Quels sont les changements ? : " COMMIT_MSG
+			echo ""
+
+			if [ -z "$COMMIT_MSG" ]; then
+				COMMIT_MSG="Mise à jour du $(date)"
+			fi
+		fi
+
+		git add -A
+
+		echo -e "${BLUE}Commission des données...${NC}"
+		git commit -m "$COMMIT_MSG"
+		echo ""
+
+	else
+		echo -e "${YELLOW}Aucun changements n'a été soumis${NC}"
+		exit 0
+	fi
+}
+
+# Propose à l'utilisateur des solutions en cas de fichiers non fusionnés
+resolve_conflicts() {
+
+	echo -e "${RED}Attention, des fichiers n'ont pas été fusionnés !${NC}"
+	echo ""
+
+	read -r -p "Voulez-vous quitter et résoudre les conflits manuellement ? [y/n] " response
+	echo ""
+
+	# Si la réponse est oui, on quitte le script
+	if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+		echo -e "${YELLOW}Utilisez git add, git commit et git push pour resoudre les conflits${NC}"
+		exit 0
+	else
+		echo -e "${YELLOW}Ne validez que quand vous savez ce que vous faites${NC}"
+		echo ""
+
+		read -r -p "Envoyer les données telles qu'elles en ligne ? [y/n] " response
+		echo ""
+
+		# Si la réponse est oui, on envoi les données en ligne
+		if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+			push_changes
+		else
+			read -r -p "Reinitialiser les données à partir de la branche distante ? [y/n] " response
+			echo ""
+		
+			# Si la réponse est oui, on affiche le status de la branche locale et on demande une confirmation
+			if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+
+				get_status
+
+				read -r -p "Attention, les données non fusionnées seront perdus, continuer ? [y/n] " response
+				echo ""
+			
+				# Si la réponse est oui, on réinitialise la branche locale à partir de master
+				if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+					git reset --hard origin/master
+					echo ""
+					
+					echo -e "${YELLOW}Fusion des données reussi !${NC}"
+				else
+					echo -e "${YELLOW}Utilisez git add, git commit et git push pour resoudre les conflits${NC}"
+					exit 0
+				fi
+			else
+				echo -e "${YELLOW}Utilisez git add, git commit et git push pour resoudre les conflits${NC}"
+				exit 0
+			fi
+		fi
+	fi
+}
+
+
+############################## SCRIPT ######################################
+
+fetch
+
+get_status
+
+if has_diverged; then
+	resolve_conflicts
+fi
+
+if exist_unstaged || exist_uncommitted; then
+	send_changes "$COMMIT_MSG"
+fi
+
+if is_behind; then
+
+	echo -e "${BLUE}Aquisition des differences...${NC}" 
+	git diff --color --name-status master origin | cat
+	echo ""
+		
+	read -r -p "La branche locale et la branche distante ont divergé, fusionner les deux branches ? [y/n] " response
+	echo ""
+		
+	if [[ "$response" =~ ^([yY][eE][sS]|[yY])+$ ]]; then
+		echo -e "Fusion des données..."
+		git pull
+		echo ""
+	else
+		echo -e "${YELLOW}Fusion des branches annulée${NC}"
+		exit 0
+	fi
+ 
+	if has_diverged; then
+		resolve_conflicts
+	else
+		echo -e "${GREEN}Fusion des données reussi !${NC}"
+		echo ""
+	fi
+fi
+
+if is_ahead; then
+	push_changes
+fi
+
