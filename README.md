@@ -6,7 +6,7 @@ Une compilation de TDs, TPs, cours magistraux, annales d'examens et mémos pour 
 
 **Semestre 1:**
 
-**UE obligatoire**
+**UE obligatoires**
 - [HMIN101L - Anglais]()
 - [HMIN107 - Intelligence artificielle]()
 - [HMIN108 - Programmation orientee agents]()
@@ -18,7 +18,7 @@ Une compilation de TDs, TPs, cours magistraux, annales d'examens et mémos pour 
 
 **Semestre 2:**
 
-**UE obligatoire**
+**UE obligatoireS**
 - [HMIN201 - TER]()
 - [HMIN211 - Analyse et traitement images]()
 - [HMIN212 - Modelisation et programmation 3D]()
