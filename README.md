@@ -18,7 +18,7 @@ Une compilation de TDs, TPs, cours magistraux, annales d'examens et mémos pour 
 
 **Semestre 2:**
 
-**UE obligatoireS**
+**UE obligatoires**
 - [HMIN201 - TER]()
 - [HMIN211 - Analyse et traitement images]()
 - [HMIN212 - Modelisation et programmation 3D]()
