@@ -1,0 +1,16 @@
+Name: TEST
+IconPath: dekat.png
+SoundPath: dekat.wav
+Description: |
+    Equipe de test d'intégration python
+BrainsPackage: inGameTeams.python_primitive
+ScriptImplementation: python
+AgentsBrainClasses:
+    WarBase: WarBase.py
+    WarExplorer: WarExplorer.py
+    WarLight: WarLight.py
+    WarHeavy: WarHeavy.py
+    WarRocketLauncher: WarRocketLauncher.py
+    WarKamikaze: WarKamikaze.py
+    WarEngineer: WarEngineer.py
+    WarTurret: WarTurret.py

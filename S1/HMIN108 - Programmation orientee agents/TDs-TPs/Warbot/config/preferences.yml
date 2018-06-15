@@ -1,0 +1,30 @@
+# Directories path where a inGameTeam can be loaded
+teamsSourcesFolders:
+#   <teamName>: path/to/directory/separated/by/slashes
+    Engineer: "teams/engineer"
+    Debug team: "teams/debug_team"
+    Test team: "teams/test_team"
+    Resources and construction: "teams/resources_and_construction_team"
+    Time To Explode: "teams/timetoexplode"
+#    PythonLevel0: "teams/level0"
+#    FSM: "teams/fsm"
+    Presentation relic: "teams/presentation_relic"
+
+# Number of agents of each type to deploy at game start
+NbAgentsAtStart:
+    WarBase: 1
+    WarExplorer: 5
+    WarLight: 0
+    WarHeavy: 0
+    WarRocketLauncher: 0
+    WarKamikaze: 0
+    WarEngineer: 0
+    WarTurret: 5
+    Wall: 0
+
+# Food appearance rate = ticks amount separating each food appearance
+FoodAppearanceRate : 150
+
+# Default logger level
+# Available levels are : SEVERE, WARNING, INFO, CONFIG, FINE, FINER and FINEST
+DefaultLoggerLevel: WARNING

@@ -1,0 +1,16 @@
+Name: JAVASCRIPT_Lv0
+IconPath: dekat.png
+SoundPath: dekat.wav
+Description: |
+    Equipe de super Javascript niveau 0
+BrainsPackage: inGameTeams.javascript_level_0
+ScriptImplementation: javascript
+AgentsBrainClasses:
+    WarBase: WarBase.js
+    WarExplorer: WarExplorer.js
+    WarLight: WarLight.js
+    WarHeavy: WarHeavy.js
+    WarRocketLauncher: WarRocketLauncher.js
+    WarKamikaze: WarKamikaze.js
+    WarEngineer: WarEngineer.js
+    WarTurret: WarTurret.js
