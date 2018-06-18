@@ -7,7 +7,7 @@ Une compilation de TDs, TPs, cours magistraux, annales d'examens et mémos pour 
 **Semestre 1:**
 
 **UE obligatoires**
-- [HMIN101L - Anglais](../../tree/master/S1/home/thibault/Documents/master-imagina/S1/HMIN101L%20-%20Anglais)
+- [HMIN101L - Anglais](../../tree/master/S1/HMIN101L%20-%20Anglais)
 - [HMIN107 - Intelligence artificielle](../../tree/master/S1/HMIN107%20-%20Intelligence%20artificielle)
 - [HMIN108 - Programmation orientee agents](../../tree/master/S1/HMIN108%20-%20Programmation%20orientee%20agents)
 - [HMIN109 - Traitement du signal](../../tree/master/S1/HMIN109%20-%20Traitement%20du%20signal)
