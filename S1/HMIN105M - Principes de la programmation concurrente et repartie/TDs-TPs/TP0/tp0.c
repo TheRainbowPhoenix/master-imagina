@@ -84,30 +84,27 @@ void child_process(void){
 }
 
 void large_process(int largeur){
-	
-	pid_t pid = -1;
 
+	if(largeur > 0){
 
-	pid = create_process();
+		pid_t pid = -1;
 
-	if(pid == -1){
-		printf("error fork\n");
-	}
-	else if(pid == 0){ //fils
-		printf("debut process %d\n", getpid());
-		child_process();
-		printf("fin process %d\n", getpid());
-	}
-	else{
+		pid = create_process();
 
-		if(largeur > 0){
-			largeur--;
-			large_process(largeur);
+		if(pid == -1){
+			printf("error fork\n");
 		}
-		/* attend tous les fils */
-		while(wait(0) != -1);
-	}
-	
+		else if(pid == 0){ //fils
+			printf("debut process %d\n", getpid());
+			child_process();
+			printf("fin process %d\n", getpid());
+		}
+		else{
+			large_process(largeur - 1);
+			/* attend tous les fils */
+			while(wait(0) != -1);
+		}
+	}	
 }
 
 void deep_process(int hauteur){
@@ -194,10 +191,10 @@ int main(/*int argc, const char *argv[]*/) {
 
 	printf("la somme est : %d\n", somme_rec(T, T_size));
 */
+	//./run & pstree -p $!
+	large_process(6);
 
-	//large_process(6);
-
-	deep_process(6);
+	//deep_process(6);
 
 	//tree_process(2, 2);
 	return 0;
