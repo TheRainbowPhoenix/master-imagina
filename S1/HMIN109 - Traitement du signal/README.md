@@ -63,12 +63,52 @@ Ici on compte les bits à 0 et on ne rajoute pas de 0 sur le bit de parité pour
 
 **Les erreurs**
 
-l'information reçue doit être identique à l'information émise
-
+l'information reçue doit être identique à l'information émise.
 Le signale peut être modifié, des bits ou octets perdus durant le transfert de l'information : erreurs
-
 Il faut les détecter et les corriger.
 
 - Detection d'une modification
 - l'émetteur rajoute des bits, fonction des données qu'il transmet
 - Le récepteur recalcule la fonction et vérifie
+
+- Détection d'une perte (paquet) : besoin de numérotation, ajoutée par l'émetteur et vérifiée par le récepteur
+- Détection d'un mauvais ordre d'arrivée : réseaux maillés
+
+**Fenêtrage**
+
+- Un Ack accusé réception de plusieurs éléments d'information.
+- Primordial dans les transferts de fichiers
+
+**Contrôle de flux**
+
+- Flot d'arrivée trop rapide pour le récepteur ou poru les noeuds intermédiares
+- Quand fenêtrage : résolu par l'émetteur
+- Asynchrone : XON - XOFF
+- ICMP : Source Quench
+
+**Mode connecté (un paquet fait le train, les autres suivent)**
+
+- En début de chaque session : création d'un chemin virtuel CV entre les deux protagonistes
+- Chaque noeud réserve les ressources nécessaires à la session
+- Dans chaque élément d'information : numéro du CV
+- Fin de session : chaque noeud est averti
+- Exemple : téléphone, X25, 
+
+**Mode non connecté (chaque paquet est un train qui trouve sont chemin)**
+
+- Chaque élément d'information (datagramme) qui circule contient l'adresse du destinataire et de l'émetteur.
+- Les noeuds (routeurs) dispatchent à la volée : il faut trouve le bon chemin rapidement (but du routage)
+
+**Les couches**
+
+- Chaque couche ajoute un entête et un identificateur de la couche supérieur
+
+**Adressage et nommage**
+
+- But : identifier un objet réseau
+- Adrese liée à la géographie
+- Nom lié à la fonction ou l'indetité (personne)
+- Problème : unicité et gestion
+
+# CONCEPTS DES TÉLÉCOMMUNCATIONS
+
