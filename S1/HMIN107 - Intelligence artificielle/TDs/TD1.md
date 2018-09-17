@@ -182,3 +182,37 @@ Etats: (nb M à G, nb C à G, position B)
 
 # EXERCICE 3
 
+6 variables pour decrire la maison :
+
+X composé de 30 variables
+
+Cigarette, Pet, 
+
+X =  { Cx, Px, Nx, Sx, Dx, Lx } avec x <- {1..5}
+
+chaque variable a un domaine de taille 5
+
+D(c1) = D(C2) = D(C5) = { R, G, I, Y, B }
+D(P1) = ...	  = D(P5) = { D, S, F, 4, 2 }
+
+C2.1
+
+C1 	N1
+R 	E
+G 	N
+G 	S
+G 	J
+G 	U
+I 	N
+I 	S
+I 	J
+I 	U
+ ...
+Y	N
+Y	S
+Y 	J
+Y	U
+B 	N
+B 	S
+B 	J
+B 	U
