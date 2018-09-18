@@ -1,5 +1,5 @@
 
-public interface Idico {
+public interface IDictionary {
 
         Object get (Object key) throws Exception;
         

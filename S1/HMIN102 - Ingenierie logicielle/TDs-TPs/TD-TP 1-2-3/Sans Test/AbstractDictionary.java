@@ -1,4 +1,4 @@
-public abstract class AbstractDictionary implements Idico {
+public abstract class AbstractDictionary implements IDictionary {
 
 	protected Object[] keys;
 	protected Object[] values;
