@@ -4,13 +4,13 @@ Evaluation : 0.67 EXAM + 0.33 TP (note de TP definitive)
 
 # SOMMAIRE
 
-1. [Les réseaux](#les%20reseaux)
+1. [Les réseaux](#réseaux)
 2. [Concepts des télécommunications](#concepts%20des%20télécommunications)
 3. [Le réseau de télécommunication](liens)
 4. [Compression](liens)
 5. [Cryptage](liens)
 
-# LES RÉSEAUX
+# RÉSEAUX
 
 - Applications : telnet, ftp, nfs
 - Ordinateurs  : PC, stations de travail, périphériques, terminaux
