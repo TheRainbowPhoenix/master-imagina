@@ -4,13 +4,13 @@ Evaluation : 0.67 EXAM + 0.33 TP (note de TP definitive)
 
 # SOMMAIRE
 
-1. [Les réseaux](#reseaux)
-2. [Concepts des télécommunications](#telecommunications)
+1. [Les réseaux](#les-reseaux)
+2. [Concepts des télécommunications](#concepts-des-télécommunications)
 3. [Le réseau de télécommunication](liens)
 4. [Compression](liens)
 5. [Cryptage](liens)
 
-# I) LES RÉSEAUX <a name="reseaux"></a>
+# LES RÉSEAUX
 
 - Applications : telnet, ftp, nfs
 - Ordinateurs  : PC, stations de travail, périphériques, terminaux
@@ -110,7 +110,8 @@ Il faut les détecter et les corriger.
 - Nom lié à la fonction ou l'indetité (personne)
 - Problème : unicité et gestion
 
-# II) CONCEPTS DES TÉLÉCOMMUNCATIONS <a name="telecommunications"></a>
+# CONCEPTS DES TÉLÉCOMMUNCATIONS
+
 
 **Forme**
 
