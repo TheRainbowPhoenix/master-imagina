@@ -4,13 +4,13 @@ Evaluation : 0.67 EXAM + 0.33 TP (note de TP definitive)
 
 # SOMMAIRE
 
-1. [Les réseaux](liens)
-2. [Concepts des télécommunications](liens)
+1. [Les réseaux](#reseaux)
+2. [Concepts des télécommunications](#telecommunications)
 3. [Le réseau de télécommunication](liens)
 4. [Compression](liens)
 5. [Cryptage](liens)
 
-# LES RÉSEAUX
+# I) LES RÉSEAUX <a name="reseaux"></a>
 
 - Applications : telnet, ftp, nfs
 - Ordinateurs  : PC, stations de travail, périphériques, terminaux
@@ -110,5 +110,43 @@ Il faut les détecter et les corriger.
 - Nom lié à la fonction ou l'indetité (personne)
 - Problème : unicité et gestion
 
-# CONCEPTS DES TÉLÉCOMMUNCATIONS
+# II) CONCEPTS DES TÉLÉCOMMUNCATIONS <a name="telecommunications"></a>
 
+**Forme**
+
+- texte
+- musique
+- images fixes
+
+**Codage**
+
+- Adaptation au canal de communication
+- Capteurs et transducteurs
+
+**Codage en bande de base**
+
+- Binaire
+```
+	1 0 1 1 0 0 0 0 0 1 0 0 0 0 0
+	- _ - - _ _ _ _ _ - _ _ _ _ _
+```
+
+- Bipolaire (sequences de O <= n+1)
+```
+	1 0 1 1 0 0 0 0 0 1 0 0 0 0 0
+	- _   - _ _ _ _ _   _ _ _ _ _
+		-             -
+```
+
+- HDB3n (Haute densité bourrage) 
+```
+	1 0 1 1 0 0 0 0 0 1 0 0 0 0 0
+	- _   -   _ _ - _   _ _ _   _
+		-   -         -       -
+```
+
+**Téléinformatique**
+
+- Echantillonage: Shannon Fe >= 2 Fmax
+- Quantification/codage: Si D est la dynamique du signal: n >= log2 D
+- Debit du signal numérisé: C >= n * Fe (bits/s)

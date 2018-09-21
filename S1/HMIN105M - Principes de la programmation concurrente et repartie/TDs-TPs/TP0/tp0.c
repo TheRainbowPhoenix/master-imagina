@@ -131,7 +131,7 @@ void deep_process(int hauteur){
 	}
 }
 
-void tree_process(int hauteur, int largeur){
+void tree_process(int hauteur){
 		
 	if(hauteur > 0){
 
@@ -143,15 +143,24 @@ void tree_process(int hauteur, int largeur){
 			printf("error fork\n");
 		}
 		else if(pid == 0){ //fils
+			pid_t pid_son = -1;
+			pid_son = create_process();
 
+			if(pid_son == -1){
+				printf("error fork\n");
+			}
+			else if(pid_son == 0){ //fils
+				tree_process(hauteur - 1);
+			}
+			else{
+				tree_process(hauteur - 1);
+			}
+			while(wait(0) != -1);
+		}
+		else{
 			printf("debut process %d\n", getpid());
 			child_process();
 			printf("fin process %d\n", getpid());
-
-		}
-		else{
-			tree_process(hauteur - 1);
-			tree_process(hauteur - 1);
 			/* attend tous les fils */
 			while(wait(0) != -1);
 		}
