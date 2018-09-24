@@ -216,3 +216,128 @@ B 	N
 B 	S
 B 	J
 B 	U
+
+Pour tout i appartenant à 1..5 :
+D(Ni) = {Sp, Eng, Uk, Ja, No}
+D(Ci) = {Iv, Red, Blue, Green, Yellow}
+
+C2 : 
+<N1, C1> : {(Eng, Red)}U({Sp,Ja,Vh,No}x{Iv,G,Bl,Ye})
+  ...
+<N5,C5>
+
+5 Contraintes binaires de 17 tuples
+
+C3 :
+<P1, N1> : {(Sp, Dog)}U({Fra,Uk,Ja,N$}x{Sn,Ze,Fo,H$})
+...
+<P5,N5>
+
+C4 : 5 contraintes binaire de 17 tuples
+C5 : ----------------------------------
+C6 : <C1,L1,C2,L2> : ({Iv, Bl, Ye, Gr, Red}x1..5x{1,2,3,4,5}x1..5)\I
+
+I (Interdits) = {
+	(G,1,I,2),(G,1,I,3),
+	(G,1,I,4),(G,1,I,5),
+	(G,2,I,3),(G,2,I,4),
+	(G,2,I,5),(G,3,I,1),
+	(G,3,I,4),(G,3,I,3),
+	(G,4,I,1),(G,4,I,2),
+	(G,4,I,5),(G,5,I,1),
+	(G,5,I,2),(G,5,I,3)
+}
+
+<D1,L1> : {(Milk,3)}U({Wat,Orange,Coffe,Tea}x{1,2,4,5})
+...
+<D5,L5>
+
+C6 : 
+<C1,C2> : (CxC)\{(G2,Iv)}\({Iv}x{B,Y,R})\({B,Y,R}x{G})\({G2,Iv})
+<C2,C3> : 
+<C3,C4> : 
+<C4,C5> :
+
+# Inversion de modelisation : 
+
+X = {
+	Ye,Bl,Re,Gr,Iv,
+	Sp,En,Ja,Uk,No,
+	...
+} <- 25 variables
+
+Pour tout x appartenant à X, D(x) = 1..5
+
+C1  _ Domaine
+C2  _ <Eng,Red> : Eng = Red : {(1,1),(2,2),(3,3),(4,4),(5,5)}
+C3  _ Spa = Dog       
+C4  _ Cof = Green     
+C5  _ Uk = Tea        
+C6  _ <Green,Ivory> : Green = Ivory+1 {(2,1),(3,2),(4,3),(5,4)}  
+C7  _ Og = Sn
+C8  _ Koal = Yel
+C9  _ <Milk> : Milk = 3
+C10 _ <Nor> : Nor = 3
+C11 _ <Chest,Fox> : chest = fox-1 ou chest = fox+1
+C12 _ Même chose
+C13 _ LS = Orange
+C14 _ Jap = Parliaments
+C15 _ <Blue> : {2}
+
+C6 : 
+|G|I|
+|-|-|
+|2|1|
+|3|2|
+|4|3|
+|5|4|
+
+C12 : 
+
+|Yel|Horse|
+|---|-----|
+|2  |1    |
+|3  |2    |
+|4  |3    |
+|5  |4    |
+|1  |2    |
+|2  |3    |
+|3  |4    |
+|4  |5    |
+
+C11 : 
+
+|Chest|Fox|
+|-----|---|
+|2    |1  |
+|1    |2  |
+|3    |2  |
+|2    |3  |
+|4    |3  |
+|3    |4  |
+|4    |5  |
+|5    |4  |
+
+D(Red)    = {1,3,4,5}
+D(Yellow) = {1,3,4,5}
+D(Green)  = {1,3,4,5}
+D(Ivory)  = {1,3,4,5}
+D(Jap)    = {2,3,4,5}
+D(Uk)     = {2,4,5}
+D(Dog)    = {2,3,4,5}
+D(Water)  = {1,2,4,5}
+D(Orange) = {1,2,4,5}
+
+AllDiff(Yell,Iv,Green,Red)
+
+AllDiff(Jap,Uk,Dog,Red)
+
+AllDiff(Horse,Dog,Zeb,Fox,OldGold)
+
+AllDiff(Water,Orange,Uk,Gi)
+
+AllDiff(OldGold,Chest,Jap,Yell)
+
+
+
+
