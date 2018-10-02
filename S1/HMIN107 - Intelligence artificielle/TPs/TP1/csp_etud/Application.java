@@ -21,7 +21,7 @@ public class Application {
 			readFile.close();
 
 		} catch(Exception e) {
-			System.out.println("Chargement" + e.getMessage());
+			System.out.println("Chargement " + e.getMessage());
 		}
 	}
 }

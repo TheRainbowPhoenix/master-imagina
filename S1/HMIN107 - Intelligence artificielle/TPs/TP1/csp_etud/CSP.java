@@ -60,11 +60,27 @@ public class CSP {
 		 */
 		
 		private Assignment backtrack() {
-		    // A IMPLANTER
-		    // AJOUTER UN PARAMETRE DE TYPE ASSIGNMENT SI ON NE TRAVAILLE PAS DIRECTEMENT SUR L'ATTRIBUT assignment
-		    // quelque part : cptr++
-		    System.err.println("backtrack a implanter !!");
-		    return null;
+
+	        cptr++;
+
+	        if(this.assignment.size() == this.network.getVarNumber()){
+	            return assignment;
+	        }
+
+	        String x = chooseVar();
+	        ArrayList<Object> domain = tri(network.getDom(x));
+
+	        for(int i = 0 ; i < domain.size() ; i++) {
+	            assignment.put(x, domain.get(i));
+	            if(this.consistent(x)) {
+	                Assignation b = backtrack();
+	                if(b != null)
+	                    return this.assignment;
+	                this.assignment.remove(x);
+	            }
+	        }
+
+	        return null;
 		}
 		
 		
@@ -109,26 +125,16 @@ public class CSP {
 		 * @return une variable non encore assignée
 		 */
 		private String chooseVar() {
-		    // A IMPLANTER
-		    System.err.println("Méthode chooseVar() à implanter !!!");
+
+	        for(String var : reseau.getVars()){
+	            if(!(assignment.containsKey(var))){
+	                return var;
+	            }
+	        }
+
 		    return null;
 		}
-		
-		/*****************************************************************/
-		
-		/**
-		 * Retourne la prochaine variable à assigner étant donné la solution partielle passée en paramètre
-		 *  
-		 *  @param sol solution partielle courante
-		 * @return une variable non encore assignée
-		 */
-		private String chooseVar(Assignment sol) {
-			// A IMPLANTER
-			System.err.println("Méthode chooseVar() à implanter !!!");
-			return null;
-		}
-		
-		
+
 		/**
 		 * Fixe un ordre de prise en compte des valeurs d'un domaine
 		 * 
@@ -151,24 +157,12 @@ public class CSP {
 		 * @return vrai ssi l'assignment courante ne viole aucune contrainte
 		 */
 		private boolean consistant(String lastAssignedVar) {
-			// A IMPLANTER
-			System.err.println("Méthode consistant() à implanter !!!");
+	        ArrayList<Constraint> constraints = reseau.getConstraints(lastAssignedVar);
+	        for(int i = 0 ; i < constraints.size() ; i++) {
+	            if(constraints.get(i).violation(assignment))
+	                return false;
+	        }
 			return true;
-		}
-		
-		/**
-		 * Teste si l'assignation courante stockée dans assignment est consistante par rapport à sol, c'est à dire qu'elle
-		 * ne viole aucune contrainte.
-		 * 
-		 * @param sol solution partielle courante
-		 * @param lastAssignedVar la variable que l'on vient d'assigner à cette étape
-		 * @return vrai ssi l'assignment courante ne viole aucune contrainte
-		 */
-		private boolean consistant(Assignment sol, String lastAssignedVar) {
-			// A IMPLANTER
-			System.err.println("Méthode consistant() à implanter !!!");
-			return true;
-
 		}
 		
 }

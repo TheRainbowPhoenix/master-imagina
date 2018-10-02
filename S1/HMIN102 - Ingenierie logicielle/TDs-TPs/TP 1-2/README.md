@@ -1,0 +1,1 @@
+Les fichiers mdj s'ouvrent avec starUML
