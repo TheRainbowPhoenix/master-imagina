@@ -10,7 +10,7 @@ Evaluation : 0.67 EXAM + 0.33 TP (note de TP definitive)
 4. [Compression](liens)
 5. [Cryptage](liens)
 
-# LES RÉSEAUX
+# I) LES RÉSEAUX
 
 - Applications : telnet, ftp, nfs
 - Ordinateurs  : PC, stations de travail, périphériques, terminaux
@@ -41,15 +41,15 @@ Evaluation : 0.67 EXAM + 0.33 TP (note de TP definitive)
 - Signaux sur le support
 - Niveaux et changements de niveaux
 
-**(EXEMPLE) Bit de parité**
-
+### **Exemple : Bit de parité**
+```
 On résonne sur les bits à 0
 
 0 1 2 3 4 5 6 7
 0 0 1 1 0 1 0|1 (bit de parité)
 
 Ici on compte les bits à 0 et on ne rajoute pas de 0 sur le bit de parité pour avoir un nombre de 0 pair.
-
+```
 **Modes de transmission**
 
 - Bits : singaux de support
@@ -110,8 +110,7 @@ Il faut les détecter et les corriger.
 - Nom lié à la fonction ou l'indetité (personne)
 - Problème : unicité et gestion
 
-# CONCEPTS DES TÉLÉCOMMUNCATIONS
-
+# II) CONCEPTS DES TÉLÉCOMMUNCATIONS
 
 **Forme**
 
@@ -124,7 +123,7 @@ Il faut les détecter et les corriger.
 - Adaptation au canal de communication
 - Capteurs et transducteurs
 
-**Codage en bande de base**
+### Codage en bande de base
 
 - Binaire
 ```
@@ -151,3 +150,66 @@ Il faut les détecter et les corriger.
 - Echantillonage: Shannon Fe >= 2 Fmax
 - Quantification/codage: Si D est la dynamique du signal: n >= log2 D
 - Debit du signal numérisé: C >= n * Fe (bits/s)
+
+### Sécurisation de la transmission 
+
+- Taux d'erreur binaire (TEB) = (nb bits erronés) / (nb bits transmis)
+- Soit n le nombre de bits du message, la probabilité de transmission sans erreur P = (1 - TEB)^n
+
+**Clés de contrôle**
+
+- Bit de parité : VRC, efficacité 50 - 60%
+- Caractère de parité : LRC, efficacité 95%
+- Combinaison VRC/LRC
+- Envoi de la même trame en plusieurs exemplaires
+- Clés de contrôle de 2 à 4 octets, CRC (Cyclic Redundancy Check), efficacité 100%
+
+### Eficacité
+
+- Taux de transfert des informations, TTI = (nb de bits utiles) / (durée de transmission)
+- Rendement du support = TTI / Débit nominal du support
+
+### Exemple : Taux de transfert des informations
+
+```
+Message 1000 caractère aCSII avec 1 bit VRC/caractère, liaison 9600 bits/s, TEB = 10^-4
+P = (1 - 10^-4)^8*1000 = 44%
+
+Templs de transmission sans tenir compte des erreurs t = 8000/9600 = 0.83s
+TTI = 7000/0.83 = 8403 bits/s
+
+Temps de transmission avec erreurs : tc = t/P = 0.83/0.44 = 1.89s
+TTIe = 7000/1.89 = 3696  bits/s
+
+Rendement = 3696/9600 = 38%
+```
+
+**Compression**
+
+- Image, JPEG, MPEG1, MPEG2
+- Texte, codage de la longueur de ligne, codage de huffman
+
+### Exemple : Codage par plage RLE, RLC (Run Length Encoding/Coding)
+
+```
+223 223 223 214 214 214 214 223 223 223 217 214 214 214 = 14 * 8 bits = 112 bits
+  {3,223}       {4,214}       {3,223} {1,217} {3,214}   = 5*(8+2) = 50 bits
+
+Est interressant quand il y a de la redondance d'affiler
+```
+
+**Codage de Huffman**
+
+- Codage à longueur variable
+- Symboles très frequent -> codes courts
+- Symboles rares -> codes longs
+- Un code ne doit jamais être le début d'un autre code
+
+1. Trier les symboles par probabilité décroissante
+2. Regrouper les 2 symboles qui ont les probabilités les plus faibles
+3. Remplacer ces symboles par un symbole : somme des probabilité des caractères
+4. Tant que tout n'est pas regroupé : rentour en 2
+5. En partant du bas et remontant jusqu'au bout
+- à gauche : ajouer un 0
+- à droite : ajouter un 1
+
