@@ -213,3 +213,71 @@ Est interressant quand il y a de la redondance d'affiler
 - à gauche : ajouer un 0
 - à droite : ajouter un 1
 
+# III) Le réseau de télécommunication
+
+**Trafic téléphonique**
+
+- Soit N(t) le nombre de circuits occupés à l'instant t, le volume de trafic pendant un temps T: V(t) = integrale[0,T] N(t) dt en secondes
+- Intensité du trafic (en erlang ou %): I(T) = 1/T V(t)
+
+```
+1 erlang = 1 E -> 1 ligne pendant 1 heure
+               -> 2 ligne pendant 1/2 heure
+```
+
+Circuit:
+```
+ 🢑
+1┃━━━ ━ ━━━
+2┃ ━━━ ━━  ━━━
+3┃━━━ ━━   ━━
+4┃ ━━━  ━━━
+5┃   ━━━━━
+ ┗━━━━━━━━━━━━━━🢒
+
+1) 5 circuits : inutile
+2) 4 circuits : les 12 communication sont établies
+3) 3 circuits : 2 sessions sont perdues
+```
+
+Compromis : 3 paramètres
+
+- Trafic
+- Capacité du faisceau : n
+- Probabilité de perte
+
+Probabilité de pertes:
+```
+p = (E^n / n!) / (somme[h = 0, n] E^h / h!)
+```
+
+Ex: 2 faisceaux de 10 circuits
+-> trafic de 5 erlangs
+-> p = 2%
+
+Rendement = 0,5 E/circuit
+
+Regroupe les é faisceaux
+-> 1 faisceau de 20 circuits
+-> p = 2%
+-> trafic de 13 Erlangs
+
+Rendement = 0.65 E/circuit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

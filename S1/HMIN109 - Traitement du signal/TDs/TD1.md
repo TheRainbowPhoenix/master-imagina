@@ -2,12 +2,16 @@
 
 # Exercice 1
 
+**Question a)**
 ```
-a) BONJOUR :
+BONJOUR :
 VRC  LRC | VRC   R  | VRC   U  | VRC   O  | VRC   J  | VRC   N  | VRC   O  | VRC   B
  x xxxxxx   x xxxxxx   x xxxxxx   x xxxxxx   x xxxxxx   x xxxxxx   x xxxxxx   x xxxxxx 
+```
 
-b) B = 66, O = 79, N = 78, J = 74, U = 85, R = 82
+**Question b)**
+```
+B = 66, O = 79, N = 78, J = 74, U = 85, R = 82
 ```
 |   |B|O|N|J|O|U|R|LRC|
 |---|-|-|-|-|-|-|-|---|
@@ -20,15 +24,15 @@ b) B = 66, O = 79, N = 78, J = 74, U = 85, R = 82
 |1  |0|1|0|0|1|1|0|1  |
 |VRC|0|1|0|1|1|0|0|1  |
 
-```
-b)
-```
+**Question c)**
+
 |R         |U         |O         |J         |N         |O         |B         |
 |----------|----------|----------|----------|----------|----------|----------|
 |[0]1010010|[0]1010010|[1]1001111|[1]1001010|[0]1001110|[1]1001111|[0]1000010|
 
+**Question d.1)**
 ```
-d) 1) VRC + LRC, On réussit à localiser et corriger l'erreur
+VRC + LRC, On réussit à localiser et corriger l'erreur
 ```
 |   |B|O|N|J|O|U|R|LRC|
 |---|-|-|-|-|-|-|-|---|
@@ -41,8 +45,9 @@ d) 1) VRC + LRC, On réussit à localiser et corriger l'erreur
 |1  |0|1|0|0|1|1|0|1  |
 |VRC|0|1|0|1|1|0|0|1  |
 
+**Question d.2)**
 ```
-2) LRC, On réussit à detecter 2 erreurs
+LRC, On réussit à detecter 2 erreurs
 ```
 |   |B|O|N|J|O|U|R|LRC|
 |---|-|-|-|-|-|-|-|---|
@@ -55,8 +60,9 @@ d) 1) VRC + LRC, On réussit à localiser et corriger l'erreur
 |1  |0|1|0|0|1|1|0|1  |
 |VRC|0|1|0|1|1|0|0|1  |
 
+**Question d.3)**
 ```
-3) VRC, On réussit à detecter 2 erreurs
+VRC, On réussit à detecter 2 erreurs
 ```
 |   |B|O|N|J|O|U|R|LRC|
 |---|-|-|-|-|-|-|-|---|
@@ -69,8 +75,9 @@ d) 1) VRC + LRC, On réussit à localiser et corriger l'erreur
 |1  |0|1|0|0|1|1|0|1  |
 |VRC|0|1|0|1|1|0|0|1  |
 
+**Question d.4)**
 ```
-4) On ne voit pas l'erreur
+On ne voit pas l'erreur
 ```
 |   |B|O|N|J|O|U|R|LRC|
 |---|-|-|-|-|-|-|-|---|
@@ -85,8 +92,9 @@ d) 1) VRC + LRC, On réussit à localiser et corriger l'erreur
 
 # Exercice 2
 
+**Question a)**
 ```
-a) Pas de LRC que des [VRC] 1001 1110 1010 0011 1100 1010
+Pas de LRC que des [VRC] 1001 1110 1010 0011 1100 1010
 
 sens de lecture -> avec VRC à droite
 
@@ -121,14 +129,19 @@ sens de lecture <- avec VRC à droite
 VRC 0 1 0
     ^
 (erreur detecter sur le le paquet de bit 1)
+```
 
-b) YES
+**Question b)**
+```
+YES
 ```
 
 # Exercice 3
 
+**Question a)**
 ```
-a) P degré n, R degré n-1, x^4 + x^2 + x + 1.
+P degré n, R degré n-1, x^4 + x^2 + x + 1.
+
 Polynome génerateurs : 10111
 
 10100101110000
@@ -140,11 +153,15 @@ Polynome génerateurs : 10111
        10100
        10111
           1100
+```
 
-b) Le message à transmettre est 1010010111|1100
+**Question b)**
+```
+Le message à transmettre est 1010010111|1100
+```
 
-c)
-
+**Question c)**
+```
 10100101110000
 10111
    11101
@@ -170,9 +187,8 @@ coder sur 0 : -> s'il est suivi d'un autre 0 transition en fin de période
 
 # Exercice 5
 
-```
-a)
-```
+**Question a)**
+
 |   |I|M|A|G|I|N|A|LRC|
 |---|-|-|-|-|-|-|-|---|
 |64 |1|1|1|1|1|1|1|1  |
@@ -184,8 +200,10 @@ a)
 |1  |1|1|1|1|1|0|1|0  |
 |VRC|1|0|0|0|1|0|0|0  |
 
+**Question b)**
+
 ```
-b) I = 11001001
+I = 11001001
 
 110010010000
 11001

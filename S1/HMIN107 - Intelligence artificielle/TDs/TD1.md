@@ -1,30 +1,49 @@
 # EXERCICE 1
 
-1. Un ensemble d'au plus 3 sequences. 
+**Question 1**
+```
+Un ensemble d'au plus 3 sequences. 
 chaque séquence est ordonnée du plus haut au plus bas.
 
 - Etat initial 	= { <C, A>, <B>, <> }
 - Etat but 		= { <B, A, C>, <>, <> }
+```
 
-2. (espace de recherche)
+**Question 2**
 
-3. (parcours en largeur)
+(espace de recherche)
 
+**Question 3**
+
+(parcours en largeur)
+
+```
 93 noeuds générés, 31 explorés.
+```
 
-4. Avec le parcour en profondeur on ré-explore l'etat initial à l'infini.
+**Question 4**
+```
+Avec le parcour en profondeur on ré-explore l'etat initial à l'infini.
+```
+**Question 5**
+```
+Pour éviter de ré-etudier un état, au moment de la fonction expand on peut vérifier si l'etat appartient déjà à une table d'états deja générés.
+```
 
-5. Pour éviter de ré-etudier un état, au moment de la fonction expand on peut vérifier si l'etat appartient déjà à une table d'états deja générés.
-k
 (recherche en largeur améliorée)
 
+```
 13 noeuds générés, 11 explorés.
+```
+**Question 6**
 
-6. (recherche en profondeur améliorée)
+(recherche en profondeur améliorée)
 
+```
 11 noeuds générés, 9 explorés.
+```
 
-7. 
+**Question 7**
 ```
 Node recherche_profondeur(Problem p){
 	Node n <- make_node(p.initial_state);
@@ -62,7 +81,7 @@ void recherche_prof_rec(Node nc, Problem p, List s){
 }
 ```
 
-8.
+**Question 8**
 ```
 Bool test_etat_parent_identique(Node n){
 
@@ -93,7 +112,7 @@ void recherche_prof_rec(Node nc, Problem p, List s){
 }
 ```
 
-9. 
+**Question 9** 
 ```
 void recherche_prof_rec(Node nc, Problem p, List s){
 
@@ -115,17 +134,15 @@ void recherche_prof_rec(Node nc, Problem p, List s){
 }
 ```
 
-10. Oui
+**Question 10**
+```
+Oui
 
 - Si le problème a un nombre d'états fini et pas de circuit dans le graphe des états.
-
 - Si on a une borne pour le nombre d'actions maximal d'une solution. 
-
 - Recherche en profondeur iterative 
 
-```
 recherche_prof_iterative(Problem p){
-
 	Borne b <- 0;
 	Node n;
 
@@ -138,7 +155,9 @@ recherche_prof_iterative(Problem p){
 
 # EXERCICE 2
 
-1. M = Missionnaire, C = Cannibale, B = Barque, T = Traversé, G = Gauche, D = Droite
+**Question 1**
+```
+M = Missionnaire, C = Cannibale, B = Barque, T = Traversé, G = Gauche, D = Droite
 
 Règles :
 - suffisamment de M et de C pour faire l'action
@@ -154,9 +173,10 @@ Actions:
 Etats: (nb M à G, nb C à G, position B)
 - But: (0, 0, D)
 - Initial: (3, 3, G)
+```
 
-2. 
 
+**Question 2**
 ```
 	 -------(3, 3, G)-------					(0, 0, D)--------------
 	/ 			|			\						|		\		   \
@@ -167,7 +187,7 @@ Etats: (nb M à G, nb C à G, position B)
 (3, 0, D)---(3, 1, G)---(1, 1, D)---(2, 2, G)---(0, 2, D)---(0, 3, G)
 ```
 
-3.
+**Question 3**
 ```
 	 -------(3, 3, G)-------
 	/ 			|			\
@@ -181,7 +201,7 @@ Etats: (nb M à G, nb C à G, position B)
 ```
 
 # EXERCICE 3
-
+```
 6 variables pour decrire la maison :
 
 X composé de 30 variables
@@ -257,9 +277,10 @@ C6 :
 <C2,C3> : 
 <C3,C4> : 
 <C4,C5> :
+```
 
-# Inversion de modelisation : 
-
+**Inversion de modelisation:** 
+```
 X = {
 	Ye,Bl,Re,Gr,Iv,
 	Sp,En,Ja,Uk,No,
@@ -337,7 +358,4 @@ AllDiff(Horse,Dog,Zeb,Fox,OldGold)
 AllDiff(Water,Orange,Uk,Gi)
 
 AllDiff(OldGold,Chest,Jap,Yell)
-
-
-
-
+```
