@@ -264,7 +264,18 @@ Regroupe les é faisceaux
 
 Rendement = 0.65 E/circuit
 
+# IV) Réseau
 
+**Exemple**
+
+Débit de 9600 bits/s message de 300 octets 3 liaisons : L = 3
+liaison = 0.25s
+transit = 0.75s
+
+message en 3 paquets
+T un paquet-liaison = 0.83s
+100 octets
+Transit = 0.417s
 
 
 
