@@ -1,0 +1,9 @@
+2
+rl1;1;2
+rl2;1;2
+2
+dif
+rl1;rl2
+exp
+rl1;rl2
+rl1+1!=rl2 && rl1!=rl2+1

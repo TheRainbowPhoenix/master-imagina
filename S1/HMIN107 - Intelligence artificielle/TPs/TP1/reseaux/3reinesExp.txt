@@ -1,0 +1,16 @@
+3
+rl1;1;2;3
+rl2;1;2;3
+rl3;1;2;3
+4
+dif
+rl1;rl2;rl3
+exp
+rl1;rl2
+rl1+1!=rl2 && rl1!=rl2+1
+exp
+rl1;rl3
+rl1+2!=rl3 && rl1!=rl3+2
+exp
+rl2;rl3
+rl2+1!=rl3 && rl2!=rl3+1

@@ -1,0 +1,62 @@
+17
+Bleu;1;2;3;4;5
+Ivoire;1;2;3;4;5
+Norvegien;1
+Ukrainien_The;1;2;3;4;5
+Anglais_Rouge;1;2;3;4;5
+Espagnol_Chien;1;2;3;4;5
+Japonais_Parliament;1;2;3;4;5
+Renard;1;2;3;4;5
+Cheval;1;2;3;4;5
+Zebre;1;2;3;4;5
+Eau;1;2;3;4;5
+Lait;3
+Cafe_Vert;1;2;3;4;5
+Kools_Jaune;1;2;3;4;5
+Chesterfield;1;2;3;4;5
+Old Gold_Escargot;1;2;3;4;5
+Lucky Strike_Jus d'orange;1;2;3;4;5
+9
+dif
+Anglais_Rouge;Cafe_Vert;Bleu;Kools_Jaune;Ivoire
+dif
+Norvegien;Ukrainien_The;Anglais_Rouge;Espagnol_Chien;Japonais_Parliament
+dif
+Renard;Cheval;Old Gold_Escargot;Espagnol_Chien;Zebre
+dif
+Eau;Ukrainien_The;Lait;Lucky Strike_Jus d'orange;Cafe_Vert
+dif
+Kools_Jaune;Chesterfield;Old Gold_Escargot;Lucky Strike_Jus d'orange;Japonais_Parliament
+ext
+Ivoire;Cafe_Vert
+4
+1;2
+2;3
+3;4
+4;5
+ext
+Chesterfield;Renard
+8
+1;2
+2;1
+2;3
+3;2
+3;4
+4;3
+4;5
+5;4
+ext
+Kools_Jaune;Cheval
+8
+1;2
+2;1
+2;3
+3;2
+3;4
+4;3
+4;5
+5;4
+ext
+Norvegien;Bleu
+1
+1;2

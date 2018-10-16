@@ -1,0 +1,17 @@
+3
+x;1;2;3
+y;as;tutu;hep
+z;2;4;6;10
+2
+ext
+x;y
+5
+1;as
+2;tutu
+5;hep
+6;as
+3;as
+ext
+y;z;x
+1
+as;4;1
