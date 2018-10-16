@@ -1,0 +1,380 @@
+16
+rl1;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl2;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl3;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl4;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl5;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl6;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl7;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl8;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl9;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl10;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl11;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl12;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl13;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl14;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl15;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+rl16;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16
+121
+dif
+rl1;rl2;rl3;rl4;rl5;rl6;rl7;rl8;rl9;rl10;rl11;rl12;rl13;rl14;rl15;rl16
+exp
+rl1;rl2
+rl1+1!=rl2 && rl1!=rl2+1
+exp
+rl1;rl3
+rl1+2!=rl3 && rl1!=rl3+2
+exp
+rl1;rl4
+rl1+3!=rl4 && rl1!=rl4+3
+exp
+rl1;rl5
+rl1+4!=rl5 && rl1!=rl5+4
+exp
+rl1;rl6
+rl1+5!=rl6 && rl1!=rl6+5
+exp
+rl1;rl7
+rl1+6!=rl7 && rl1!=rl7+6
+exp
+rl1;rl8
+rl1+7!=rl8 && rl1!=rl8+7
+exp
+rl1;rl9
+rl1+8!=rl9 && rl1!=rl9+8
+exp
+rl1;rl10
+rl1+9!=rl10 && rl1!=rl10+9
+exp
+rl1;rl11
+rl1+10!=rl11 && rl1!=rl11+10
+exp
+rl1;rl12
+rl1+11!=rl12 && rl1!=rl12+11
+exp
+rl1;rl13
+rl1+12!=rl13 && rl1!=rl13+12
+exp
+rl1;rl14
+rl1+13!=rl14 && rl1!=rl14+13
+exp
+rl1;rl15
+rl1+14!=rl15 && rl1!=rl15+14
+exp
+rl1;rl16
+rl1+15!=rl16 && rl1!=rl16+15
+exp
+rl2;rl3
+rl2+1!=rl3 && rl2!=rl3+1
+exp
+rl2;rl4
+rl2+2!=rl4 && rl2!=rl4+2
+exp
+rl2;rl5
+rl2+3!=rl5 && rl2!=rl5+3
+exp
+rl2;rl6
+rl2+4!=rl6 && rl2!=rl6+4
+exp
+rl2;rl7
+rl2+5!=rl7 && rl2!=rl7+5
+exp
+rl2;rl8
+rl2+6!=rl8 && rl2!=rl8+6
+exp
+rl2;rl9
+rl2+7!=rl9 && rl2!=rl9+7
+exp
+rl2;rl10
+rl2+8!=rl10 && rl2!=rl10+8
+exp
+rl2;rl11
+rl2+9!=rl11 && rl2!=rl11+9
+exp
+rl2;rl12
+rl2+10!=rl12 && rl2!=rl12+10
+exp
+rl2;rl13
+rl2+11!=rl13 && rl2!=rl13+11
+exp
+rl2;rl14
+rl2+12!=rl14 && rl2!=rl14+12
+exp
+rl2;rl15
+rl2+13!=rl15 && rl2!=rl15+13
+exp
+rl2;rl16
+rl2+14!=rl16 && rl2!=rl16+14
+exp
+rl3;rl4
+rl3+1!=rl4 && rl3!=rl4+1
+exp
+rl3;rl5
+rl3+2!=rl5 && rl3!=rl5+2
+exp
+rl3;rl6
+rl3+3!=rl6 && rl3!=rl6+3
+exp
+rl3;rl7
+rl3+4!=rl7 && rl3!=rl7+4
+exp
+rl3;rl8
+rl3+5!=rl8 && rl3!=rl8+5
+exp
+rl3;rl9
+rl3+6!=rl9 && rl3!=rl9+6
+exp
+rl3;rl10
+rl3+7!=rl10 && rl3!=rl10+7
+exp
+rl3;rl11
+rl3+8!=rl11 && rl3!=rl11+8
+exp
+rl3;rl12
+rl3+9!=rl12 && rl3!=rl12+9
+exp
+rl3;rl13
+rl3+10!=rl13 && rl3!=rl13+10
+exp
+rl3;rl14
+rl3+11!=rl14 && rl3!=rl14+11
+exp
+rl3;rl15
+rl3+12!=rl15 && rl3!=rl15+12
+exp
+rl3;rl16
+rl3+13!=rl16 && rl3!=rl16+13
+exp
+rl4;rl5
+rl4+1!=rl5 && rl4!=rl5+1
+exp
+rl4;rl6
+rl4+2!=rl6 && rl4!=rl6+2
+exp
+rl4;rl7
+rl4+3!=rl7 && rl4!=rl7+3
+exp
+rl4;rl8
+rl4+4!=rl8 && rl4!=rl8+4
+exp
+rl4;rl9
+rl4+5!=rl9 && rl4!=rl9+5
+exp
+rl4;rl10
+rl4+6!=rl10 && rl4!=rl10+6
+exp
+rl4;rl11
+rl4+7!=rl11 && rl4!=rl11+7
+exp
+rl4;rl12
+rl4+8!=rl12 && rl4!=rl12+8
+exp
+rl4;rl13
+rl4+9!=rl13 && rl4!=rl13+9
+exp
+rl4;rl14
+rl4+10!=rl14 && rl4!=rl14+10
+exp
+rl4;rl15
+rl4+11!=rl15 && rl4!=rl15+11
+exp
+rl4;rl16
+rl4+12!=rl16 && rl4!=rl16+12
+exp
+rl5;rl6
+rl5+1!=rl6 && rl5!=rl6+1
+exp
+rl5;rl7
+rl5+2!=rl7 && rl5!=rl7+2
+exp
+rl5;rl8
+rl5+3!=rl8 && rl5!=rl8+3
+exp
+rl5;rl9
+rl5+4!=rl9 && rl5!=rl9+4
+exp
+rl5;rl10
+rl5+5!=rl10 && rl5!=rl10+5
+exp
+rl5;rl11
+rl5+6!=rl11 && rl5!=rl11+6
+exp
+rl5;rl12
+rl5+7!=rl12 && rl5!=rl12+7
+exp
+rl5;rl13
+rl5+8!=rl13 && rl5!=rl13+8
+exp
+rl5;rl14
+rl5+9!=rl14 && rl5!=rl14+9
+exp
+rl5;rl15
+rl5+10!=rl15 && rl5!=rl15+10
+exp
+rl5;rl16
+rl5+11!=rl16 && rl5!=rl16+11
+exp
+rl6;rl7
+rl6+1!=rl7 && rl6!=rl7+1
+exp
+rl6;rl8
+rl6+2!=rl8 && rl6!=rl8+2
+exp
+rl6;rl9
+rl6+3!=rl9 && rl6!=rl9+3
+exp
+rl6;rl10
+rl6+4!=rl10 && rl6!=rl10+4
+exp
+rl6;rl11
+rl6+5!=rl11 && rl6!=rl11+5
+exp
+rl6;rl12
+rl6+6!=rl12 && rl6!=rl12+6
+exp
+rl6;rl13
+rl6+7!=rl13 && rl6!=rl13+7
+exp
+rl6;rl14
+rl6+8!=rl14 && rl6!=rl14+8
+exp
+rl6;rl15
+rl6+9!=rl15 && rl6!=rl15+9
+exp
+rl6;rl16
+rl6+10!=rl16 && rl6!=rl16+10
+exp
+rl7;rl8
+rl7+1!=rl8 && rl7!=rl8+1
+exp
+rl7;rl9
+rl7+2!=rl9 && rl7!=rl9+2
+exp
+rl7;rl10
+rl7+3!=rl10 && rl7!=rl10+3
+exp
+rl7;rl11
+rl7+4!=rl11 && rl7!=rl11+4
+exp
+rl7;rl12
+rl7+5!=rl12 && rl7!=rl12+5
+exp
+rl7;rl13
+rl7+6!=rl13 && rl7!=rl13+6
+exp
+rl7;rl14
+rl7+7!=rl14 && rl7!=rl14+7
+exp
+rl7;rl15
+rl7+8!=rl15 && rl7!=rl15+8
+exp
+rl7;rl16
+rl7+9!=rl16 && rl7!=rl16+9
+exp
+rl8;rl9
+rl8+1!=rl9 && rl8!=rl9+1
+exp
+rl8;rl10
+rl8+2!=rl10 && rl8!=rl10+2
+exp
+rl8;rl11
+rl8+3!=rl11 && rl8!=rl11+3
+exp
+rl8;rl12
+rl8+4!=rl12 && rl8!=rl12+4
+exp
+rl8;rl13
+rl8+5!=rl13 && rl8!=rl13+5
+exp
+rl8;rl14
+rl8+6!=rl14 && rl8!=rl14+6
+exp
+rl8;rl15
+rl8+7!=rl15 && rl8!=rl15+7
+exp
+rl8;rl16
+rl8+8!=rl16 && rl8!=rl16+8
+exp
+rl9;rl10
+rl9+1!=rl10 && rl9!=rl10+1
+exp
+rl9;rl11
+rl9+2!=rl11 && rl9!=rl11+2
+exp
+rl9;rl12
+rl9+3!=rl12 && rl9!=rl12+3
+exp
+rl9;rl13
+rl9+4!=rl13 && rl9!=rl13+4
+exp
+rl9;rl14
+rl9+5!=rl14 && rl9!=rl14+5
+exp
+rl9;rl15
+rl9+6!=rl15 && rl9!=rl15+6
+exp
+rl9;rl16
+rl9+7!=rl16 && rl9!=rl16+7
+exp
+rl10;rl11
+rl10+1!=rl11 && rl10!=rl11+1
+exp
+rl10;rl12
+rl10+2!=rl12 && rl10!=rl12+2
+exp
+rl10;rl13
+rl10+3!=rl13 && rl10!=rl13+3
+exp
+rl10;rl14
+rl10+4!=rl14 && rl10!=rl14+4
+exp
+rl10;rl15
+rl10+5!=rl15 && rl10!=rl15+5
+exp
+rl10;rl16
+rl10+6!=rl16 && rl10!=rl16+6
+exp
+rl11;rl12
+rl11+1!=rl12 && rl11!=rl12+1
+exp
+rl11;rl13
+rl11+2!=rl13 && rl11!=rl13+2
+exp
+rl11;rl14
+rl11+3!=rl14 && rl11!=rl14+3
+exp
+rl11;rl15
+rl11+4!=rl15 && rl11!=rl15+4
+exp
+rl11;rl16
+rl11+5!=rl16 && rl11!=rl16+5
+exp
+rl12;rl13
+rl12+1!=rl13 && rl12!=rl13+1
+exp
+rl12;rl14
+rl12+2!=rl14 && rl12!=rl14+2
+exp
+rl12;rl15
+rl12+3!=rl15 && rl12!=rl15+3
+exp
+rl12;rl16
+rl12+4!=rl16 && rl12!=rl16+4
+exp
+rl13;rl14
+rl13+1!=rl14 && rl13!=rl14+1
+exp
+rl13;rl15
+rl13+2!=rl15 && rl13!=rl15+2
+exp
+rl13;rl16
+rl13+3!=rl16 && rl13!=rl16+3
+exp
+rl14;rl15
+rl14+1!=rl15 && rl14!=rl15+1
+exp
+rl14;rl16
+rl14+2!=rl16 && rl14!=rl16+2
+exp
+rl15;rl16
+rl15+1!=rl16 && rl15!=rl16+1
