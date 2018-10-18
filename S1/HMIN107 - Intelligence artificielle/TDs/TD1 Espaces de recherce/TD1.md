@@ -5,8 +5,11 @@
 Un ensemble d'au plus 3 sequences. 
 chaque séquence est ordonnée du plus haut au plus bas.
 
-- Etat initial 	= { <C, A>, <B>, <> }
-- Etat but 		= { <B, A, C>, <>, <> }
+- Etat initial : { <C, A>, <B>, <> }
+- Etat but     : { <B, A, C>, <>, <> }
+- Action :
+	- Ne rien faire, 
+	- Deplacer un cube de haut de sequence en haut d'une autre sequence
 ```
 
 **Question 2**
