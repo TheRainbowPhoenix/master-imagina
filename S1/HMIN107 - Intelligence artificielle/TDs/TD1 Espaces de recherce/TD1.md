@@ -174,8 +174,8 @@ Actions:
 - T M
 
 Etats: (nb M à G, nb C à G, position B)
-- But: (0, 0, D)
 - Initial: (3, 3, G)
+- But: (0, 0, D)
 ```
 
 

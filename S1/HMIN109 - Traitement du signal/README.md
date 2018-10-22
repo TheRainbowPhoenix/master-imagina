@@ -1,8 +1,16 @@
-william.puech@lirmm.fr / www.lirmm.fr/~wpuech/
+# HMIN109 - Traitement Du Signal
 
-Evaluation : 0.67 EXAM + 0.33 TP (note de TP definitive)
+# Informations Et Ressources
+
+- Evaluation : 0.67 * EXAM + 0.33 * TP (note de TP definitive)
+- Ressources :
+	- william.puech@lirmm.fr / www.lirmm.fr/~wpuech/
+	- http://www.lirmm.fr/~strauss/
+
 
 # SOMMAIRE
+
+[TOC]
 
 1. [Les réseaux](#les%20reseaux)
 2. [Concepts des télécommunications](#concepts%20des%20télécommunications)
@@ -277,18 +285,58 @@ T un paquet-liaison = 0.83s
 100 octets
 Transit = 0.417s
 
+# Traitement Linéaire Des Signaux
 
+## I. Signal
 
+**1. Qu'est-ce ?**
 
+- Transfert d'information
+- Support :
+	- Courant electrique
+	- Champs electro-magnetiques
+	- Pression acoustique
+	- Variation du Support
 
+**Définition** : Une information qui est codé sous la forme d'une variation d'une grandeur intensive (mesurable) en fonction d'une grandeur extensive (que l'on peut indexer).
 
+**2. Signaux élémentaires**
 
+- **Continu** : un signal pour lequel on possède toutes les données (physique).
+- **Analogique** : La seule différence avec le signal continu est la manière dont on traite ce signal.
+- **Echantilloné** : Transformation des signaux en valeures entières (signaux numeriques).
 
+**3. Modèles mathématiques**
 
+(schema)
 
+**4. Fourier**
 
+![equation][1]
+[1]: https://latex.codecogs.com/svg.latex?\Large&space;s(t)=\sum_{i}^nAi.sin(w_it+q_i)
 
+![equation][2]
+[2]: https://latex.codecogs.com/svg.latex?\Large&space;\int&space;s(t).sin(w_0t)dt=B\int&space;sin^2(w_0t)dt
 
+![equation][3]
+[3]: https://latex.codecogs.com/svg.latex?\Large&space;\int_0^{\infty}s(t)e^{-iwt}dt
 
+**5. Transformation de Fourier**
 
+- **Linéarité** : TF { f(t) + g(t) } = TF { f(t)} + TF{g(t) }
+- Soit λ ∈ ℝ : TF { λ.f(t) } = λ.TF { f(t) }
+
+## II. Systèmes Linéaires
+
+**1. Qu'est ce ?**
+
+- Le systeme est lineaire si :
+	- e₁(t) → s₁(t)
+	- e₂(t) → s₂(t)
+	- e₃(t) = e₁(t) + e₂(t) → s₃(t) = s₁(t) + s₂(t)
+
+**2. Systèmes**
+
+![equation][4]
+[4]: https://latex.codecogs.com/svg.latex?\Large&space;\sum_{i=1}^{n}i^3=\frac{n(n+1)}{2}^2
 

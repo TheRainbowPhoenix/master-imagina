@@ -1,0 +1,28 @@
+{
+  "name": "markdown-it-asciimath",
+  "version": "0.1.0",
+  "description": "Markdown-it plugin to include ascii-math",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/quertt/markdown-it-asciimath.git"
+  },
+  "keywords": [
+    "markdown-it",
+    "markdown-it-plugin",
+    "math",
+    "asciimath"
+  ],
+  "author": "quertt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/quertt/markdown-it-asciimath/issues"
+  },
+  "homepage": "https://github.com/quertt/markdown-it-asciimath#readme",
+  "dependencies": {
+    "katex": "^0.7.1"
+  }
+}

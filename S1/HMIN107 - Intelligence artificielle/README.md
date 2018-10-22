@@ -9,7 +9,7 @@
 
 **Probleme :** Collection d'information que l'agent utilise pour décider quelle(s) action(s) accomplir
 
-**Definiti Atmosphere need to release because SXOS is gaining more fan by days. Even detractors of SXOS paid for SXOS due to USB XCI loading.on d'un Problème :**
+**Definition d'un Problème :**
 
 - Identification d'un **état initial** (choix d'un langage de description d'états du problème)
 - Identification des **actions possibles** par définition d'opérateurs de changements d'état (definition de l'ensemble des états possibles du problème).
@@ -258,3 +258,120 @@ Début
 	retourner false
 Fin
 ```
+# Probleme
+
+**Definition**
+
+- Identifier **l'état initial**
+- Identifier les **actions possibles**
+- Identifier **l'état but**
+
+**Resolution**
+
+- Trouver un chemin qui va de l'état initial à l'état but
+
+**Solution**
+
+- Sequences d'action qui permettent de passer de l'état initial à l'état but
+
+# Algorithme de résolution
+
+- Correspond a une simple recherche de l'état but à travers l'espace des états
+- L'idée est de maintenir et d'etendre un ensemble de solution partielles qui se rapprochent de l'état but
+
+**Géneration des solutions partielles**
+
+1. Tester si l'état actuel est un état but
+2. Générer un nouvel ensemble d'états à partir de l'état actuel et des action possibles
+3. **Sélectionner** un des états générés et recommencer
+
+lors de la selection plusieurs strategie sont possible selon le problème
+
+**Processus de resolution**
+
+- creation d'un arbre de recherche
+- racine = etat initial
+- feuilles = etats sans action ou noeuds non encore developper
+
+# Strategie de resolution
+
+**Evaluation des performance**
+
+- Completude
+- Optimalité
+- Complexité 
+	- En temps
+	- En memoire
+
+**Recherche en largeur**
+
+**principe** : Les noeuds de profondeur d sont développés avant ceux de profondeur d+1.
+
+- Completude : si un solution existe elle sera trouver
+- Optimalité : trouve une solution la plus proche de la racine
+- Complexité en temps et memoire:
+	- Soit d la profondeur à laquelle la solution est trouvée
+	- Soit b le nombre max de noeuds générés à chaque expansion
+		- Complexité **bornées par O(b^(d+1))**
+
+**Recherche par cout**
+
+**principe** : On sélectionne parmi les noeuds frontière le noeud dont le coût associé à son chemin depuis la racine est le moins élevé.
+
+- Completude : si les coûts sont positifs
+- Optimale : si PathCost augmente avec le nombre d'operateurs et pas de coût negatif
+- Complexité : 
+	- Soit c le cout de la solution
+	- Soit p le cout de l'action min
+		- La profondeur maximum sera de c/p
+		- La complexité en **O(b^(c/p))**
+
+**Recherche en profondeur**
+
+**principe** : On développe toujours un des noeuds les plus profonds et on ne remonte que lorsqu'on tombe sur un noeud non but et non devellopable.
+
+- Complexité :
+	- Soit m la profondeur max de l'espace de recherche
+	- Soit b le facteur de branchement
+		- Complexité temporelle : **O(bᵐ)**
+		- Complexité spatiale : **O(mb)**
+
+- Non Complete : On insère les noeuds développer en tete de liste
+	- Peut creer des cycles ou des branches infinies
+
+- Non optimale : retourne la première solution rencontrée sans correlation de 
+
+**amelioration**
+
+- completude : si on connait la profondeur max de la solution on peut appliquer borne max a l'algorithme pour ne pas explorer les branches infinies
+
+- supression des etats répéter : 
+	- Ne pas retourner à l'état d'ou l'on viens O(1)
+	- Ne pas creer de chemin avec des cycles en comparent tout le noeuds de puis la racine O(d)
+	- Ne pas generer d'état déjà généré avec un stockage de tout les etats visité O(s) avec s taille de l'espace des etats
+
+# CSP : Constraint Satisfaction Problem
+
+- Etats definis par les valeurs d'un ensemble de variables qui sont caractérisées par un domaine de valeurs possible
+- Actions sont des assignation de valeurs aux variables et/ou des retraits de valeurs possibles aux domaines
+
+
+- Etats : Ensemble de variables partiellement valuées
+- Fonction but : Ensemble de contraintes
+
+**Resau de contraintes**
+
+- Triplet (X, D, C)
+	- X = {x_1, x_2, ..., x_n} est un ensemble finis de variables
+	- D, le domaine de X est une fonction qui associe à chaque variable x_i un ensemble fini de valeurs D(x_i)
+	- C = {c_1, c_2, ..., c_n} est un ensemble de contraintes
+
+Chaque contrainte c_i est une relation (un ensemble de tuples de)
+
+**graphe**
+
+**Resolution CSP**
+
+**heuristique**
+
+choisir la variable ayant le plut petit domaine

@@ -3,7 +3,9 @@
 ## Informations et Ressources
 
 - Examen : 0.6 * EXAM + 0.4 * TP
-- Ressources : Moodle
+- Ressources : 
+	- Moodle
+	- https://github.com/angrave/SystemProgramming/wiki
 
 ## Forks vs Threads
 
