@@ -17,8 +17,8 @@ Fork                                            | Thread
 Processus lourd                                 | Processus leger
 Changement de contexte couteux                  | Partie d'un processus
 Espace d'adressage de processus non partageable | Peu partager des données en memoire avec d'autres threads
-Outils de synchronisation difficiles            | Execute une fonction
-                                                | Permet d'executer plusieurs unités d'execution de manière asynchrone
+Outils de synchronisation difficiles            | Permet d'executer plusieurs unités d'execution de manière asynchrone
+Plus difficile à implementer                    | Execute une fonction
 
 ## Threads
 
