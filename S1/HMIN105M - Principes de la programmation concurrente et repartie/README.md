@@ -1,4 +1,4 @@
-# Principes de la Programmation Concurrente et Repartie
+# Principes de la Programmation Concurrente et Repartie
 
 ## Informations UE
 
