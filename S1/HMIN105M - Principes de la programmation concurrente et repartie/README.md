@@ -10,7 +10,7 @@
 	- https://moodle.umontpellier.fr/
 	- https://github.com/angrave/SystemProgramming/wiki
 
-## Threads
+## Thread
 
 Tous les objets et fonctions manipulés sont definis dans pthread.h sous les formes :
 
@@ -159,7 +159,7 @@ int pthread_cond_broadcast(pthread_cond_t* cond) ;
 - Après engendre qu’un thread réveillé ne pourra pas obtenir le verrouillage immédiatement car le verrou est toujours indisponible. Donc le thread réveillé devra se bloquer temporairement.
 - Avant peut être plus efficace, mais il se peut aussi qu’un thread Tz non (encore) en attente obtienne le verrouillage. Il n’y a pas d’équité, alors que le thread réveillé Ta peut être plus prioritaire (Tz moins prioritaire a obtenu le verrouillage alors que Ta, en attente de l'annonce, ne pouvait l'obtenir).
 
-## Threads vs Forks
+## Thread vs Fork
 
 Fork                                            | Thread
 ------------------------------------------------|---------------------------------------------------------------------
