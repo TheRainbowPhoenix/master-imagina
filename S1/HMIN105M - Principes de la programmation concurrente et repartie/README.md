@@ -2,7 +2,7 @@
 
 ## Informations et Ressources
 
-- Examen : 0.6 * Exam + 0.4 * TP
+- Note UE : 60% Exam + 40% TP
 - Ressources : 
 	- https://moodle.umontpellier.fr/
 	- https://github.com/angrave/SystemProgramming/wiki
