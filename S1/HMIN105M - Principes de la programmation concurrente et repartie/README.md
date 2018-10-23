@@ -1,12 +1,9 @@
-# HLIN105 - Principes de la Programmation Concurrente et Repartie
-
-## Informations et Ressources
+# HLIN105M - Principes de la Programmation Concurrente et Repartie
 
 - Note UE : 60% Exam + 40% TP
 - Ressources : 
 	- https://moodle.umontpellier.fr/
 	- https://github.com/angrave/SystemProgramming/wiki
-
 
 ## Forks vs Threads
 
