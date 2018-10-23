@@ -1,6 +1,4 @@
-# HLIN105M - Principes de la Programmation Concurrente et Repartie
-
-[RETOUR](../../)
+# Principes de la Programmation Concurrente et Repartie
 
 ## Informations UE
 
