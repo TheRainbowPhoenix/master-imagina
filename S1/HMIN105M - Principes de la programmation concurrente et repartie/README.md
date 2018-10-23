@@ -1,6 +1,11 @@
 # HLIN105M - Principes de la Programmation Concurrente et Repartie
 
+## Informations UE
+
 - Note UE : 60% Exam + 40% TP
+	- TP noté multithreading : 23/10/2018
+	- Projet application client-serveur + IPC + multithreading : 04/12/2018
+	
 - Ressources : 
 	- https://moodle.umontpellier.fr/
 	- https://github.com/angrave/SystemProgramming/wiki
