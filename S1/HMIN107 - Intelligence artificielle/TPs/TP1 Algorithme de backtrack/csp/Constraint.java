@@ -1,4 +1,4 @@
-package csp_etud;
+package csp;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;

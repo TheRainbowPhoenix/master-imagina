@@ -2,10 +2,11 @@
 
 ## Informations et Ressources
 
-- Examen : 0.6 * EXAM + 0.4 * TP
+- Examen : 0.6 * Exam + 0.4 * TP
 - Ressources : 
-	- Moodle
+	- https://moodle.umontpellier.fr/
 	- https://github.com/angrave/SystemProgramming/wiki
+
 
 ## Forks vs Threads
 

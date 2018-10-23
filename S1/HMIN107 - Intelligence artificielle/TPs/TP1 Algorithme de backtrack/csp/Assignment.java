@@ -1,4 +1,4 @@
-package csp_etud;
+package csp;
 
 import java.util.ArrayList;
 import java.util.HashMap;

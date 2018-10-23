@@ -1,4 +1,4 @@
-package csp_etud;
+package csp;
 
 import java.util.ArrayList;
 
@@ -12,7 +12,7 @@ public class CSP {
 
 		private Network network;			// le réseau à résoudre
 		private ArrayList<Assignment> solutions; 	// les solutions du réseau (résultat de searchAllSolutions)
-		private Assignment assignment;			// l'assignation courante (résultat de searchSolution)
+		private Assignment assignment;			// l'Assignment courante (résultat de searchSolution)
 		int cptr;					// le compteur de noeuds explorés
 
 		
@@ -35,17 +35,13 @@ public class CSP {
 		/**
 		 * Cherche une solution au réseau de contraintes
 		 * 
-		 * @return une assignation solution du réseau, ou null si pas de solution
+		 * @return une Assignment solution du réseau, ou null si pas de solution
 		 */
 		
 		public Assignment searchSolution() {
-			cptr=1;
-			
-			// Implanter appel a backtrack
-			Assignment sol = null;
-			System.err.println("searchSolution a finaliser : gerer l'appel a backtrack  !!");
-			
-			System.out.println(cptr + " noeuds ont été explorés");
+        	cptr=0; // 1 a la base
+        	assignment.clear();
+        	Assignment sol = backtrack();
 			return sol;
 		}
 
@@ -54,7 +50,7 @@ public class CSP {
 		 * dans ce cas il faut le passer en parametre de backtrack
 		 */
 		/**
-		 * Exécute l'algorithme de backtrack à la recherche d'une solution en étendant l'assignation courante
+		 * Exécute l'algorithme de backtrack à la recherche d'une solution en étendant l'Assignment courante
 		 * Utilise l'attribut assignment
 		 * @return la prochaine solution ou null si pas de nouvelle solution
 		 */
@@ -68,12 +64,12 @@ public class CSP {
 	        }
 
 	        String x = chooseVar();
-	        ArrayList<Object> domain = tri(network.getDom(x));
+	        ArrayList<Object> domain = sort(network.getDom(x));
 
 	        for(int i = 0 ; i < domain.size() ; i++) {
 	            assignment.put(x, domain.get(i));
 	            if(this.consistent(x)) {
-	                Assignation b = backtrack();
+	                Assignment b = backtrack();
 	                if(b != null)
 	                    return this.assignment;
 	                this.assignment.remove(x);
@@ -90,34 +86,43 @@ public class CSP {
 		/**
 		 * Calcule toutes les solutions au réseau de contraintes
 		 * 
-		 * @return la liste des assignations solution
+		 * @return la liste des Assignments solution
 		 * 
 		 */
 		public ArrayList<Assignment> searchAllSolutions(){
-			cptr=1;
-			solutions.clear(); // SI ON CHOISIT DE TRAVAILLER DIRECTEMENT SUR L'ATTRIBUT SOLUTIONS
-			// Implanter appel a backtrack
-			System.err.println("searchAllSolutions a finaliser : gerer l'appel a backtrackAll  !!");
-						
-			System.out.println(cptr + " noeuds ont été explorés");
-			return solutions;
+	        cptr=0; // 1 à la base
+	        solutions.clear();
+	        assignment.clear();
+	        this.backtrackAll();
+	        return this.solutions;
 		}
 		
 		/**
 		 * Exécute l'algorithme de backtrack à la recherche de toutes les solutions
-		 * étendant l'assignation courante
+		 * étendant l'Assignment courante
 		 * 
 		 */
 		private void backtrackAll() {
-		    // AJOUTER UN PARAMETRE DE TYPE ArrayList<Assignment> SI ON NE TRAVAILLE PAS DIRECTEMENT SUR L'ATTRIBUT solutions
-		    // A IMPLANTER
-		    // quelque part : cptr++;
-		    System.err.println("backtrackAll a implanter !!");
-		
+	        cptr++;
+	        if(this.assignment.size() == this.network.getVarNumber()){
+	            this.solutions.add(this.assignment.clone());
+	            return;
+	        }
+
+	        String x = chooseVar();
+	        ArrayList<Object> domain = sort(network.getDom(x));
+	        for(int i = 0 ; i < domain.size() ; i++){
+	            assignment.put(x, domain.get(i));
+	            if(this.consistent(x)) {
+	                this.backtrackAll();
+	            }
+	            this.assignment.remove(x);
+	        }
+	        return;
 		}
     
   		
-    // IMPLANTER l'UNE DES DEUX METHODES CHOOSEVAR CI-DESSOUS (SELON QUE L'ASSIGNATION COURANTE EST PASSEE EN PARAMETRE OU PAS)
+    // IMPLANTER l'UNE DES DEUX METHODES CHOOSEVAR CI-DESSOUS (SELON QUE L'Assignment COURANTE EST PASSEE EN PARAMETRE OU PAS)
 		
 		/**
 		 * Retourne la prochaine variable à assigner étant donné assignment (qui doit contenir la solution partielle courante)
@@ -126,7 +131,7 @@ public class CSP {
 		 */
 		private String chooseVar() {
 
-	        for(String var : reseau.getVars()){
+	        for(String var : network.getVars()){
 	            if(!(assignment.containsKey(var))){
 	                return var;
 	            }
@@ -141,23 +146,23 @@ public class CSP {
 		 * @param values une liste de valeurs
 		 * @return une liste de valeurs
 		 */
-		private ArrayList<Object> tri(ArrayList<Object> values) {
+		private ArrayList<Object> sort(ArrayList<Object> values) {
 			return values; // donc en l'état n'est pas d'une grande utilité !
 		}
 		
 
 
-  // IMPLANTER l'UNE DES DEUX METHODES CONSISTANT CI-DESSOUS (SELON QUE L'ASSIGNATION COURANTE EST PASSEE EN PARAMETRE OU PAS)
+  // IMPLANTER l'UNE DES DEUX METHODES CONSISTANT CI-DESSOUS (SELON QUE L'Assignment COURANTE EST PASSEE EN PARAMETRE OU PAS)
 		
 		/**
-		 * Teste si l'assignation courante stokée dans l'attribut assignment est consistante, c'est à dire qu'elle
+		 * Teste si l'Assignment courante stokée dans l'attribut assignment est consistante, c'est à dire qu'elle
 		 * ne viole aucune contrainte.
 		 * 
 		 * @param lastAssignedVar la variable que l'on vient d'assigner à cette étape
 		 * @return vrai ssi l'assignment courante ne viole aucune contrainte
 		 */
-		private boolean consistant(String lastAssignedVar) {
-	        ArrayList<Constraint> constraints = reseau.getConstraints(lastAssignedVar);
+		private boolean consistent(String lastAssignedVar) {
+	        ArrayList<Constraint> constraints = network.getConstraints(lastAssignedVar);
 	        for(int i = 0 ; i < constraints.size() ; i++) {
 	            if(constraints.get(i).violation(assignment))
 	                return false;
