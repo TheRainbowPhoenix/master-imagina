@@ -20,7 +20,7 @@
 
 ### Ressources
 
-- [Moodle](https://moodle.umontpellier.fr/)
+- [Cours et TPs](https://moodle.umontpellier.fr/course/view.php?id=675)
 - [System Programming Wiki](https://github.com/angrave/SystemProgramming/wiki)
 
 ## Les Threads

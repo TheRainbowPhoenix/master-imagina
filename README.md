@@ -4,7 +4,7 @@
 
 - [HMIN101L - Anglais](../../tree/master/S1/HMIN101L%20-%20Anglais)
 - [HMIN102 - Ingenierie logicielle](../../tree/master/S1/HMIN102%20-%20Ingenierie%20logicielle)
-- [HMIN105M - Principes de la programmation concurrente et repartie](../../tree/master/S1/HMIN105M%20-%20Principes%20de%20la%20programmation%20concurrente%20et%20repartie)
+- [HMIN105 - Programmation concurrente et repartie](../../tree/master/S1/HMIN105%20-%20Programmation%20concurrente%20et%20repartie)
 - [HMIN107 - Intelligence artificielle](../../tree/master/S1/HMIN107%20-%20Intelligence%20artificielle)
 - [HMIN108 - Programmation orientee agents](../../tree/master/S1/HMIN108%20-%20Programmation%20orientee%20agents)
 - [HMIN109 - Traitement du signal](../../tree/master/S1/HMIN109%20-%20Traitement%20du%20signal)

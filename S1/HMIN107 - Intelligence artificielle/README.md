@@ -1,10 +1,20 @@
-# HMIN107 - Intelligence Artificielle
+# HMIN107 - Intelligence artificielle
 
-##  Information et Ressources
+## Sommaire
 
-- Examen : max(Exam, (50% Exam + 50% CC))
-- Ressources : 
-		- https://moodle.umontpellier.fr/
+* [Informations](#informations)
+  + [Examens](#examens)
+  + [Ressources](#ressources)
+
+## Informations
+
+### Examens
+
+- Note final : MAX(Exam, (50% Exam + 50% CC))
+
+### Ressources 
+
+- [Cours et TPs](https://moodle.umontpellier.fr/course/view.php?id=1195)
 
 ## Definitions
 

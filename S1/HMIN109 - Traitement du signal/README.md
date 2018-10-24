@@ -1,24 +1,36 @@
 # HMIN109 - Traitement Du Signal
 
-# Informations Et Ressources
+## Sommaire
 
-- Evaluation : 0.67 * EXAM + 0.33 * TP (note de TP definitive)
-- Ressources :
-	- william.puech@lirmm.fr / www.lirmm.fr/~wpuech/
-	- http://www.lirmm.fr/~strauss/
+* [Informations](#informations)
+  + [Examens](#examens)
+  + [Ressources](#ressources)
+* [I) LES RÉSEAUX](#i--les-r-seaux)
+  + [Exemple : Bit de parité](#--exemple---bit-de-parit---)
+* [II) CONCEPTS DES TÉLÉCOMMUNCATIONS](#ii--concepts-des-t-l-communcations)
+  + [Codage en bande de base](#codage-en-bande-de-base)
+  + [Sécurisation de la transmission](#s-curisation-de-la-transmission)
+  + [Eficacité](#eficacit-)
+  + [Exemple : Taux de transfert des informations](#exemple---taux-de-transfert-des-informations)
+  + [Exemple : Codage par plage RLE, RLC (Run Length Encoding/Coding)](#exemple---codage-par-plage-rle--rlc--run-length-encoding-coding-)
+* [III) Le réseau de télécommunication](#iii--le-r-seau-de-t-l-communication)
+* [IV) Réseau](#iv--r-seau)
+* [Traitement Linéaire Des Signaux](#traitement-lin-aire-des-signaux)
+  + [I. Signal](#i-signal)
+  + [II. Systèmes Linéaires](#ii-syst-mes-lin-aires)
 
+## Informations
 
-# SOMMAIRE
+### Examens
 
-[TOC]
+- Note final : 67% Exam + 33% TP
 
-1. [Les réseaux](#les%20reseaux)
-2. [Concepts des télécommunications](#concepts%20des%20télécommunications)
-3. [Le réseau de télécommunication](liens)
-4. [Compression](liens)
-5. [Cryptage](liens)
+### Ressources 
 
-# I) LES RÉSEAUX
+- [Cours](http://www.lirmm.fr/~wpuech/enseignement/master_informatique/index.html)
+- [TPs](http://www.lirmm.fr/~strauss/MasterInfo/TravauxPratiquesHMIN109.html)
+
+## I) LES RÉSEAUX
 
 - Applications : telnet, ftp, nfs
 - Ordinateurs  : PC, stations de travail, périphériques, terminaux
@@ -118,7 +130,7 @@ Il faut les détecter et les corriger.
 - Nom lié à la fonction ou l'indetité (personne)
 - Problème : unicité et gestion
 
-# II) CONCEPTS DES TÉLÉCOMMUNCATIONS
+## II) CONCEPTS DES TÉLÉCOMMUNCATIONS
 
 **Forme**
 
@@ -221,7 +233,7 @@ Est interressant quand il y a de la redondance d'affiler
 - à gauche : ajouer un 0
 - à droite : ajouter un 1
 
-# III) Le réseau de télécommunication
+## III) Le réseau de télécommunication
 
 **Trafic téléphonique**
 
@@ -272,7 +284,7 @@ Regroupe les é faisceaux
 
 Rendement = 0.65 E/circuit
 
-# IV) Réseau
+## IV) Réseau
 
 **Exemple**
 
@@ -285,9 +297,9 @@ T un paquet-liaison = 0.83s
 100 octets
 Transit = 0.417s
 
-# Traitement Linéaire Des Signaux
+## Traitement Linéaire Des Signaux
 
-## I. Signal
+### I. Signal
 
 **1. Qu'est-ce ?**
 
@@ -326,7 +338,7 @@ Transit = 0.417s
 - **Linéarité** : TF { f(t) + g(t) } = TF { f(t)} + TF{g(t) }
 - Soit λ ∈ ℝ : TF { λ.f(t) } = λ.TF { f(t) }
 
-## II. Systèmes Linéaires
+### II. Systèmes Linéaires
 
 **1. Qu'est ce ?**
 
