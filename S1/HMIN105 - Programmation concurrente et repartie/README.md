@@ -1,29 +1,29 @@
 # HMIN105M - Programmation concurrente et repartie
 
-## Sommaire
+## Sommaire [↺](#sommaire)
 
-* [Informations](#informations)
-  + [Examens](#examens)
-  + [Ressources](#ressources)
-* [Les Threads](#les-threads)
-  + [Les Mutex](#les-mutex)
-  + [Les Conditions](#les-conditions)
-  + [Thread vs Fork](#thread-vs-fork)
+* [Informations](#informations------sommaire-)
+  + [Examens](#examens------sommaire-)
+  + [Ressources](#ressources------sommaire-)
+* [Les Threads](#les-threads------sommaire-)
+  + [Les Mutex](#les-mutex------sommaire-)
+  + [Les Conditions](#les-conditions------sommaire-)
+  + [Thread vs Fork](#thread-vs-fork------sommaire-)
 
-## Informations [⬆](#sommaire)
+## Informations [↺](#sommaire)
 
-### Examens [⬆](#sommaire)
+### Examens [↺](#sommaire)
 	
 - Note final : 60% Exam + 40% TP
 - TP noté multithreading : 23/10/2018
 - Projet client-serveur + IPC + multithreading : 04/12/2018
 
-### Ressources [⬆](#sommaire)
+### Ressources [↺](#sommaire)
 
 - [Cours et TPs](https://moodle.umontpellier.fr/course/view.php?id=675)
 - [System Programming Wiki](https://github.com/angrave/SystemProgramming/wiki)
 
-## Les Threads [⬆](#sommaire)
+## Les Threads [↺](#sommaire)
 
 Tous les objets et fonctions manipulés sont definis dans pthread.h sous les formes :
 
@@ -86,7 +86,7 @@ int pthread_join(pthread_t thread, void** retval);
 
 **Attention** la fonction exit() termine le processus même si executer dans un processus fils.
 
-### Les Mutex [⬆](#sommaire)
+### Les Mutex [↺](#sommaire)
 
 Une fonction manipulant un mutex est de la forme, pthread_mutex_fonction().
 
@@ -111,7 +111,7 @@ pthread_mutex_t verrou = PHTREAD_MUTEX_INITIALIZER;
 - Cette portion de code est appelée section critique.
 - Si un thread est dans une section critique, il doit être garanti qu'aucun autre thread n'y sois pas simultanément.
 
-### Les Conditions [⬆](#sommaire)
+### Les Conditions [↺](#sommaire)
 
 Sur une variable conditionnelle c et un verrou v, on peut effectuer les actions suivantes :
 
@@ -172,7 +172,7 @@ int pthread_cond_broadcast(pthread_cond_t* cond) ;
 - Après engendre qu’un thread réveillé ne pourra pas obtenir le verrouillage immédiatement car le verrou est toujours indisponible. Donc le thread réveillé devra se bloquer temporairement.
 - Avant peut être plus efficace, mais il se peut aussi qu’un thread Tz non (encore) en attente obtienne le verrouillage. Il n’y a pas d’équité, alors que le thread réveillé Ta peut être plus prioritaire (Tz moins prioritaire a obtenu le verrouillage alors que Ta, en attente de l'annonce, ne pouvait l'obtenir).
 
-### Thread vs Fork [⬆](#sommaire)
+### Thread vs Fork [↺](#sommaire)
 
 Fork                                            | Thread
 ------------------------------------------------|---------------------------------------------------------------------
