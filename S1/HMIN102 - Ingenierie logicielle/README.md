@@ -1,18 +1,18 @@
 # HMIN102 - Ingenierie logicielle
 
-## Sommaire
+## Sommaire [↺](#sommaire-)
 
-* [Informations](#informations)
-  + [Examens](#examens)
-  + [Ressources](#ressources)
+* [Informations](#informations-)
+  + [Examens](#examens-)
+  + [Ressources](#ressources-)
 
-## Informations UE
+## Informations [↺](#sommaire-)
 
-### Examens
+### Examens [↺](#sommaire-)
 
 - Note final : 100% Exam
 
-### Ressources 
+### Ressources [↺](#sommaire-)
 
 - [Cours et TPs](http://www.lirmm.fr/~dony/enseig/IL/index.html)
 

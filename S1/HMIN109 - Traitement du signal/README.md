@@ -1,31 +1,18 @@
-# HMIN109 - Traitement Du Signal
+# HMIN109 - Traitement du signal
 
-## Sommaire
+## Sommaire [↺](#sommaire-)
 
-* [Informations](#informations)
-  + [Examens](#examens)
-  + [Ressources](#ressources)
-* [I) LES RÉSEAUX](#i--les-r-seaux)
-  + [Exemple : Bit de parité](#--exemple---bit-de-parit---)
-* [II) CONCEPTS DES TÉLÉCOMMUNCATIONS](#ii--concepts-des-t-l-communcations)
-  + [Codage en bande de base](#codage-en-bande-de-base)
-  + [Sécurisation de la transmission](#s-curisation-de-la-transmission)
-  + [Eficacité](#eficacit-)
-  + [Exemple : Taux de transfert des informations](#exemple---taux-de-transfert-des-informations)
-  + [Exemple : Codage par plage RLE, RLC (Run Length Encoding/Coding)](#exemple---codage-par-plage-rle--rlc--run-length-encoding-coding-)
-* [III) Le réseau de télécommunication](#iii--le-r-seau-de-t-l-communication)
-* [IV) Réseau](#iv--r-seau)
-* [Traitement Linéaire Des Signaux](#traitement-lin-aire-des-signaux)
-  + [I. Signal](#i-signal)
-  + [II. Systèmes Linéaires](#ii-syst-mes-lin-aires)
+* [Informations](#informations-)
+  + [Examens](#examens-)
+  + [Ressources](#ressources-)
 
-## Informations
+## Informations [↺](#sommaire-)
 
-### Examens
+### Examens [↺](#sommaire-)
 
 - Note final : 67% Exam + 33% TP
 
-### Ressources 
+### Ressources [↺](#sommaire-)
 
 - [Cours](http://www.lirmm.fr/~wpuech/enseignement/master_informatique/index.html)
 - [TPs](http://www.lirmm.fr/~strauss/MasterInfo/TravauxPratiquesHMIN109.html)
