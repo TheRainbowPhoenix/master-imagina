@@ -2,25 +2,28 @@
 
 ## Sommaire
 
-* [Informations UE](#informations-ue)
+* [Informations](#informations)
+    - [Examens](#examens)
+    - [Ressources](#ressources)
 * [Thread](#thread)
 * [Mutex](#mutex)
 * [Condition](#condition)
 * [Thread vs Fork](#thread-vs-fork)
 
-## Informations UE
+## Informations
 
-**Note UE** : 60% Exam + 40% TP
-
+### Examens
+	
+- Note final : 60% Exam + 40% TP
 - TP noté multithreading : 23/10/2018
-- Projet application client-serveur + IPC + multithreading : 04/12/2018
+- Projet client-serveur + IPC + multithreading : 04/12/2018
 
-**Ressources** : 
+### Ressources
 
 - [Moodle](https://moodle.umontpellier.fr/)
 - [System Programming Wiki](https://github.com/angrave/SystemProgramming/wiki)
 
-## Thread
+## Les Threads
 
 Tous les objets et fonctions manipulés sont definis dans pthread.h sous les formes :
 
@@ -83,7 +86,7 @@ int pthread_join(pthread_t thread, void** retval);
 
 **Attention** la fonction exit() termine le processus même si executer dans un processus fils.
 
-## Mutex
+### Les Mutex
 
 Une fonction manipulant un mutex est de la forme, pthread_mutex_fonction().
 
@@ -108,7 +111,7 @@ pthread_mutex_t verrou = PHTREAD_MUTEX_INITIALIZER;
 - Cette portion de code est appelée section critique.
 - Si un thread est dans une section critique, il doit être garanti qu'aucun autre thread n'y sois pas simultanément.
 
-## Condition
+### Les Conditions
 
 Sur une variable conditionnelle c et un verrou v, on peut effectuer les actions suivantes :
 
@@ -169,7 +172,7 @@ int pthread_cond_broadcast(pthread_cond_t* cond) ;
 - Après engendre qu’un thread réveillé ne pourra pas obtenir le verrouillage immédiatement car le verrou est toujours indisponible. Donc le thread réveillé devra se bloquer temporairement.
 - Avant peut être plus efficace, mais il se peut aussi qu’un thread Tz non (encore) en attente obtienne le verrouillage. Il n’y a pas d’équité, alors que le thread réveillé Ta peut être plus prioritaire (Tz moins prioritaire a obtenu le verrouillage alors que Ta, en attente de l'annonce, ne pouvait l'obtenir).
 
-## Thread vs Fork
+### Thread vs Fork
 
 Fork                                            | Thread
 ------------------------------------------------|---------------------------------------------------------------------
