@@ -1,45 +1,31 @@
-# HLIN105 - Principes de la Programmation Concurrente et Repartie
+# Principes de la Programmation Concurrente et Repartie
 
-## Informations et Ressources
+## Informations UE
 
-- Examen : 0.6 * EXAM + 0.4 * TP
+- Note UE : 60% Exam + 40% TP
+	- TP noté multithreading : 23/10/2018
+	- Projet application client-serveur + IPC + multithreading : 04/12/2018
+
 - Ressources : 
-	- Moodle
+	- https://moodle.umontpellier.fr/
 	- https://github.com/angrave/SystemProgramming/wiki
 
-## Forks vs Threads
+## Thread
 
-**Fork :**
-
-- Processus lourd
-- Changement de contexte couteux
-- Espace d'adressage de processus non partageable (Outils de communication commme les tubes, files, etc.. obligatoires)
-- Outils de synchronisation difficiles
-
-**Threads :**
-
-- Processus leger
-- Partie d'un processus
-- Execute une fonction
-- Peu partager des données en memoire avec d'autres threads
-- Permet d'executer plusieurs unités d'execution de manière asynchrone
-
-## Threads
-
-Tous les objets et fonctions manipulés sont definis dans pthread.h et sous les forme,
+Tous les objets et fonctions manipulés sont definis dans pthread.h sous les formes :
 
 - pthread_objet_t
 - pthread_objet_opération()
 
-L'option -lpthread ou -pthread peut être necessaire à la compilation.
+Action         | Fonction         | Remarque                  
+---------------|------------------|---------------------------
+Creation       | pthread_create() | Créée un thread           
+Fin/Abandon    | pthread_exit()   | Different de exit()       
+Identification | pthread_self()   | Resultat de type pthread_t
+Egalité        | pthread_equal()  | Portabilité : eviter =    
+Attente        | pthread_join()   | Portabilité : eviter =    
 
-| Action         | Fonction         | Remarque                   |
-|----------------|------------------|----------------------------|
-| Creation       | pthread_create() | Créée un thread            |
-| Fin/Abandon    | pthread_exit()   | Different de exit()        |
-| Identification | pthread_self()   | Resultat de type pthread_t |
-| Egalité        | pthread_equal()  | Portabilité : eviter =     |
-| Attente        | pthread_join()   | Portabilité : eviter =     |
+L'option -lpthread ou -pthread peut être necessaire à la compilation.
 
 ```c
 /**
@@ -91,13 +77,13 @@ int pthread_join(pthread_t thread, void** retval);
 
 Une fonction manipulant un mutex est de la forme, pthread_mutex_fonction().
 
-| Fonction                | Resultat                                              |
-|-------------------------|-------------------------------------------------------|
-| pthread_mutex_init()    | Verrou créée, etat libre                              |
-| pthread_mutex_lock()    | Verrouillage                                          |
-| pthread_mutex_trylock() | Verrouillage si etat libre, sinon erreur sans blocage |
-| pthread_mutex_unlock()  | Deverrouillage, etat libre                            |
-| pthread_mutex_destroy() | Destruction                                           |
+Fonction                | Resultat                                             
+------------------------|------------------------------------------------------
+pthread_mutex_init()    | Verrou créée, etat libre                             
+pthread_mutex_lock()    | Verrouillage                                         
+pthread_mutex_trylock() | Verrouillage si etat libre, sinon erreur sans blocage
+pthread_mutex_unlock()  | Deverrouillage, etat libre                           
+pthread_mutex_destroy() | Destruction                                          
 
 Une initialisation plus simple : 
 
@@ -116,14 +102,14 @@ pthread_mutex_t verrou = PHTREAD_MUTEX_INITIALIZER;
 
 Sur une variable conditionnelle c et un verrou v, on peut effectuer les actions suivantes :
 
-| Fonction                               | Action                                                |
-|----------------------------------------|-------------------------------------------------------|
-| pthread_cond_init(&c)                  | Créée la variable conditionnelle c                    |
-| pthread_cond_destroy(&c)               | Destruction                                           |
-| pthread_cond_wait(&c, &v)              | Bloque l'appelant et rend le verrou de façon atomique |
-| pthread_cond_timedwait(&c, &v, &delai) | Wait avec un delai                                    |
-| pthread_cond_broadcast(&c)             | Libère tous les threads boqués                        |
-| pthread_cond_signal(&c)                | Libère un seul thread                                 |
+Fonction                               | Action                                               
+---------------------------------------|------------------------------------------------------
+pthread_cond_init(&c)                  | Créée la variable conditionnelle c                   
+pthread_cond_destroy(&c)               | Destruction                                          
+pthread_cond_wait(&c, &v)              | Bloque l'appelant et rend le verrou de façon atomique
+pthread_cond_timedwait(&c, &v, &delai) | Wait avec un delai                                   
+pthread_cond_broadcast(&c)             | Libère tous les threads boqués                       
+pthread_cond_signal(&c)                | Libère un seul thread                                
 
 **Remarque :** Toutes ces fonctions retournent 0 en cas de succès et un résultat non-nul en cas d’erreur, accompagné d’un code d’erreur.
 
@@ -168,7 +154,17 @@ int pthread_cond_broadcast(pthread_cond_t* cond) ;
 - Lorsqu’une variable conditionnelle est utilisée pour plusieurs prédicats, signal est à prohiber.
 - En cas de doute, utiliser broadcast.
 
-**Déverrouiller après ou avant l’annonc :**
+**Déverrouiller après ou avant l’annonce :**
 
 - Après engendre qu’un thread réveillé ne pourra pas obtenir le verrouillage immédiatement car le verrou est toujours indisponible. Donc le thread réveillé devra se bloquer temporairement.
 - Avant peut être plus efficace, mais il se peut aussi qu’un thread Tz non (encore) en attente obtienne le verrouillage. Il n’y a pas d’équité, alors que le thread réveillé Ta peut être plus prioritaire (Tz moins prioritaire a obtenu le verrouillage alors que Ta, en attente de l'annonce, ne pouvait l'obtenir).
+
+## Thread vs Fork
+
+Fork                                            | Thread
+------------------------------------------------|---------------------------------------------------------------------
+Processus lourd                                 | Processus leger
+Changement de contexte couteux                  | Partie d'un processus
+Espace d'adressage de processus non partageable | Peu partager des données en memoire avec d'autres threads
+Outils de synchronisation difficiles            | Permet d'executer plusieurs unités d'execution de manière asynchrone
+Plus difficile à implementer                    | Execute une fonction

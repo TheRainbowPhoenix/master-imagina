@@ -1,4 +1,4 @@
-package csp_etud;
+package csp;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -79,8 +79,21 @@ public class ConstraintExt extends Constraint{
 	 * @return vrai ssi l'assignation viole la contrainte 
 	 */
 	public boolean violation(Assignment a) {
-		// A IMPLANTER 
-		System.err.println("Méthode violation non encore implantée !!");
+		ArrayList<String> aVars = a.getVars(); //store the assignment's and the constraint's variables in separate arrays
+		ArrayList<String> cVars = this.getVars();
+		
+		for(ArrayList<Object> tuple : this.tuples){ //cycle through all the constraint's tuples, which are a list of values in order
+			boolean validTuple = true;
+			for(String variable : aVars){ //cycles through all the assignment's variables
+				if(cVars.contains(variable)){ //if the constraint includes this variable then check that the assignment for this variable corresponds to the value for this variable in the current tuple
+					if(!((a.get(variable)).equals(tuple.get(cVars.indexOf(variable))))){ //if it doesn't, then move on to the next tuple and start again
+						validTuple = false;
+					}
+				}
+				if(!validTuple) break;
+			}
+			if(validTuple) return false; //if we went through the current tuple without finding discrepancies then the assignment doesn't violate the constraint
+		}
 		return false;
 	}
 	

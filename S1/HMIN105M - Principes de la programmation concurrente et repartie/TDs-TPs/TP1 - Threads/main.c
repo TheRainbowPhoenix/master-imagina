@@ -4,11 +4,12 @@
 #include <pthread.h>
 #include <math.h>
 #include <time.h>
+#include "calcul.h"
 
 void array_init_rand(int* array, int array_size);
 void array_print(int* array, int array_size);
 
-void rand_sleep(int min, int max);
+void rand_calcul(int min, int max);
 void print_tab(int n);
 
 // EXERCICE 1
@@ -21,7 +22,7 @@ void print_tab(int n);
 	3. si une des tâches appel exit() le processus ce termine 
 	(tous les threads aussi donc) */
 
-void* sleep_thread(void* time);
+void* calcul_thread(void* time);
 void show_multithread(int thread_number, int thread_time);
 
 // EXERCICE 2
@@ -141,8 +142,8 @@ void array_print(int* array, int array_size){
 	}
 }
 
-void rand_sleep(int min, int max){
-	sleep(min + rand() % abs(max - min));
+void rand_calcul(int min, int max){
+	calcul(min + rand() % abs(max - min));
 }
 
 void print_tab(int n){
@@ -152,12 +153,12 @@ void print_tab(int n){
 
 // EXERCICE 1
 
-void* sleep_thread(void* time){
+void* calcul_thread(void* time){
 
 	int T = *(int*)time;
 
 	printf("Thread %lu will run %ds\n", pthread_self(), T);
-	sleep(T);
+	calcul(T);
 	printf("Thread %lu ended after %ds\n", pthread_self(), T);
 	
 	pthread_exit(NULL);
@@ -168,7 +169,7 @@ void show_multithread(int thread_number, int thread_time){
 	pthread_t* thread_ids = (pthread_t*)malloc(thread_number * sizeof(pthread_t));
 
 	for(int i = 0; i < thread_number; ++i){
-		if(pthread_create(&thread_ids[i], NULL, sleep_thread, &thread_time) != 0)
+		if(pthread_create(&thread_ids[i], NULL, calcul_thread, &thread_time) != 0)
 			printf("Thread error !\n");
 	}
 
@@ -243,7 +244,7 @@ void sync_multithread(int thread_number, int sync_time){
 			printf("Thread error !\n");
 	}
 	
-	sleep(sync_time);
+	calcul(sync_time);
 
 	pthread_mutex_lock(&sync_lock);
 	is_sync = 1;
@@ -279,7 +280,7 @@ void* process_sync_thread(void* params){
 		}
 		
 		print_tab(thread_index); printf("Thread n°%d zone n°%d is processing\n", thread_index, i);
-		rand_sleep(1, 5);
+		rand_calcul(1, 5);
 		print_tab(thread_index); printf("Thread n°%d zone n°%d is finished !\n", thread_index, i);
 
 		pthread_mutex_lock(&process_progress_mutex);

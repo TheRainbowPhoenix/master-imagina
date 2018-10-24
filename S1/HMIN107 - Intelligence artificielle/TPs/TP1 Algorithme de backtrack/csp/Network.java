@@ -1,4 +1,4 @@
-package csp_etud;
+package csp;
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
@@ -77,12 +77,13 @@ public class Network {
 			Constraint c = null;
 			String type = in.readLine().trim();					// le type de la contrainte 
 			if (type.equals("ext")) c = new ConstraintExt(in);
-			// else if(type.equals("AUTRE TYPE")) c = new ConstraintTYPE(in)
-			else 
-				{
+			else if(type.equals("dif")) c = new ConstraintDif(in);
+			else if(type.equals("eq")) c = new ConstraintEq(in);
+			else if(type.equals("exp")) c = new ConstraintExp(in);
+			else {
 				System.out.println(type);
 				System.err.println("Type contrainte inconnu");
-				}
+			}
 				
 			addConstraint(c);
 		}
