@@ -2,8 +2,9 @@
 
 ##  Information et Ressources
 
-- Examen : 0.50 * EXAM + 0.50 * CC
-- Ressources : Moodle
+- Examen : max(Exam, (50% Exam + 50% CC))
+- Ressources : 
+		- https://moodle.umontpellier.fr/
 
 ## Definitions
 
