@@ -5,9 +5,10 @@
 * [Informations](#informations-)
   + [Examens](#examens-)
   + [Ressources](#ressources-)
-* [Les Threads](#les-threads-)
-  + [Les Mutex](#les-mutex-)
-  + [Les Conditions](#les-conditions-)
+* [Multithreading](#Multithreading-)
+  + [Thread](#thread-)
+  + [Mutex](#mutex-)
+  + [Variable conditionnelle](#variable-conditionnelle-)
   + [Thread vs Fork](#thread-vs-fork-)
 
 ## Informations [↺](#sommaire-)
@@ -23,136 +24,174 @@
 - [Cours et TPs](https://moodle.umontpellier.fr/course/view.php?id=675)
 - [System Programming Wiki](https://github.com/angrave/SystemProgramming/wiki)
 
-## Les Threads [↺](#sommaire-)
+## Multithreading [↺](#sommaire-)
 
-Tous les objets et fonctions manipulés sont definis dans pthread.h sous les formes :
+Les objets et leurs operations en rapport avec le multithreading posix sont definis dans le fichier **pthread.h** sous la forme :
 
-- pthread_objet_t
-- pthread_objet_opération()
+- **pthread_objet_t**
+- **pthread_objet_opération()**
 
-Action         | Fonction         | Remarque                  
----------------|------------------|---------------------------
-Creation       | pthread_create() | Créée un thread           
-Fin/Abandon    | pthread_exit()   | Different de exit()       
-Identification | pthread_self()   | Resultat de type pthread_t
-Egalité        | pthread_equal()  | Portabilité : eviter =    
-Attente        | pthread_join()   | Portabilité : eviter =    
+L'option **-lpthread** ou **-pthread** peut être necessaire à la compilation.
 
-L'option -lpthread ou -pthread peut être necessaire à la compilation.
+### Thread [↺](#sommaire-)
+
+Sur un thread on peut effectuer les actions suivantes :
+
+Action          | Fonction                                             
+----------------|------------------------------------------------------
+Creation        | `int pthread_create(*thread, *attr, *function, *arg)`
+Identification  | `pthread_t pthread_self()`                           
+Egalité         | `int pthread_equal(thread1, thread2)`                
+Attente         | `int pthread_join(thread, **retval)`                 
+Destruction     | `void pthread_exit(*retval)`                         
 
 ```c
-/**
- * Cette fonction demarre l'execution d'un nouveau thread en parallèle 
- * avec celui qui l'a appelé mais dans le même processus.
- * 
- * @param  thread   Identité obtenue en résultat
- * @param  attr     NULL pour commencer
- * @param  function Fonction à executer
- * @param  arg      Argument(s) à passer a la fonction
- * @return 0 si réussite, != 0 sinon
- */
-int pthread_create(pthread_t* thread, const pthread_attr_t* attr, void* (*function)(void*), void* arg);
+// Créée un thread en lui associant des attributs, une fonction
+// et ses arguments.
+int pthread_create(             // Renvoie 0 à la reusite sinon un code d'erreur != 0
+	pthread_t* thread,          // Identité du thread obtenue en résullat
+	const pthread_attr_t* attr, // Attribut du thread, NULL par default
+	void* (*function)(void*),   // Fonction à demarrer dans le thread
+	void* arg                   // Argument(s) passé à la fonction
+);
 
-/**
- * Met fin à l'appel du thread.
- * 
- * @param  retval valeur à retourner au parent
- */
-void pthread_exit(void* retval);
-
-/**
- * @return  Identité du thread appelant.
- */
+// Renvoie l'identifiant du thread appelant la fonction.
 pthread_t pthread_self(void);
 
-/**
- * Compare les thread t1 et t2.
- * 
- * @param  t1 
- * @param  t2 
- * @return  valeur != 0 si t1 = t2, 0 sinon 
- */
-int pthread_equal(pthread_t t1, pthread_t t2);
+// Renvoie un nombre != 0 si les threads sont egaux et 0 sinon.
+int pthread_equal(  
+	pthread_t thread1,
+	pthread_t thread2
+);
 
-/**
- * Attend que le thread spécifier en paramètre ce termine.
- * 
- * @param  thread Thread à attendre
- * @param  retval Valeur retourner par le thread qui ce termine
- * @return  0 si le thread ce termine, != 0 sinon
- */
-int pthread_join(pthread_t thread, void** retval);
+// Attend la fin du thread passé en paramètre et permet d'accéder
+// aux données qu'il a renvoyées.
+int pthread_join(     // Renvoie 0 à la reussite sinon un code d'erreur != 0
+	pthread_t thread, // Identifiant du thread à attendre
+	void** retval     // Donnée(s) renvoyée(s) par le thread attendu
+);
+
+// Termine le thread appelant la fonction et permet de renvoyer des
+// données si le thread est joignable.
+void pthread_exit(
+	void* retval   // Donnée(s) renvoyée(s)
+);
 ```
 
-**Attention** la fonction exit() termine le processus même si executer dans un processus fils.
+**Attention !** La fonction exit() termine le processus même si l'appelant est un thread secondaire.
 
-### Les Mutex [↺](#sommaire-)
+### Mutex [↺](#sommaire-)
 
-Une fonction manipulant un mutex est de la forme, pthread_mutex_fonction().
+Sur un mutex on peut effectuer les actions suivantes :
 
-Fonction                | Resultat                                             
-------------------------|------------------------------------------------------
-pthread_mutex_init()    | Verrou créée, etat libre                             
-pthread_mutex_lock()    | Verrouillage                                         
-pthread_mutex_trylock() | Verrouillage si etat libre, sinon erreur sans blocage
-pthread_mutex_unlock()  | Deverrouillage, etat libre                           
-pthread_mutex_destroy() | Destruction                                          
+Action                    | Fonction
+--------------------------|----------------------------------------
+Creation                  | `int pthread_mutex_init(*mutex, *attr)`
+Verrouillage              | `int pthread_mutex_lock(*mutex)`
+Verrouillage non bloquant | `int pthread_mutex_trylock(*mutex)`
+Deverouillage             | `int pthread_mutex_unlock(*mutex)`
+Destruction               | `int pthread_mutex_destroy(*mutex)`
 
-Une initialisation plus simple : 
+**Remarque** : Toutes ces fonctions retournent 0 en cas de succès et sinon un code d'erreur ≠ 0.
 
 ```c
-pthread_mutex_t verrou = PHTREAD_MUTEX_INITIALIZER;
+pthread_mutex_t mutex = PHTREAD_MUTEX_INITIALIZER; // Initialisation plus simple d'un mutex
+
+// Créée un mutex en lui associant des attributs.
+int pthread_mutex_init(
+	pthread_mutex_t* mutex,   // Mutex initialisé obtenu en résullat
+	pthread_mutexattr_t* attr // Attribut du mutex, NULL par default
+);
+
+// Verrouille le mutex sauf si celui-ci et déja verrouillé par un
+// autre thread, dans ce cas la fonction bloquera le thread appelant
+// jusqu'a ce que le mutex soit deverrouillé.
+int pthread_mutex_lock(
+	pthread_mutex_t* mutex
+);
+
+// Equivalent à pthread_mutex_lock() sauf que si le mutex est deja
+// verrouillé, la fonction ne bloquera pas le thread appelant.
+int pthread_mutex_trylock(
+	pthread_mutex_t* mutex
+);
+
+// Deverouille le mutex.
+int pthread_mutex_unlock(
+	pthread_mutex_t* mutex
+);
+
+// Detruit le mutex.
+int pthread_mutex_destroy(
+	pthread_mutex_t* mutex
+);
 ```
 
-**Règle :** Tout accès à une variable accessible en lecture par un thread et en écriture par un autre doit être protégé.
+**Règle** : Tout accès à une variable accessible en lecture par un thread et en écriture par un autre doit être protégé.
 
 - Un seul mutex peut protéger plusieurs variables, mais pas l’inverse.
-- Les opérations ...lock() et ...unlock() sont atomiques, mais pas la portion de code qui se trouve entre les deux.
-- Cette portion de code est appelée section critique.
-- Si un thread est dans une section critique, il doit être garanti qu'aucun autre thread n'y sois pas simultanément.
+- Les opérations lock() et unlock() sont atomiques, mais pas la portion de code qui se trouve entre les deux.
+- Cette portion de code est appelée **section critique**.
+- Si un thread est dans une **section critique**, il doit être garanti qu'aucun autre thread n'y sois pas simultanément.
 
-### Les Conditions [↺](#sommaire-)
+### Variable conditionnelle [↺](#sommaire-)
 
-Sur une variable conditionnelle c et un verrou v, on peut effectuer les actions suivantes :
+Sur une variable conditionnelle et un mutex on peut effectuer les actions suivantes :
 
-Fonction                               | Action                                               
----------------------------------------|------------------------------------------------------
-pthread_cond_init(&c)                  | Créée la variable conditionnelle c                   
-pthread_cond_destroy(&c)               | Destruction                                          
-pthread_cond_wait(&c, &v)              | Bloque l'appelant et rend le verrou de façon atomique
-pthread_cond_timedwait(&c, &v, &delai) | Wait avec un delai                                   
-pthread_cond_broadcast(&c)             | Libère tous les threads boqués                       
-pthread_cond_signal(&c)                | Libère un seul thread                                
+Action                            | Fonction
+----------------------------------|-------------------------------------------------
+Creation                          | `pthread_cond_init(*cond, *attr)`
+Attente                           | `pthread_cond_wait(*cond, *mutex)`
+Attente avec delai                | `pthread_cond_timedwait(*cond, *mutex, *time)`
+Liberation d'une attente          | `pthread_cond_signal(*cond)`
+Liberation de toutes les attentes | `pthread_cond_broadcast(*cond)`
+Destruction                       | `pthread_cond_destroy(*cond)`
 
-**Remarque :** Toutes ces fonctions retournent 0 en cas de succès et un résultat non-nul en cas d’erreur, accompagné d’un code d’erreur.
+**Remarque** : Toutes ces fonctions retournent 0 en cas de succès et sinon un code d'erreur ≠ 0.
 
 ```c
-/**
- * @param  cond variable conditionnelle à créée
- * @param  attr NULL par default
- */
-int pthread_cond_init(pthread_cond_t* cond,  pthread_condattr_t* attr); 
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER; // Initialisation plus simple d'une variable conditionnelle
 
-/**
- * @param  cond variable conditionnelle à detruire
- */
-int pthread_cond_destroy(pthread_cond_t* cond);
+// Créée une variable conditionnelle en lui associant des attributs.
+int pthread_cond_init(
+	pthread_cond_t* cond,    // Variable conditionnelle initialisée obtenue en résullat
+	pthread_condattr_t* attr // Attribut de la variable conditionnelle, NULL par default
+); 
 
-/**
- * Appel bloquant qui de façon atomique déverouille verrou et
- * attend que la condition cond soit annoncée (par un autre thread).
- */
-int pthread_cond_wait(pthread_cond_t* cond, pthread_mutex_t* verrou);
+// Deverrouille le mutex et bloque le thread appelant la fonction
+// sur la variable conditionnelle.
+// La fonction ce debloquera quand un autre thread libèrera la
+// variable conditionnelle.
+// Quand la fonction ce termine avec succès, le mutex est 
+// automatiquement verrouillé par le thread appelant.
+int pthread_cond_wait(
+	pthread_cond_t* cond,   
+	pthread_mutex_t* mutex 
+);
 
-/**
- * Provoque le réveil d’un thread mis en attente par la condition cond.
- */
-int pthread_cond_signal(pthread_cond_t* cond);
+// Equivalent à pthread_cond_wait() sauf que si le delai indiqué en
+// paramètre est dépassé la fonction ce débloquera et renverra un
+// code d'erreur.
+int pthread_cond_timedwait(
+	pthread_cond_t *cond,       
+	pthread_mutex_t *mutex,     
+	const struct timespec *time 
+); 
 
-/**
- * Provoque le réveil de tous les threads mis en attendant la condition cond.
- */
-int pthread_cond_broadcast(pthread_cond_t* cond) ;
+// Libère un des threads bloqués sur la variable conditionnelle.
+int pthread_cond_signal( 
+	pthread_cond_t* cond 
+);
+
+// Libère tous les threads bloqués sur la variable conditionnelle.
+int pthread_cond_broadcast(
+	pthread_cond_t* cond    
+);
+
+// Detruit la variable conditionnelle.
+int pthread_cond_destroy(
+	pthread_cond_t* cond  
+);
 ```
 
 **Important :**
