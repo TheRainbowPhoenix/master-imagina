@@ -11,6 +11,8 @@
 ### Examens [↺](#sommaire-)
 
 - Note final : MAX(Exam, (50% Exam + 50% CC))
+- CC Amphi : 22/10/2018
+- TP Backtrack : 5/11/2018
 
 ### Ressources [↺](#sommaire-)
 
