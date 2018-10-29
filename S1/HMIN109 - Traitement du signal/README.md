@@ -1,4 +1,4 @@
-# HMIN109 - Traitement du signal
+ HMIN109 - Traitement du signal
 
 ## Sommaire [↺](#sommaire-)
 
@@ -329,7 +329,7 @@ Transit = 0.417s
 
 **1. Qu'est ce ?**
 
-- Le systeme est lineaire si :
+- Un systeme est lineaire quand on peut utiliser le principe de superposition :
 	- e₁(t) → s₁(t)
 	- e₂(t) → s₂(t)
 	- e₃(t) = e₁(t) + e₂(t) → s₃(t) = s₁(t) + s₂(t)
@@ -339,3 +339,132 @@ Transit = 0.417s
 ![equation][4]
 [4]: https://latex.codecogs.com/svg.latex?\Large&space;\sum_{i=1}^{n}i^3=\frac{n(n+1)}{2}^2
 
+A(w).e^(jϕ(w)) = F(jw) { (A(w)), (ϕ(w)) :} 
+
+#### 3. Réponse impulsionnelle
+
+```math
+e(t) → ▩▩ → s(t)
+
+L_p{S_λ(t)} = L_p{λ(j)}*F(p) = F(p)
+
+
+F(p) → f(t) = L_p^-1{F(p)}
+
+S(p) = F(p) * E(p) = L_p{(f*e)(t)} = L_p{S(t)}
+
+S(t) = (f * e)(t)
+
+f(t) = sortie du système linéaire quand il a en entré une impulsion de direct?
+**réponse impulsionnelle du système**
+
+```
+
+#### 4. Fonctions de transfert
+
+```math
+F(p) = (b_0 + b_1 * p + ... + b_m * p^m) / (a_0 + a_1 * p + ... + a_m * p^n) * (e^(λp))
+```
+
+si le système est  **n ≥ m**.
+
+#### 5. Rapport entre fonction de transfert et equations différencielle
+
+```math
+F(p) = (3 + 2p - 3p²) / (1 - p²)
+
+S(p) = F(p) * E(p) = (3 + 2p - 3p²) / (1 - p²) * E(p) 
+
+(1 - p²)*S(p) = (3 + 2p - 3p²)*E(p)
+(1 - p²)*L_p{S(t)} = (3 + 2p - 3p²)*L_p{E(t)}
+
+L_p{S(t)} - p³*L_p{S(t)} = 3*L_p{e(t)} + 2p*L_p{e(t)} - 3p²*L_p{e(t)}
+
+L_p{S(t)} - L_p{S'''(t)} = 3*L_p{e(t)} + 2*L_p{e'(t)} - 3*L_p{e'(t)}
+L_p{S(t) - S'''(t)} = L_p{3*e(t) + 2*e'(t) - 3*e'(t)}
+
+E.D. ≡ S(t) - S'''(t) = 3e(t) + 2e'(t) + 2e'(t)
+```
+
+#### 6. Representation graphique
+
+##### Courbe de bode
+
+(voir schemas)
+
+#### 7. Filtres
+
+```math
+e(t) = x(t) + ubrace(b(t))_bruit
+
+S(t) = x(t)
+
+x(t) + b(t) → ▩▩ → x'(t) + a(t)
+```
+
+##### Filtre passe bas
+
+##### Filtre passe haut
+
+##### Filtre passe bande
+
+##### Filtre coupe bande
+
+##### Gabarits de filtre
+
+###### Butterworth
+
+Le plus utiliser pour filtrer la musique.
+
+F(p) = (N(p) = 1) / D(p)
+
+n | D(p)                | N(p)
+--|---------------------|-----
+1 | p+1                 | 1
+2 | p²+√2 * p + 1       | 1
+3 | (p² + p + 1)(p + 1) | 1
+4 |                     | 1
+
+F_(p)^2 = 1/(p+1) → f_(wc)^1 = 1/(p/(wc) + 1) = wc/(p+wc)
+F_(p)^2 = 1/(p²+√2 * p + 1)
+
+f_w1^1(p) = w1/(p+w1)
+f_w2^1(p) = w2/(p+w2)
+
+F_(w1, w2)(p) = F'_(w2)(p)(1-F'_(w1)(p))
+= w2/(p+w2) *(1 - W1 /(p+w1))
+= (w2 * p)/((p+w2)*(p+w1))
+
+###### Tchebichev
+
+Meilleure coupure que butterworth mais ne respecte pas le signal.
+
+###### Bessel
+
+Dephasé par rapprot au signal.
+
+### II. Signaux numérique
+
+#### 1. Signal numérique
+
+Série (suite) de nombres entiers x_1, x_2, ... , x_n ∈ ℕ qui représente un echantillonage d'un signal.
+
+#### 2. Repliement du spectre
+
+#### 3. Stratégie anti-repliement
+
+Si T est la periode d'échantillonage on ne peut échantilloner sans repliement de spectre que des signaux dont le plan haute fréquence < fe/2, haute pulsation < we/2.
+
+#### 4. Reconstruction
+
+**Interpolation** : reconstruction du signal continu a partir de l'echantillon.
+
+L_p^-1{H(p)} = h(+)
+
+s(t) = (h * x^λ)(t)
+
+#### 5. Fonction de transfert echantillonné
+
+e^(-Tp) = z^(-1) ≡ retard d'un echantillon
+
+F(z) = b_0 + b_1
