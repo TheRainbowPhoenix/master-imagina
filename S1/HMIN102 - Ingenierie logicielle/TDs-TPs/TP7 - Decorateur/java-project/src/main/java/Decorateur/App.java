@@ -1,7 +1,10 @@
-public class Main {
+package Decorateur;
 
-    public static void main(String[] args){
 
+public class App
+{
+    public static void main( String[] args )
+    {
         System.out.println("Exercice 1 :\n");
 
             Produit lgv = new Produit("La grande vadrouill", 10.0);
@@ -33,7 +36,5 @@ public class Main {
             cmt = new CompteSeuilDecoration(cmt);
             System.out.println("CompteNormal : " + cmt.prixLocation(lgv));
             System.out.println("CompteNormal : " + cmt.prixLocation(lgv));
-            System.out.println("CompteNormal : " + cmt.prixLocation(lgv));
-
-    }
+            System.out.println("CompteNormal : " + cmt.prixLocation(lgv));    }
 }

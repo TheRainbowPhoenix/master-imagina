@@ -34,6 +34,5 @@ public class Main {
             System.out.println("CompteNormal : " + cmt.prixLocation(lgv));
             System.out.println("CompteNormal : " + cmt.prixLocation(lgv));
             System.out.println("CompteNormal : " + cmt.prixLocation(lgv));
-
     }
 }
