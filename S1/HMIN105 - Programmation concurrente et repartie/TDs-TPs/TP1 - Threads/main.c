@@ -4,12 +4,11 @@
 #include <pthread.h>
 #include <math.h>
 #include <time.h>
-#include "calcul.h"
 
 void array_init_rand(int* array, int array_size);
 void array_print(int* array, int array_size);
 
-void rand_calcul(int min, int max);
+void rand_sleep(int min, int max);
 void print_tab(int n);
 
 // EXERCICE 1
@@ -19,17 +18,17 @@ void print_tab(int n);
 
 	2. si la tache principale ce termine tout les threads se termineront
 
-	3. si une des tâches appel exit() le processus ce termine 
+	3. si une des tâches appel exit() le processus ce termine
 	(tous les threads aussi donc) */
 
-void* calcul_thread(void* time);
+void* sleep_thread(void* time);
 void show_multithread(int thread_number, int thread_time);
 
 // EXERCICE 2
 
-struct prod_arg{ 
+struct prod_arg{
 	int p1;
-	int p2; 
+	int p2;
 };
 
 int scalar_sum = 0;
@@ -142,8 +141,8 @@ void array_print(int* array, int array_size){
 	}
 }
 
-void rand_calcul(int min, int max){
-	calcul(min + rand() % abs(max - min));
+void rand_sleep(int min, int max){
+	sleep(min + rand() % abs(max - min));
 }
 
 void print_tab(int n){
@@ -153,14 +152,14 @@ void print_tab(int n){
 
 // EXERCICE 1
 
-void* calcul_thread(void* time){
+void* sleep_thread(void* time){
 
 	int T = *(int*)time;
 
 	printf("Thread %lu will run %ds\n", pthread_self(), T);
-	calcul(T);
+	sleep(T);
 	printf("Thread %lu ended after %ds\n", pthread_self(), T);
-	
+
 	pthread_exit(NULL);
 }
 
@@ -169,7 +168,7 @@ void show_multithread(int thread_number, int thread_time){
 	pthread_t* thread_ids = (pthread_t*)malloc(thread_number * sizeof(pthread_t));
 
 	for(int i = 0; i < thread_number; ++i){
-		if(pthread_create(&thread_ids[i], NULL, calcul_thread, &thread_time) != 0)
+		if(pthread_create(&thread_ids[i], NULL, sleep_thread, &thread_time) != 0)
 			printf("Thread error !\n");
 	}
 
@@ -234,7 +233,7 @@ void* sync_thread(void* thread_number){
 }
 
 void sync_multithread(int thread_number, int sync_time){
-	
+
 	is_sync = 0;
 	sync_number = 0;
 	pthread_t* thread_ids = (pthread_t*)malloc(thread_number * sizeof(pthread_t));
@@ -243,8 +242,8 @@ void sync_multithread(int thread_number, int sync_time){
 		if(pthread_create(&thread_ids[i], NULL, sync_thread, &thread_number) != 0)
 			printf("Thread error !\n");
 	}
-	
-	calcul(sync_time);
+
+	sleep(sync_time);
 
 	pthread_mutex_lock(&sync_lock);
 	is_sync = 1;
@@ -267,24 +266,24 @@ void* process_sync_thread(void* params){
 
 	int zone_number = (int)param->zone_number;
 	int thread_index = (int)param->thread_index;
-	
+
 	for(int i = 0; i < zone_number; ++i){
 
 		if(thread_index > 0){
-			
+
 			pthread_mutex_lock(&process_progress_mutex);
 			while(process_progress[thread_index - 1] <= i){
 				pthread_cond_wait(&process_progress_cond, &process_progress_mutex);
 			}
 			pthread_mutex_unlock(&process_progress_mutex);
 		}
-		
+
 		print_tab(thread_index); printf("Thread n°%d zone n°%d is processing\n", thread_index, i);
-		rand_calcul(1, 5);
+		rand_sleep(1, 5);
 		print_tab(thread_index); printf("Thread n°%d zone n°%d is finished !\n", thread_index, i);
 
 		pthread_mutex_lock(&process_progress_mutex);
-		process_progress[thread_index]++;		
+		process_progress[thread_index]++;
 		pthread_cond_broadcast(&process_progress_cond);
 		pthread_mutex_unlock(&process_progress_mutex);
 	}
@@ -313,4 +312,3 @@ void process_sync_multithread(int thread_number, int zone_number){
 	free(thread_ids);
 	free(params);
 }
-

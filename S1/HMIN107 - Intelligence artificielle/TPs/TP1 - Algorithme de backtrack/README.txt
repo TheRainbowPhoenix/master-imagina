@@ -1,0 +1,4 @@
+- Etapes : 1 à 6 implémentées
+- Contraintes : Ext, Dif, Eq et Exp implémentées
+- Optimisations : 
+- Expérimentations : 
