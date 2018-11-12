@@ -1,9 +1,22 @@
-# HMIN107 - Intelligence Artificielle
+# HMIN107 - Intelligence artificielle
 
-##  Information et Ressources
+## Sommaire [↺](#sommaire-)
 
-- Examen : 0.50 * EXAM + 0.50 * CC
-- Ressources : Moodle
+* [Informations](#informations-)
+  + [Examens](#examens-)
+  + [Ressources](#ressources-)
+
+## Informations [↺](#sommaire-)
+
+### Examens [↺](#sommaire-)
+
+- Note final : MAX(Exam, (50% Exam + 50% CC))
+- CC Amphi : 22/10/2018
+- TP Backtrack : 5/11/2018
+
+### Ressources [↺](#sommaire-)
+
+- [Cours et TPs](https://moodle.umontpellier.fr/course/view.php?id=1195)
 
 ## Definitions
 

@@ -1,4 +1,18 @@
-Cours : http://www.lirmm.fr/~ferber/ProgAgent/index.html
-Evaluation : moy(0.6 ecrit, 0.4 cc)
+# HMIN108 - Programmation orientee agents
 
-Html to pdf : https://www.sejda.com/fr/html-to-pdf
+## Sommaire [↺](#sommaire-)
+
+* [Informations](#informations-)
+  + [Examens](#examens-)
+  + [Ressources](#ressources-)
+
+## Informations [↺](#sommaire-)
+
+### Examens [↺](#sommaire-)
+
+- Note final : MAX(Exam, (60% Exam + 40% CC))
+
+### Ressources [↺](#sommaire-)
+
+- [Cours et TPs](http://www.lirmm.fr/~ferber/ProgAgent/index.html)
+- [Html to Pdf Converter](https://www.sejda.com/fr/html-to-pdf)
