@@ -10,33 +10,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
-#include "warnevent.h" //Verifications d'erreurs
-
-char* addr_to_str(const struct sockaddr* addr, socklen_t addrlen){
-    
-    char host[NI_MAXHOST];
-    
-    int res = getnameinfo(addr, addrlen, host, sizeof(host), NULL, 0, NI_NUMERICHOST); WARN_ERROR_GAI(res);
-    
-    char* result = (char*)malloc((NI_MAXHOST) * sizeof(char)); result[0] = '\0';
-    
-    strcpy(result, host);
-
-    return result;
-}
-
-char* port_to_str(const struct sockaddr* addr, socklen_t addrlen){
-    
-    char serv[NI_MAXSERV];
-    
-    int res = getnameinfo(addr, addrlen, NULL, 0, serv, sizeof(serv), NI_NUMERICSERV); WARN_ERROR_GAI(res);
-    
-    char* result = (char*)malloc((NI_MAXSERV) * sizeof(char)); result[0] = '\0';
-    
-    strcpy(result, serv);
-
-    return result;
-}
+#include "warnevent.h" // Verifications d'erreurs
 
 int main(int argc, char const *argv[]){
 
@@ -54,19 +28,19 @@ int main(int argc, char const *argv[]){
 
     printf("Accès aux informations liées au port %s...\n", port);
 
-    //Pas besoin de spécifier l'hote comme nous créons un serveur.
+    // Pas besoin de spécifier l'hote comme nous créons un serveur.
     int error = getaddrinfo(NULL, port, &hints, &res); WARN_ERROR_GAI(error);
 
     printf("Création du socket...\n");
 
     int sock_fd = socket(res->ai_family, res->ai_socktype, res->ai_protocol); WARN_ERROR(sock_fd);
 
-    //Permet de réutilliser le port directement après la fin du programme
-    //int optval = 1;
-    //setsockopt(sock_fd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
+    // Permet de réutilliser le port directement après la fin du programme
+    // int optval = 1;
+    // setsockopt(sock_fd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 
     char address[256] = "";
-    //Convertion de l'adresse IP en chaine de charactère.
+    // Convertion de l'adresse IP en chaine de charactère.
     inet_ntop(AF_INET, &((struct sockaddr_in*)res->ai_addr)->sin_addr, address, sizeof(address)); WARN_ERROR_IF(strcmp(address, "") == 0);
 
     printf("Affectation de l'adresse %s au socket...\n", address);

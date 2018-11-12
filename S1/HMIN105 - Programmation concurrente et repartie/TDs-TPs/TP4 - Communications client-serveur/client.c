@@ -10,7 +10,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
-#include "warnevent.h" //Verifications d'erreurs
+#include "warnevent.h" // Verifications d'erreurs
 
 int main(int argc, char const *argv[]){
 
@@ -30,16 +30,16 @@ int main(int argc, char const *argv[]){
 	serv_addr.sin_port = htons(port);
 	serv_addr.sin_addr.s_addr = INADDR_ANY;
 
-   	//Convertion de L'IP (chaine de charactère) en adresse network.
+   	// Convertion de L'IP (chaine de charactère) en adresse network.
 	int res = inet_pton(AF_INET, adr, &(serv_addr.sin_addr)); WARN_ERROR(res);
 
 	char* msg = NULL;
 	size_t msg_len = 0;
 	ssize_t read_size = 0;
 
-	//Permet de réutilliser le port directement après la fin du programme
-    //int optval = 1;
-    //setsockopt(sock_fd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
+	// Permet de réutilliser le port directement après la fin du programme
+    // int optval = 1;
+    // setsockopt(sock_fd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 
 	printf("Message a envoyer : ");
 

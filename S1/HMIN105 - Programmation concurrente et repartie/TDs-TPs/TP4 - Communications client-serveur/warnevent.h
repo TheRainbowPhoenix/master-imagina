@@ -1,10 +1,10 @@
 #ifndef WARNEVENT_ERROR_LOG_H
 #define WARNEVENT_ERROR_LOG_H
 
-#include <stdio.h>	//fprintf()
-#include <errno.h>  //errno
-#include <string.h>	//strerror()
-#include <netdb.h>	//gai_strerror()
+#include <stdio.h>	// fprintf()
+#include <errno.h>  // errno
+#include <string.h>	// strerror()
+#include <netdb.h>	// gai_strerror()
 
 #define WARN_DEF_OUTPUT stderr
 #define WARN_DEF_TYPE "ERROR"
