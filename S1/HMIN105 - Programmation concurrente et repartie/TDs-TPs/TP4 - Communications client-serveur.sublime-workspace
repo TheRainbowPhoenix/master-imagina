@@ -1,0 +1,201 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/etc/modprobe.d/thinkfan.conf",
+		"/etc/modprobe.d/thinkpad_acpi.conf",
+		"/etc/thinkfan.conf",
+		"/etc/default/thinkfan",
+		"/etc/modprobe.d/thinkpad.conf",
+		"/home/thibault/Cours/Licence/S6/HLIN611 - Reseaux/TPs/TPNote/EX1/server.c",
+		"/home/thibault/Cours/Licence/S6/HLIN611 - Reseaux/TPs/TP1/tp1-exo3.cpp",
+		"/home/thibault/Cours/Licence/S6/HLIN611 - Reseaux/TPs/TPNote/EX1/client.c",
+		"/home/thibault/Cours/Licence/S6/HLIN611 - Reseaux/TPs/TP3/client.c",
+		"/etc/default/thinkfan.conf",
+		"/home/thibault/Cours/Licence/S6/HLIN611 - Reseaux/TPs/TPNote/EX2/client.c",
+		"/home/thibault/Cours/Licence/S6/HLIN611 - Reseaux/TPs/TPNote/EX3/getaddrinfo/main.cpp",
+		"/home/thibault/Cours/Master/S1/HMIN107 - Intelligence artificielle/TPs/TP1 - Algorithme de backtrack/README.txt",
+		"/home/thibault/Cours/Licence/S6/HLIN611 - Reseaux/TPs/TP2/client.c",
+		"/home/thibault/Cours/Licence/S6/HLIN611 - Reseaux/TPs/TP2/server.c",
+		"/home/thibault/Documents/config/sublime-text-3/configure.sh",
+		"/home/thibault/.bashrc",
+		"/home/thibault/Documents/config/bash/prompt.sh",
+		"/home/thibault/Documents/config/bash/alias.sh",
+		"/home/thibault/dep.md",
+		"/home/thibault/Cours/Master/S1/HMIN105 - Programmation concurrente et repartie/TDs-TPs/TP2 - Files de messages/main.c",
+		"/home/thibault/Cours/Master/S1/HMIN105 - Programmation concurrente et repartie/TDs-TPs/TP2 - Files de messages/makefile",
+		"/home/thibault/Cours/Master/S1/HMIN105 - Programmation concurrente et repartie/TDs-TPs/TP1 - Threads/makefile",
+		"/etc/sysctl.conf",
+		"/home/thibault/Cours/Master/S1/HMIN107 - Intelligence artificielle/TPs/2017-2018/TP3/Java/Resultats.txt",
+		"/home/thibault/Cours/Master/S1/HMIN107 - Intelligence artificielle/TPs/2017-2018/TP3/Java/exo1.txt",
+		"/home/thibault/Documents/config/sublime-text-3/install.sh",
+		"/home/thibault/Cours/Master/S1/HMIN105 - Programmation concurrente et repartie/README.md",
+		"/media/thibault/BigData/Save/thibault/halloween.md",
+		"/home/thibault/.local/share/kwin/scripts/kpluginindex.json",
+		"/home/thibault/Modèles/Desktop File.desktop",
+		"/home/thibault/switch workspace",
+		"/home/thibault/Documents/config/update"
+	],
+	"find":
+	{
+		"height": 0.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 38.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.SublimeLinter":
+	{
+		"height": 0.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "TP4 - Communications client-serveur.sublime-project",
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

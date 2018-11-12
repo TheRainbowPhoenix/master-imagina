@@ -1,5 +1,5 @@
 CC = gcc
-FLAGS = -W -Wall
+FLAGS = -W -Wall -g
 
 SRCS0 = client.c
 SRCS1 = server.c
@@ -7,7 +7,7 @@ SRCS1 = server.c
 BIN0 = client
 BIN1 = server
 
-INCLUDE = 
+INCLUDE =
 
 EXT = *.o *~
 

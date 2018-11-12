@@ -10,84 +10,108 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
-#include "check.h" //Verifications d'erreurs
+#include "warnevent.h" //Verifications d'erreurs
 
-int main(int argc, char const *argv[])
-{
-	const char* port;
-
-	if(argc < 2){
-		fprintf(stderr, "Usage %s <PORT>\n", argv[0]);
-		exit(EXIT_FAILURE);
-	}
-
-	port = argv[1];
-
-    printf("Création de la socket...\n");
-
-    int sock_fd = socket(PF_INET, SOCK_STREAM, 0);
-    CHECK_FD(sock_fd)
+char* addr_to_str(const struct sockaddr* addr, socklen_t addrlen){
     
-    printf("Accès à l'adresse liée au port %s...\n", port);
+    char host[NI_MAXHOST];
+    
+    int res = getnameinfo(addr, addrlen, host, sizeof(host), NULL, 0, NI_NUMERICHOST); WARN_ERROR_GAI(res);
+    
+    char* result = (char*)malloc((NI_MAXHOST) * sizeof(char)); result[0] = '\0';
+    
+    strcpy(result, host);
+
+    return result;
+}
+
+char* port_to_str(const struct sockaddr* addr, socklen_t addrlen){
+    
+    char serv[NI_MAXSERV];
+    
+    int res = getnameinfo(addr, addrlen, NULL, 0, serv, sizeof(serv), NI_NUMERICSERV); WARN_ERROR_GAI(res);
+    
+    char* result = (char*)malloc((NI_MAXSERV) * sizeof(char)); result[0] = '\0';
+    
+    strcpy(result, serv);
+
+    return result;
+}
+
+int main(int argc, char const *argv[]){
+
+    PRINT_USAGE_IF(argc < 2, "Usage %s <PORT>\n", argv[0]);
+
+    const char* port = argv[1];
 
     struct addrinfo hints, *res;
 
     memset(&hints, 0, sizeof(hints));
 
-    hints.ai_family = AF_INET; //INET6 for IPv6
-    hints.ai_socktype = SOCK_STREAM;   //TCP
-    hints.ai_flags = AI_PASSIVE;
+    hints.ai_family = AF_INET; // INET for IPv4
+    hints.ai_socktype =  SOCK_DGRAM;
+    hints.ai_flags =  AI_PASSIVE;
+
+    printf("Accès aux informations liées au port %s...\n", port);
 
     //Pas besoin de spécifier l'hote comme nous créons un serveur.
-	getaddrinfo(NULL, port, &hints, &res);
+    int error = getaddrinfo(NULL, port, &hints, &res); WARN_ERROR_GAI(error);
 
-	printf("Affectation de l'adresse à la socket...\n");
+    printf("Création du socket...\n");
+
+    int sock_fd = socket(res->ai_family, res->ai_socktype, res->ai_protocol); WARN_ERROR(sock_fd);
 
     //Permet de réutilliser le port directement après la fin du programme
-    int optval = 1;
-    setsockopt(sock_fd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
+    //int optval = 1;
+    //setsockopt(sock_fd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 
     char address[256] = "";
     //Convertion de l'adresse IP en chaine de charactère.
-    inet_ntop(AF_INET, &((struct sockaddr_in*)res->ai_addr)->sin_addr, address, sizeof(address));
+    inet_ntop(AF_INET, &((struct sockaddr_in*)res->ai_addr)->sin_addr, address, sizeof(address)); WARN_ERROR_IF(strcmp(address, "") == 0);
 
-	int error = bind(sock_fd, res->ai_addr, res->ai_addrlen);
-	CHECK_ERROR(error)
+    printf("Affectation de l'adresse %s au socket...\n", address);
 
-    error = listen(sock_fd, 10);
-    CHECK_GAI_ERROR(error);
+    error = bind(sock_fd, res->ai_addr, res->ai_addrlen); WARN_ERROR(error);
 
-    struct sockaddr_in* res_addr = (struct sockaddr_in*)res->ai_addr;
+    struct sockaddr_storage addr;
+    socklen_t addrlen = sizeof(addr);
 
-    printf("En ecoute sur le descripteur de fichier %d, port %d...\n", sock_fd, ntohs(res_addr->sin_port));
+    printf("Serveur UDP en attente de connexion...\n");
+    printf("IP : %s, PORT : %s\n", address, port);
 
-	printf("Serveur TCP en attente de connexion...\n");
-	printf("IP : %s, PORT : %s\n", address, port);
+    while(1){
 
-    struct sockaddr_in client_addr;
-    socklen_t client_lg = sizeof(struct sockaddr_in);
+        char* msg = NULL;
+        size_t msg_len = 0;
+        ssize_t read_size = 0;
 
-    int client_fd = accept(sock_fd, (struct sockaddr*)&client_addr, &client_lg);
-    //int client_fd = accept(sock_fd, NULL, NULL); seulement pour le descripteur de fichier
-    CHECK_FD(client_fd)
+        read_size = recvfrom(sock_fd, &msg_len, sizeof(msg_len), 0, (struct sockaddr*)&addr, &addrlen); WARN_ERROR(read_size);
+        
+        msg = malloc(msg_len * sizeof(char));
 
-    printf("Connexion en cours avec le client %d\n", client_fd);
+        read_size = recvfrom(sock_fd, msg, msg_len, 0, (struct sockaddr*)&addr, &addrlen); WARN_ERROR(read_size);
 
-    char msg[1024] = "";
+        char host[NI_MAXSERV];
+        char serv[NI_MAXSERV];
 
-    printf("Reception du message...\n");
+        error = getnameinfo((struct sockaddr*)&addr, addrlen, host, sizeof(host), serv, sizeof(serv), NI_NUMERICHOST | NI_NUMERICSERV); WARN_ERROR_GAI(error);
 
-    int len = recv(client_fd, msg, sizeof(msg), 0);
-    msg[len] = '\0';
+        printf("Message provenant de l'IP : %s, PORT : %s\n", host, serv);
+        printf("  └─▶ %s", msg);
+        printf("Réponse : ");
 
-    printf("%s\n", msg);
+        read_size = getline(&msg, &msg_len, stdin); WARN_ERROR(read_size);
+        
+        // Envoie la taille de la chaine de character.
+        read_size = sendto(sock_fd, &msg_len, sizeof(msg_len), 0, (struct sockaddr *)&addr, sizeof(addr)); WARN_ERROR(read_size);
 
-    printf("Confirmation d'arrivée...\n");
+        // Envoie la chaine de character
+        read_size = sendto(sock_fd, msg, msg_len, 0, (struct sockaddr *)&addr, sizeof(addr)); WARN_ERROR(read_size);
 
-    send(client_fd, &len, sizeof(int), 0);
+        free(msg);
+    }
 
-    close(client_fd);
     close(sock_fd);
 
-	return 0;
+    return 0;
 }

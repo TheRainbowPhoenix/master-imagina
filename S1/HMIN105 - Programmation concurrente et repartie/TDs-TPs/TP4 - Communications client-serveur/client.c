@@ -10,58 +10,63 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
-#include "check.h" //Verifications d'erreurs
+#include "warnevent.h" //Verifications d'erreurs
 
-int main(int argc, char const *argv[])
-{
-	char msg[1024] = "";
-	const char* adr;
-	const char* port;
+int main(int argc, char const *argv[]){
 
-	if(argc < 4){
-		fprintf(stderr, "Usage %s <MESSAGE> <ADRESS> <PORT>\n", argv[0]);
-		exit(EXIT_FAILURE);
-	}
+	PRINT_USAGE_IF(argc < 3, "Usage %s <ADRESS> <PORT>\n", argv[0]);
+	
+	const char* adr = argv[1];
+	short port = atoi(argv[2]);
 
-	strcpy(msg, argv[1]);
-	adr = argv[2];
-	port = argv[3];
+	printf("Création du socket...\n");
 
-	printf("Création de la socket...\n");
+	int sock_fd = socket(AF_INET, SOCK_DGRAM, 0); WARN_ERROR(sock_fd);
 
-	int sock_fd = socket(PF_INET, SOCK_STREAM, 0);
-	CHECK_FD(sock_fd)
+	struct sockaddr_in serv_addr;
+	memset(&serv_addr, 0, sizeof(serv_addr));
 
-	printf("Accès aux information de l'adresse %s et du port %s...\n", adr, port);
+	serv_addr.sin_family = AF_INET;
+	serv_addr.sin_port = htons(port);
+	serv_addr.sin_addr.s_addr = INADDR_ANY;
 
-    struct addrinfo hints, *res;
+   	//Convertion de L'IP (chaine de charactère) en adresse network.
+	int res = inet_pton(AF_INET, adr, &(serv_addr.sin_addr)); WARN_ERROR(res);
 
-    memset(&hints, 0, sizeof(struct addrinfo));
+	char* msg = NULL;
+	size_t msg_len = 0;
+	ssize_t read_size = 0;
 
-    hints.ai_family = AF_INET; //IPv4 only
-    hints.ai_socktype = SOCK_STREAM; //TCP
-    hints.ai_flags = AI_PASSIVE;	
+	//Permet de réutilliser le port directement après la fin du programme
+    //int optval = 1;
+    //setsockopt(sock_fd, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 
-    int error = getaddrinfo(adr, port, &hints, &res);
-    CHECK_GAI_ERROR(error);
+	printf("Message a envoyer : ");
 
-	printf("Connection à l'adresse %s via le port %s...\n", adr, port);
+	read_size = getline(&msg, &msg_len, stdin); WARN_ERROR(read_size);
+	
+	// Envoie la taille de la chaine de character.
+	read_size = sendto(sock_fd, &msg_len, sizeof(msg_len), 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr)); WARN_ERROR(read_size);
 
-	error = connect(sock_fd, res->ai_addr, res->ai_addrlen);
-    CHECK_ERROR(error);
+	// Envoie la chaine de character
+	read_size = sendto(sock_fd, msg, msg_len, 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr)); WARN_ERROR(read_size);
 
-    printf("Envoi du message %s...\n", msg);
+	free(msg);
 
-    send(sock_fd, msg, sizeof(msg), 0);
+	socklen_t addrlen = sizeof(serv_addr);
 
-    printf("Attente de reponse...\n");
+	printf("Client UDP en attente de réponse...\n");
 
-   	int resp = 0;// char resp[1024] = "";
+    read_size = recvfrom(sock_fd, &msg_len, sizeof(msg_len), 0, (struct sockaddr*)&serv_addr, &addrlen); WARN_ERROR(read_size);
+    
+    msg = malloc(msg_len * sizeof(char));
 
-	int len = recv(sock_fd, &resp, sizeof(int), 0);
+    read_size = recvfrom(sock_fd, msg, msg_len, 0, (struct sockaddr*)&serv_addr, &addrlen); WARN_ERROR(read_size);
 
-	printf("%d\n", resp);
+    printf("Réponse reçu : %s",msg);
 
+    free(msg);
 	close(sock_fd);
+	
 	return 0;
 }
