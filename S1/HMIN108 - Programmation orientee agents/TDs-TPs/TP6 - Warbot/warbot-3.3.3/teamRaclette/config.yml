@@ -1,0 +1,15 @@
+Name: teamRaclette
+IconPath: teamRaclette.jpg
+SoundPath: teamRaclette.wav
+Description: |
+    Descriptions de mon équipe
+BrainsPackage: teamraclette
+AgentsBrainClasses:
+    WarBase: WarBaseBrainController
+    WarExplorer: WarExplorerBrainController
+    WarLight: WarLightBrainController
+    WarHeavy: WarHeavyBrainController
+    WarRocketLauncher: WarRocketLauncherBrainController
+    WarKamikaze: WarKamikazeBrainController
+    WarEngineer: WarEngineerBrainController
+    WarTurret: WarTurretBrainController
