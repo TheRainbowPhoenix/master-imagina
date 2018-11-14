@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="isometric" width="125" height="75" tilewidth="64" tileheight="32">
+ <tileset firstgid="1" name="iso-64x64-outside" tilewidth="64" tileheight="64">
+  <image source="iso-64x64-outside.png" width="640" height="1024"/>
+ </tileset>
+ <layer name="Calque de Tile 1" width="125" height="75">
+  <data encoding="base64" compression="zlib">
+   eJztzqERADAIBLC/o/vPjGECTBER8akkBQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAS2/8fsBVDeyfbeA=
+  </data>
+ </layer>
+</map>

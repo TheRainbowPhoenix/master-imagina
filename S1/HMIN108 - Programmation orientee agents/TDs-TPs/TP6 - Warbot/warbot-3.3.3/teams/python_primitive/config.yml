@@ -1,0 +1,16 @@
+Name: PYTHON_Primitive_Lv1
+IconPath: dekat.png
+SoundPath: dekat.wav
+Description: |
+    Equipe de super Python avec des primitives
+BrainsPackage: inGameTeams.python_primitive
+ScriptImplementation: python
+AgentsBrainClasses:
+    WarBase: WarBase.py
+    WarExplorer: WarExplorer.py
+    WarLight: WarLight.py
+    WarHeavy: WarHeavy.py
+    WarRocketLauncher: WarRocketLauncher.py
+    WarKamikaze: WarKamikaze.py
+    WarEngineer: WarEngineer.py
+    WarTurret: WarTurret.py

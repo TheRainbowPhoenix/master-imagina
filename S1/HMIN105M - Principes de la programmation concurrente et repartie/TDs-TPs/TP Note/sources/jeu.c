@@ -96,7 +96,7 @@ void * jouer(void * p){
   // rappel : vStdOut n'est utilisé que pour les affichages et n'affecte en rien le déroulement du jeu.
   pthread_mutex_lock(&vStdOut); printf("Joueur %d: debut etape 1\n", param -> indice); pthread_mutex_unlock(&vStdOut);
   
-  sleep(2);
+  etape();
   
   pthread_mutex_lock(&vStdOut); printf("Joueur %d: fin etape 1\n", param -> indice); pthread_mutex_unlock(&vStdOut);
   
@@ -121,7 +121,7 @@ void * jouer(void * p){
 
   pthread_mutex_lock(&vStdOut); printf("Joueur %d: debut etape 2\n", param -> indice); pthread_mutex_unlock(&vStdOut);
   
-  sleep(2);
+  etape();
   
   pthread_mutex_lock(&vStdOut); printf("Joueur %d: fin etape 2\n", param -> indice); pthread_mutex_unlock(&vStdOut);
   
@@ -145,7 +145,7 @@ void * jouer(void * p){
   
   pthread_mutex_lock(&vStdOut); printf("Joueur %d: debut etape 3\n", param -> indice);; pthread_mutex_unlock(&vStdOut);
 
-  sleep(1);
+  etape();
   
   pthread_mutex_lock(&vStdOut); printf("Joueur %d: fin etape 3, je termine\n", param -> indice); pthread_mutex_unlock(&vStdOut);
   

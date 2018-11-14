@@ -1,0 +1,16 @@
+Name: PYTHON_FunctionLv0
+IconPath: dekat.png
+SoundPath: dekat.wav
+Description: |
+    Equipe de super Python avec function niveau 0
+BrainsPackage: inGameTeams.python_teamFunction_level_0
+ScriptImplementation: python
+AgentsBrainClasses:
+    WarBase: WarBase.py
+    WarExplorer: WarExplorer.py
+    WarLight: WarLight.py
+    WarHeavy: WarHeavy.py
+    WarRocketLauncher: WarRocketLauncher.py
+    WarKamikaze: WarKamikaze.py
+    WarEngineer: WarEngineer.py
+    WarTurret: WarTurret.py
