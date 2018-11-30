@@ -10,7 +10,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
-#include "warnevent.h" // Verifications d'erreurs
+#include "warn.h" // Verifications d'erreurs
 
 int main(int argc, char const *argv[]){
 
@@ -61,7 +61,7 @@ int main(int argc, char const *argv[]){
 
         read_size = recvfrom(sock_fd, &msg_len, sizeof(msg_len), 0, (struct sockaddr*)&addr, &addrlen); WARN_ERROR(read_size);
         
-        msg = malloc(msg_len * sizeof(char));
+        msg = (char*)malloc(msg_len * sizeof(char));
 
         read_size = recvfrom(sock_fd, msg, msg_len, 0, (struct sockaddr*)&addr, &addrlen); WARN_ERROR(read_size);
 

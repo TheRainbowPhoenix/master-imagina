@@ -481,3 +481,81 @@ $$
 \end{align}
 
 fczaefdza
+
+### Convolution numerique
+
+```
+signal echantillonée Xk et Yk
+
+Xk -> [Hk] -> Yk
+
+transformé en Z: Z{Yk} = Z{Hk}.Z{Xk}
+Y(z) = H(z) . Y(z)
+
+H(z) = (b0 + b1*Z^-1 + b2*Z^-2 + ... + bm*Z^-n) / (a0 + a1*Z^-1 + a2*Z^-2 + ... + an*Z^-n)
+
+algorithme réactif
+
+H(z) = (1 + 2*z^-1) / (2 - 3*z^-2)
+
+Y(z) = H(z).X(z) = ((1 + 2*z^-1) / (2 - 3*z^-2)).X(z)  
+
+(2 - 3*z^-2).Y(z) = (1 + 2*z^-1).X(z)
+
+2*Y(z) - 3*z^-2.Y(z) = X(z) + 2*z^-2.X(z)
+
+2Z{y_k} - 3Z{y_(k-2)} = Z{x_k} + 2Z{x_(k+1)}
+Z{2y_k-3y_(k-2)} = Z{x_k} + 2x_(k-1)
+2y_k - 3y_(k-2) = x_k + 2x_(k-1)
+
+convolution numerique -> y_n = sum_(k=0)^(oo) h_k . x_(k-n)
+
+**filtre frequentiel**
+
+p -> 1 / (p+1)
+
+{B(p) w_c} -> B^w_c(p) = B(p/w_c) = 1/((p/w_c)+1) = w_c/(p+w_c)
+
+**transformation conforme**
+
+p = t(z) = (2/T) * (z - 1)/(z + 1) = (2/T) * (1 - z^-1)/(1 + z^-1)
+```
+
+### Comparaison des signaux numériques
+
+#### 1. Distance
+
+on utilise le rapport signal sur bruit
+
+d_2(x, y) = 1/N sum_(k=0)^(N-1) (x_k - 2xk)^2 = 1 / N sum_(k=0)^(N-1) (x_k)^2
+
+#### 2. Corrélation de deux signaux
+
+|Corr(x, y) = 1 / N sum_(k=0)^(N-1) x_k.y_k| <= rac(Corr(x,x).Corr(y.y))
+
+**Correlation de Pearson**
+
+P(x,y) = Corr(x, y) / rac(Corr(x,x).Corr(y.y)) ∈ [-1, 1]
+
+Y(z) / X(z) = H(z) = ((2z^-1 + 1) / (3 + z^-1 - 2z^-2)) -> algo?
+
+y_k = (1 / 3) . (-y_(k-1) + 2y_(k-2) + 2x_(k-1) + x_k)
+
+x_k -> [] -> y_k
+
+h = [0,5 ; 0 ; -0,3]
+
+4 premiers echantillons:
+
+y_0 = 0,5.x_0
+y_1 = 0,5.x_1
+y_2 = 0,5.x_2 - 0,3.x_0
+y_3 = 0,5.x_3 - 0,3.x_1
+
+h_0 = y_0 = (1 / 3) . (1) = (1 / 3) -> h_0
+h_1 = y_1 = (1 / 3) . (-(1 / 3) + 2) = (1 / 3) . (5 / 3) = (5 / 9) -> h_1
+h_2 = y_2 = (1 / 3) . (-(5 / 9) + (2 / 3)) = (1 / 3) . ((-3 + 6) / 9) = (1 / 27) -> h_2
+
+### Bruits
+
+### Conclusion

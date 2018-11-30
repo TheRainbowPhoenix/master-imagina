@@ -132,7 +132,7 @@ int pthread_mutex_destroy(
 - Un seul mutex peut protéger plusieurs variables, mais pas l'inverse.
 - Les opérations lock() et unlock() sont atomiques, mais pas la portion de code qui se trouve entre les deux.
 - Cette portion de code est appelée **section critique**.
-- Si un thread est dans une **section critique**, il doit être garanti qu'aucun autre thread n'y sois pas simultanément.
+- Si un thread est dans une **section critique**, il doit être garanti qu'aucun autre thread n'y sois pas simultanément c'est **l'exclusion mutuelle**.
 
 ### Variable conditionnelle [↺](#sommaire-)
 
@@ -220,3 +220,137 @@ Changement de contexte couteux                  | Partie d'un processus
 Espace d'adressage de processus non partageable | Peu partager des données en memoire avec d'autres threads
 Outils de synchronisation difficiles            | Permet d'executer plusieurs unités d'execution de manière asynchrone
 Plus difficile à implementer                    | Execute une fonction
+
+## Communication entre processus (IPC)
+
+visualisation des information avec la commande `ipcs`.
+
+objet ipc publique: il faut fournir une clé pour que les autres processus puissent la trouvé.
+
+objet ipc privé: utilise la clé IPC_PRIVATE les autres processus doivent obtenir l'id de l'objet
+
+genere un clé publique en fonction du fichier existant et de l'id du projet (>0).
+
+```
+key_t key = ftok(const char* pahtname, int proj_id);
+```
+
+### File de messsages
+
+analogie boite contenant des message avec des etiquettes
+
+on peut extraire les message qui nous interresse uniquement
+
+durée de vie tant que la mémoire système n'a pas été nettoyé (redemarage) objets persistants
+
+depos de message atomique
+
+si file pleine ecrivain endormie
+
+si la file est vide lecteur endormie
+
+
+Action                            | Fonction
+--------------------------------- | ----------------------------------------------
+Creation                          | `msgget(key, rights)`
+Identification                    | `pthread_cond_wait(*cond, *mutex)`
+Ecriture                          | `pthread_cond_timedwait(*cond, *mutex, *time)`
+Lecture                           | `pthread_cond_signal(*cond)`
+Controle                          | `pthread_cond_destroy(*cond)`
+
+```c
+// Créée une variable conditionnelle en lui associant des attributs.
+int msgget(key_t key, int msgflg);
+
+
+struct msgbuf {
+    long mtype; // Etiquette du message
+    char mtext[1]; // Données du messages (pas de pointeurs)
+};
+
+ssize_t msgrcv(int msqid, void *msgp, size_t msgsz, long msgtyp, int msgflg);
+
+// controle operation on the queue
+int msgctl(int msqid, int cmd, struct msqid_ds *buf);
+int msgctl(qid, IPC_RMID, NULL); // remove queue
+
+
+// msgtyp > 0 : lis le premier message dont l'etiquette e = msgtyp
+// msgtyp = 0 : lecture du premier message disponible
+// msgtyp < 0 : lecture du premier message disponible avec la plus petite
+// etiquette e <= |msgtyp|
+int msgsnd(int msqid, const void *msgp, size_t msgsz, int msgflg);
+
+```
+
+### Memoire partagée
+
+permet a plusieurs programmes d'avoir un espace commun de mémoire
+
+Action                            | Fonction
+--------------------------------- | ----------------------------------------------
+Creation                          | `msgget(key, rights)`
+Attachement                       | `pthread_cond_wait(*cond, *mutex)`
+Dettachement                      | `pthread_cond_timedwait(*cond, *mutex, *time)`
+Controle                          | `pthread_cond_signal(*cond)`
+
+```c
+int shmget(key_t key, size_t size, int shmflg);
+
+// attachement
+void *shmat(int shmid, const void *shmaddr, int shmflg); verrify les erreur avec (void*)-1
+
+// detachement
+int shmdt(const void *shmaddr);
+
+// destruction
+int shmctl(int shmid, int cmd, struct shmid_ds *buf);
+
+
+```
+
+### Sémaphores
+
+mecanisme de synchronisation de processus.
+
+Action                            | Fonction
+--------------------------------- | ----------------------------------------------
+Creation                          | `msgget(key, rights)`
+Attachement                       | `pthread_cond_wait(*cond, *mutex)`
+Dettachement                      | `pthread_cond_timedwait(*cond, *mutex, *time)`
+Controle                          | `pthread_cond_signal(*cond)`
+
+
+```c
+int semget(key_t key, int nsems, int semflg);
+
+int semop(int semid,
+    struct sembuf *sops, // Ensemble d'operation à réaliser
+    size_t nsops); // Nombre d'operations
+
+struct sembuf {
+    unsigned short sem_num; // Numéro de la semaphore
+    short sem_op; // Opération sur la semaphore
+    short sem_flg; // Options (Ex SEM_UNDO)
+};
+
+
+int semctl(int semid, int semnum, int cmd, ...);
+
+union semun {
+    int              val;    /* Value for SETVAL */
+    struct semid_ds *buf;    /* Buffer for IPC_STAT, IPC_SET */
+    unsigned short  *array;  /* Array for GETALL, SETALL */
+    struct seminfo  *__buf;  /* Buffer for IPC_INFO
+                                (Linux-specific) */
+};
+
+// destruction
+int semctl(semid, 0, IPC_RMID);
+
+```
+
+- différences entre processus et thread
+- partage des ressources inter-processus et inter-threads
+- synchronisation entre processus et threads (exclusion mutuelle attente d'un evenement)
+- Attention à la synchronisation, problème d'interblocage

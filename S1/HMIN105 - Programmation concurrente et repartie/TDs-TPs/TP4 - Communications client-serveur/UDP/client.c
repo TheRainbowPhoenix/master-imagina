@@ -10,7 +10,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 
-#include "warnevent.h" // Verifications d'erreurs
+#include "warn.h" // Verifications d'erreurs
 
 int main(int argc, char const *argv[]){
 
@@ -34,7 +34,7 @@ int main(int argc, char const *argv[]){
 	int res = inet_pton(AF_INET, adr, &(serv_addr.sin_addr)); WARN_ERROR(res);
 
 	// Allocation de deux char pour ne pas avoir de problème avec le realloc dans getline (getdelim)
-	char* msg = malloc(sizeof(char) * 2); 
+	char* msg = (char*)malloc(sizeof(char) * 2); 
 	strncpy(msg, "\n\0", 2);
 
 	size_t msg_len = strlen(msg);
@@ -60,7 +60,7 @@ int main(int argc, char const *argv[]){
 
     read_size = recvfrom(sock_fd, &msg_len, sizeof(msg_len), 0, (struct sockaddr*)&serv_addr, &addrlen); WARN_ERROR(read_size);
     
-    msg = realloc(msg, msg_len);
+    msg = (char*)realloc(msg, msg_len);
 
     read_size = recvfrom(sock_fd, msg, msg_len, 0, (struct sockaddr*)&serv_addr, &addrlen); WARN_ERROR(read_size);
 
