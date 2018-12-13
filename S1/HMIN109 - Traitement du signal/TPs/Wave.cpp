@@ -448,8 +448,7 @@ void Wave::write(char* fileName) {
 
   //FERMETURE DU FICHIER
   fclose(fd);      
-}    
-
+}
 
 //void Wave::read(char* fileName) {
 //  
