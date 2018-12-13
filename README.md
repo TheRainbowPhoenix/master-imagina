@@ -4,8 +4,8 @@
 
 ### Semestre 1
 
-+ [HMIN102 - Ingenierie logicielle](../../tree/master/S1/HMIN102%20-%20Ingenierie%20logicielle)
-+ [HMIN105 - Programmation concurrente et repartie](../../tree/master/S1/HMIN105%20-%20Programmation%20concurrente%20et%20repartie)
+* [HMIN102 - Ingenierie logicielle](../../tree/master/S1/HMIN102%20-%20Ingenierie%20logicielle)
+* [HMIN105 - Programmation concurrente et repartie](../../tree/master/S1/HMIN105%20-%20Programmation%20concurrente%20et%20repartie)
 - [HMIN107 - Intelligence artificielle](../../tree/master/S1/HMIN107%20-%20Intelligence%20artificielle)
 - [HMIN108 - Programmation orientee agents](../../tree/master/S1/HMIN108%20-%20Programmation%20orientee%20agents)
 - [HMIN109 - Traitement du signal](../../tree/master/S1/HMIN109%20-%20Traitement%20du%20signal)
@@ -13,7 +13,7 @@
 ### Semestre 2
 
 - [HMIN201 - TER (EvoAgents)](../../tree/master/S2/HMIN201%20-%20TER%20%28EvoAgents%29)
-+ [HMIN204 - Conduite de projet](../../tree/master/S2/HMIN222M%20-%Conduite%20de%20projet)
+* [HMIN204 - Conduite de projet](../../tree/master/S2/HMIN222M%20-%Conduite%20de%20projet)
 - [HMIN211 - Analyse et traitement des images](../../tree/master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images)
 - [HMIN212 - Modelisation et programmation 3D](../../tree/master/S2/HMIN212%20-%20Modelisation%20et%20programmation%203D)
 - [HMIN213 - Algorithmes d'exploration et de mouvement](../../tree/master/S2/HMIN213%20-%20Algorithmes%20d'exploration%20et%20de%20mouvement)
