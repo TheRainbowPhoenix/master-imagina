@@ -32,7 +32,7 @@
 ### Semestre 2
 
 - [HMIN201 - TER (EvoAgents)](../../tree/master/S2/HMIN201%20-%20TER%20%28EvoAgents%29)
-- [HMIN204 - Conduite de projet](../../tree/master/S2/HMIN222M%20-%Conduite%20de%20projet)
+- [HMIN204 - Conduite de projet](../../tree/master/S2/HMIN204%20-%Conduite%20de%20projet)
 - [HMIN211 - Analyse et traitement des images](../../tree/master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images)
 - [HMIN212 - Modelisation et programmation 3D](../../tree/master/S2/HMIN212%20-%20Modelisation%20et%20programmation%203D)
 - [HMIN213 - Algorithmes d'exploration et de mouvement](../../tree/master/S2/HMIN213%20-%20Algorithmes%20d'exploration%20et%20de%20mouvement)
