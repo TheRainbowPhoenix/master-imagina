@@ -17,374 +17,376 @@
 ### Ressources [↺](#sommaire-)
 
 - [Cours et TPs](https://moodle.umontpellier.fr/course/view.php?id=1195)
+- [Chaine de Wheeler Ruml](https://www.youtube.com/channel/UCdgFn-ezyEWGpnX6wsq4jMw)
 
-## Definitions
+## CSP (Constraint Satisfaction Problem) [↺](#sommaire-)
 
-**Probleme :** Collection d'information que l'agent utilise pour décider quelle(s) action(s) accomplir
+- Etats = valeurs d'un ensembles de variables
+- Action = assignation/retraite de valeurs aux variables
+- But = ensembles de contraintes que les valeurs doivent satisfaires
 
-**Definition d'un Problème :**
+### Representation [↺](#sommaire-)
 
-- Identification d'un **état initial** (choix d'un langage de description d'états du problème)
-- Identification des **actions possibles** par définition d'opérateurs de changements d'état (definition de l'ensemble des états possibles du problème).
+**Graphe binaire**
 
-**Espace des états/de recherche d'un problème :** Ensemble des états atteignables depuis l'état initial par n'importe quelle séquence d'actions (representable par un graphe orienté).
+(exemple coloration de carte)
 
-**Solution d'un Problème :** séquence d'actions permettant de passer de l'état initial vers un état but (chemin orienté).
+**Graphe n-aire**
 
-## Formalisation d'un problème
+(exemple n-reine ou puzzle arithmètique)
 
-| Type    | Composants              | Opérations                                    |
-|         |                         |                                               |
-| Problem | InitialState, Operators | GoalTest(State), PathCost(SequenceOfOperator) |
+### Resolution [↺](#sommaire-)
 
-**Problèmes à états simple :**
+#### Backtrack [↺](#sommaire-)
 
-- On connaît l’état dans lequel on est
-- On connaît précisément l’effet des actions
-- On peut calculer à tout moment l’état dans lequel on se trouvera après une action
-
-**Problèmes à états multiples :**
-
-- On ne sait pas exactement dans quel état on se trouve (seulement un ensemble d’états possibles)
-- On ne connaît pas précisément l’effet des actions
-- On ne peut que caractériser par un ensemble d’états la situation où l’on est
-
-## Algorithme de Résolution
-
-- Il s'agit donc d'effectuer une rechercher à travers l'espace des états
-- L'idée est de maintenir et d'étendre un ensemble de solutions partielles : des séquences d'actions qui amènent à des états intermédiaires "plus proche" de l'état but
-
-## Génération des Solutions Partielles
-
-**Un cycle en 3 phases**
-
-1. Tester si l'état actuel est un état but
-2. Générer un nouvel ensemble d'états à partir de l'état actuel et des actions possibles
-3. Sélectionner un des états générés (à cette étapes ou précédemment) et recommencer
-
-Le choix de l'état à considérer (la sélection) est déterminé par la stratégie de recherche.
-
-## Processus de Résolution
-
-- Constructoin d'un arbre de recherche qui se superpose à l'espace des états du problème.
-
-- Chaque noeud correspond à l'état initial ou un devellopement du sommet parent par un des opérateurs du problème
-
-## Arbre de Recherche
-
-- Racine correspond à l'état initial
-- Feuilles sont soit des noeuds associés à des états sans action soit des noeuds non encore développés
-- Un chemin est une séquence de sommets partant du sommet à une feuille
-
-## Noeuds d'un Arbre de Recherche
-
-| Composants                            | Details                                                                                  |
-|                                       |                                                                                          |
-| State                                 | Etat danss l'espace des états auquel le noeud correspond                                 |
-| ParentNode                            | Le noeud ayant généré ce noeud                                                           |
-| Operator                              | Opérateur utilisé pour générer ce noeud                                                  |
-| Depth                                 | Le nombre de noeuds - 1 du chemin de la racine à ce noeud                                |
-| PathCost                              | Le coût de ce chemin                                                                     |
-
-| Operations                            | Details                                                                                  |
-|                                       |                                                                                          |
-| Node MakeNode(State)                  | Fabrique un noeud à partir d'un état (utilisé pour l'état initial)                       |
-| SetOfNode Expand(Node, SetOfOperator) | Calcule l'ensemble des noeuds générés par l'application des opérateurs au noeud spécifié |
-
-**Frontière :** Ensemble des noeuds non encore développés (explorés) de l'arbre de recherche
-
-## Queue d'un Arbre de Recherche
-
-| Operations                  | Details                                                          |
-|                             |                                                                  |
-| Queue MakeQueue(Node)       | Construit une liste à un  noeud                                  |
-| Bool Empty?(Queue)          | Retourne vrai si la liste est vide                               |
-| Node RemoveFront(Queue)     | Extrait le noeud en tête                                         |
-| QueuingFn(SetOfNode, Queue) | Insère des noeuds dans la liste selon une stratégie particulière |
-
-## Fonction Générale de Recherche
+Pour resoudre un problème on prend une série de décisions, on fois la décision prise on peut se rendre que la décision n'est pas bonne, si c'est le cas, on retourne à la décision précedente pour voir si un peut en prendre une meilleure
 
 ```
-GeneralSearch(Problem p, QueuingFn strategy) : Node
-	Queue frontier := MakeQueue(MakeNode(p.InitialState))
-	do
-		if Empty?(frontier) then return null
-		Node n := RemoveFront(frontier)
-		if GoalTest(n.State) then return n
-		frontier := strategy(Expand(n, p.Operators), frontier)
-	end
-end
-```
-## Performance d'une Stratégie de Résolution
-
-- **Complétude** : La technique de résolution marche t'elle dans tous les cas
-- **Optimalité** : La technique de résolution trouve t'elle une solution de coût minimal
-- **Complexité** : La technique est-elle coûteuse (en **temps** ?, en **mémoire** ?)
-
-# Strategie de Recherche Simple
-
-## Recherche en largeur
-
-- Trouve une solution la plus proche de la racine
-- Optimale seulement si
-	- le critère d'optimalité diminue avec le nombre d'opérations effectués
-	- et que toutes les Opérations ont le même coût
-
-**Complexité** : 
-
-- Soit p la profondeur de la solution trouvé
-- soit b le facteur de branchement (nombre max de noeuds générés à chaque expansion)
-
-- Les complexité temporelle et spatiale sont bornées par O(p^(b + 1))
-
-## Dijkstra (Recherche par Coût)
-
-**Complétude** :
-
-- Complète si les coûts sont positifs
-
-**Optimalité** :
-
-- Optimale si le PathCost augmente avec le nombre d’opérateurs: ∀ n PathCost (successeur (n)) ≥ PathCost(n)
-- Quand le PathCost est la somme du coût des opérateurs, elle est optimale si les opérateurs n’ont pas de coût négatif
-
-**Complexité spatiale et temporelle** :
-
-- Soit C le coût de la solution, p le coût de l’action min, la profondeur maximum de l’arbre de recherche sera C/p, soit une complexité de O(b^C/p )
-
-## Recherche en Profondeur
-
-**Complétude** :
-
-- On insère les nœuds développés en tête de liste ce qui peut conduire à développer des branches infinies ou créer des cycles
-
-**Optimalité** :
-
-- Non Optimale car elle retourne la première solution rencontrée sans
-aucune corrélation avec un critère de coût
-
-**Complexité spatiale et temporelle** :
-
-- Peu coûteuse en mémoire car on ne mémorise qu’un chemin (plus les nœuds frontières) et non l’arbre entier
-
-- Soit m la profondeur maximale de l’espace de recherche et b le facteur de branchement: 
-	- Complexité temporelle : O(b^m), mais elle peut être rapide en pratique si le problème possède beaucoup de solutions
-	- Complexité spatiale : O(mb)
-
-# Strategie de Recherche heuristique
-
-- Cela revient à considérer que l'on dispose d'une fonction d'évaluation d'état qui retourne le coût d'un chemin d'un état à l'état but le plus proche (Estimation)
-
-# CSP : Constraint Satisfaction Problem
-
-Un CSP est un type de problème particulier
-
-- Les états sont définis par les **valeurs** d'un ensemble de variables
-- Les variables sont caractérisées par un **domaine** de valeurs possibles associé à chaque variable
-- Les actions sont des **assignations** de valeurs aux variables et/ou des **retraits** de valeurs possibles aux domaines
-- La fonction de test de but est un ensemble de **contraintes** auquel les valeurs des variables doivent satisfaire
-
-- Un CSP est le problème défini par :
-	- Instance : un réseau de contraintes R=(X,D,C)
-	- Question : Sol(R) ≠ ∅ (R a-t-il une solution ?)
-
-- CSP est NP-complet
-
-## CSP vs Problème Standard
-
-- Les CSP définissent une structure particulière pour les états : un ensemble de variables partiellement valuées, et une structure particulière pour la fonction but : **un ensemble de contraintes**
-- Les algorithmes de recherche d’une solution peuvent tirer parti de cette structuration
-	- On passe d’une vision exploration d’un ensemble d’états : d’un état initial à un état but
-	- À une vision **résolution pas à pas d’un problème** : de l’étape où aucune variable n’est assignée à l’étape où toutes les variables sont assignées
-- Les techniques de résolution dépendent de la nature des domaines et contraintes
-
-## Réseau de Contraintes
-
-- Un réseau de contraintes est un triplet (X,D,C)
-	- X = {X1 ,X2 ,... ,Xn} est un ensemble fini de variables
-	- D, le domaine de X, est une fonction qui associe à chaque variable Xi un ensemble fini de valeurs D(Xi) (le domaine de la variable Xi).
-	- C = {C1 ,... ,Cm} est un ensemble de contraintes
-
-- Chaque contrainte ci est une relation (i.e. un ensemble de tuples de valeurs)
-	- définie sur un sous-ensemble ordonné des variables de X, appelé sa portée et notée* P(Ci) = <Xi1 ,... ,Xik> où k est **l’arité**.
-	- Ci désigne donc l’ensemble des tuples de valeurs autorisés par la contrainte (généralement Ci ⊆ D(Xi1)X...XD(Xik))
-
-## Assignation Partielle et Complète
-
-- Une **assignation** A sur un sous-ensemble X’ des variables de X est une application qui associe à chaque variable x de X’ une valeur de son domaine D(x)
-	- si X’⊂ X on parle **d’assignation partielle**
-	- si X’= X on parle **d’assignation complète**
-- On note :
-	- **var(A)** le domaine de A (les variables ayant une image par A)
-	- **A[t]** l’application de A aux variables de t (t étant un tuple de variables distinctes de var(A))
-
-## Consistance et Solution
-
-
-- Une assignation A **viole une contrainte** c ssi
-	1. **P(c) ⊆ var(A)** (toutes les variables de c ont une image par A)
-	2. **A[P(c)] ∉ c** (le tuple de valeur défini par A pour les variables de c n’est pas autorisé)
-
-- A est **localement consistante** si A ne viole aucune contrainte de C Une solution est une assignation complète qui ne viole aucune contrainte de C
-- L’ensemble des **solutions** d’un réseau de contraintes R = (X,D,C)
-est noté Sol(R)
-
-## Résolution d’un CSP : algo naïf
-
-- L’état initial est l’état dans lequel aucune variable n’est
-assignée : A = ∅
-- Une action consiste à choisir une variable non assignée et à lui
-associer une valeur de son domaine : A <- A U {(x i ,v)} où v ∈ D(xi)
-	- Le facteur de branchement est borné par la somme des tailles des domaines
-	- La profondeur de l’arbre de recherche est naturellement bornée par le nombre de variables
-- Lorsque toutes les variables sont assignées, la fonction de test de but vérifie si les contraintes sont satisfaites ou pas
-	- A est il une solution de R ? On peut donc utiliser un algorithme de recherche en profondeur -> O((Σi|Di|)^|X|)
-
-## Backtracking Algorithm
-
-- L’algorithme prend en entrée
-	- Un réseau de contraintes
-	- Une assignation partielle localement consistante
-- On teste à chaque extension de l’assignation partielle courante si elle ne viole pas de contraintes
-- Si viol, on « backtrack » immédiatement : on revient sur les choix précédents de valeur
-- Si non, on continue à développer la branche
-
-```
-BacktrackingSearch(Network R = (X,D,C)) = BT({}, R)
-
-Fonction BT(Assignation A, Network R) : Booléen
-Début
-	si |A| = |R.X| alors
+Algorithme Backtracking(Assignation A, Network R) : Booléen 
+Debut
+	si |A| = |R.X| // Toutes les variables de R sont assignées
 		afficher a
-		retourner true
-	finsi
-	
-	x := ChoixVariableNonAssignée(R.X, A)
-	
-	pour tout v ∈ Tri(R.D(x)) faire
-		si Consistant(A∪{(x,v)}, R.C) alors
-			si BT(A∪{(x,v)}, R) alors retourner true 
-			finsi
-		finsi
-	finpour
-	
-	retourner false
+		retourner vrai
+	x ← ChoixVariableNonAssignée(R.X, A)
+	pour tout v ∈ Tri(R.D(x))
+		si Consistant(A U {(x, v)}, R.C)
+			si Backtracking(A U {(x, v)}, R)
+				retourner vrai
+	retourner faux
 Fin
 ```
-# Probleme
 
-**Definition**
+(exemple)
 
-- Identifier **l'état initial**
-- Identifier les **actions possibles**
-- Identifier **l'état but**
+#### Heuristique [↺](#sommaire-)
 
-**Resolution**
+##### Ordre des variables [↺](#sommaire-)
 
-- Trouver un chemin qui va de l'état initial à l'état but
+- lex : lexicographique
+- rand : aléatoire
+- min-dom : petit domaines en premier
+- min-width : trie de la dernière a la première lex en selectionnant le degré min dans les variables non choisi 
+- max-deg : ordre décroissant des degré (nb contraintes sur var) 
+- max-card : ordre en selectionnant une variables connecté au plus grand nombre de variables deja selectionné
 
-**Solution**
+=> bon choix = min-dom + max-deg + lex
 
-- Sequences d'action qui permettent de passer de l'état initial à l'état but
+##### Arc-Consistance [↺](#sommaire-)
 
-# Algorithme de résolution
+- Appliquable avant et pendant le backtrack
+- Enlèves les valeurs qui n'ont pas de support dans les contraintes
+- Evite de faire des assignation inutiles
 
-- Correspond a une simple recherche de l'état but à travers l'espace des états
-- L'idée est de maintenir et d'etendre un ensemble de solution partielles qui se rapprochent de l'état but
+```
+Algorithme Revise(Variable x, Constraint c, Network R) : Booléen
+Debut
+	modif ← faux
+	pour tout v ∈ R.D(x)
+		si il n'existe pas t ∈ c tel que chaque valeur du tuple est dans le domaine courant de la variable x pour R.D
+			supprimer v de R.D(x)
+			modif ← vrai
+	retourner modif
+Fin
 
-**Géneration des solutions partielles**
+Algorithme ArcConsistance(Network R) : Booléen 
+Debut
+	Q ← {(x, c) | c ∈ R.C et x ∈ P(c)}
+	tant que Q ≠ {}
+		retirer (x, c) de Q
+		si Revise(x, c, R)
+			si R.D(x) = {}
+				retourner faux
+			sinon
+				Q ← Q U {(x', c') | c' ∈ R.C, x' ∈ P(c'), c' ≠ c, x' ≠ x}
+	retourner vrai
+Fin
+```
+(exemple)
 
-1. Tester si l'état actuel est un état but
-2. Générer un nouvel ensemble d'états à partir de l'état actuel et des action possibles
-3. **Sélectionner** un des états générés et recommencer
+##### Forward Checking [↺](#sommaire-)
 
-lors de la selection plusieurs strategie sont possible selon le problème
+- Amelioration du backtrack, les variables on des domaines dynamiques
+- Aprèes chaque assignation on élimine pour chaque domaine des variabless les valeurs qui violent des contraintes dans l'etat actuel des variables
+- Pas besoin de l'arc-consistence, la consistance et maintenu toutes seule
+- Si le domaine d'une des variables est vide après une assignation alors l'assignation ne menera pas a une solution et on backtrack puis essaye une autre assignation.
 
-**Processus de resolution**
+```
+Algorithme Propage(Variable x, Valeur v, Assignation A) : Booléen
+Accès en modification : Network R
+Début
+	pour tout c ∈ R.C tel que x ∈ P(c) et |P(c) - (var(A) U {x})| = 1
+		pour tout w ∈ R.D(y) où y est l'unique variable de P(c) - (var(A) U {x})
+			si il n'existe pas t ∈ c tel que t|_x = v et t|_y = w
+				supprimer w de R.D(y)
+	si R.D(y) = NULL
+		retourner faux
+	retourner vrai
+Fin
 
-- creation d'un arbre de recherche
-- racine = etat initial
-- feuilles = etats sans action ou noeuds non encore developper
+Algorithme ForwardChecking(Assignation A, Network R) : Booléen
+Debut
+	si |A| = |R.X| // Toutes les variables de R sont assignées
+		afficher a
+		retourner vrai
+	x ← ChoixVariableNonAssignée(R.X, A)
+	D_old ← D
+	pour tout v ∈ Tri(R.D(x))
+		si Propage(x, v, A)
+			si ForwardChecking(A U {(x, v)}, R)
+				retourner vrai
+		D ← D_old
+	retourner faux
+Fin
+```
+(exemple)
 
-# Strategie de resolution
+## SAT (Problème de satisfiabilité booléenne) [↺](#sommaire-)
 
-**Evaluation des performance**
+### Resolution [↺](#sommaire-)
 
-- Completude
-- Optimalité
-- Complexité 
-	- En temps
-	- En memoire
+- cherche a prouvé la satisfiabilité d'un formule logique F sous forme normale conjonctive ((x1 v X2) ^ (x1 v x2) ^ ...)
+- entré : Formule logique F sous forme normal conjonctive (clause)
+- sortie : si F est satisfiables donne une solution sinon donne un sous-ensembles minimal de clause non satisfiables
 
-**Recherche en largeur**
+#### DPLL [↺](#sommaire-)
 
-**principe** : Les noeuds de profondeur d sont développés avant ceux de profondeur d+1.
+- algorithme de type backtrack
+- on assigne des variables en faisant sorte de satisfaire les clauses, si impossible alors backtrack
+- pour chaque clause 
+	- si un litteral est assigné à vrai alors la clause est satisfaite (plus besoin de la considerer)
+	- si tous ses littéraux devenus faux, elle est insatisfaisable
+	- si tous ses littéraux sauf un sont faux, alors clause unitaire on n'a qu'un seule moyen de la satisfaire
+- On retarde le plus possible le moment de faire un choix, si clause devenu unitaire alors on la satisfait et on propage les effet de l'affectation (Propagation unitaire)
 
-- Completude : si un solution existe elle sera trouver
-- Optimalité : trouve une solution la plus proche de la racine
-- Complexité en temps et memoire:
-	- Soit d la profondeur à laquelle la solution est trouvée
-	- Soit b le nombre max de noeuds générés à chaque expansion
-		- Complexité **bornées par O(b^(d+1))**
+- Quand on fait un choix on utilise egalement la propagation unitaire pour propager les effet de l'assignation
 
-**Recherche par cout**
+```
+Algorithme UnitPropagation(F)
+Données : Formule logique F sous forme normale conjonctive
+Resultat : Une simplification de la formule F dont les symboles inutiles ont été éliminés
+Debut 
+	tant que F contient une clause unitaire l
+		supprimer toutes les clauses qui contiennent l // Ces clauses sont satisfaites
+		supprimer ¬l de toutes les clauses de F // Ceci peut vider une clause, ce qui provoquera un echec
+	retourner F
+Fin
 
-**principe** : On sélectionne parmi les noeuds frontière le noeud dont le coût associé à son chemin depuis la racine est le moins élevé.
+Algorithme DPLL(F) // Davis Putnam Logemann Loveland
+Données : Formule logique F sous forme normale conjonctive, sol un ensemble vide de solution
+Resultat : Vrai si toutes les clauses sont satisfaites, faux sinon
+Debut
+	si F = NULL
+		retourner vrai // Toutes les clauses sont satisfaites
+	si F a une clause vide
+		retourner faux // Une clause ne peut être satisfaite
+	si F a une clause unitaire
+		retourner DPLL(UnitPropagation(F))
+	choisir une variable non assignée x
+	retourner DPLL(F U {x}) ou DPLL(F U {¬x}) // Clause unitaire x ou ¬x ajoutée
+fin
+```
+(exemple)
 
-- Completude : si les coûts sont positifs
-- Optimale : si PathCost augmente avec le nombre d'operateurs et pas de coût negatif
-- Complexité : 
-	- Soit c le cout de la solution
-	- Soit p le cout de l'action min
-		- La profondeur maximum sera de c/p
-		- La complexité en **O(b^(c/p))**
+#### Heuristique [↺](#sommaire-)
 
-**Recherche en profondeur**
+MOMS (Maximum Occurences in Minimum Sized clauses) : on prend le literal qui apparait le plus souvent dans les clauses les plus petites mais non unitaires 
 
-**principe** : On développe toujours un des noeuds les plus profonds et on ne remonte que lorsqu'on tombe sur un noeud non but et non devellopable.
+#### Reduction polynomiale [↺](#sommaire-)
 
-- Complexité :
-	- Soit m la profondeur max de l'espace de recherche
-	- Soit b le facteur de branchement
-		- Complexité temporelle : **O(bᵐ)**
-		- Complexité spatiale : **O(mb)**
+##### SAT → CSP [↺](#sommaire-)
 
-- Non Complete : On insère les noeuds développer en tete de liste
-	- Peut creer des cycles ou des branches infinies
+- symboles de F → variables de X
+- ∀ x ∈ X, D(x) = {1,0}
+- Clauses → Contraintes
 
-- Non optimale : retourne la première solution rencontrée sans correlation de 
+(exemple)
 
-**amelioration**
+##### CSP → SAT [↺](#sommaire-)
 
-- completude : si on connait la profondeur max de la solution on peut appliquer borne max a l'algorithme pour ne pas explorer les branches infinies
+**traduction des variables et des domaines**
+- (variable x peut prendre la valeur v → symbole xv) ↔ F = { xv | x ∈ X et v ∈ D(x) } 
+- ∀ x ∈ X avec D(x) = { v_1, ..., v_n } on doit obtenir ces clauses :
+	- (xv_1 v ... v xv_n ) ↔ x prend au moins une valeur de D(x)
+	- (!xv_i v !xv_j) avec i < j et 1 ≤ i,j ≤ n ↔ x prend au plus une valeur de D(x)
 
-- supression des etats répéter : 
-	- Ne pas retourner à l'état d'ou l'on viens O(1)
-	- Ne pas creer de chemin avec des cycles en comparent tout le noeuds de puis la racine O(d)
-	- Ne pas generer d'état déjà généré avec un stockage de tout les etats visité O(s) avec s taille de l'espace des etats
+**traduction des contraintes**
+- pour chaque s contrainte c portant sur des variables (x_1, ...,  x_k) on obtiendra un ensembles de clauses de taille k, qu'on construira a partir des tuples interdits par la contrainte
+- si le tuple (v_1, ..., v_k) est interdit par la contrainte : 
+	- on obtiendra ¬(x_1v_1 ∧ ... ∧ x_kv_k ) ce qui est equivalent a la clause (¬ x_1v_1 ∨ ... ∨ ¬ x_kv_k)
 
-# CSP : Constraint Satisfaction Problem
+(exemple)
 
-- Etats definis par les valeurs d'un ensemble de variables qui sont caractérisées par un domaine de valeurs possible
-- Actions sont des assignation de valeurs aux variables et/ou des retraits de valeurs possibles aux domaines
+## Système à base de règles d'ordre 0 (Logique des propositions) [↺](#sommaire-)
+
+- base de connaissance
+	- base de faits : observation factuelle sur une situation précise
+	- base de règles : connaissances générales sur un domaine d'application 
+
+- règle R : H -> C applicable à BF si H inclus dans BF
+- application utile si C ∉ BF
+- appliquer R à BF consiste à ajouter C à BF
+- BF est saturé si aucune application d'une règle de BR à BF n'est utile
+
+monde ouvert : on ne sait pas tout sur le monde, ce qui ne découle pas de la base est inconnue
+
+monde clot : on sait tout sur le monde ce qui ne découle pas de la base est considéré comme faux
+
+### Resolution [↺](#sommaire-)
+
+#### Forward Chaining [↺](#sommaire-)
+
+- principe : applique les règles sur les faits pour generer des nouveaux faits
+- la base de faits est saturée si on ne peut plus produire de nouveau faits
+
+```
+Algorithme ForwardChaining(K) // d'ordre 0
+Données : K = (BF, BR)
+Resultat : BF saturée par BR
+Debut
+	à_traiter ← BF
+	pour toute règle R ∈ BR
+		compteur(R) ← |hypothèse(R)| // Nombre de littéraux de l'hypothèse de R
+	tant que à_traiter ≠ NULL
+		retirer F de à_traiter
+		pour toute règle R : H → C ∈ BR telle que F ∈ H
+			décrémenter compteur(R)
+			si compteur(R) = 0 // R est applicable
+				si C ∉ (BF U à_traiter) // l'application de R est utile
+					ajouter C à à_traiter
+					ajouter C à BF
+Fin
+```
+
+(exemple)
+
+#### Backward Chaining [↺](#sommaire-)
+
+- principe : prouver un but en remontant le long des règles
+- le but initial est prouvé quand on arrive à une liste de buts vide
+
+```
+Algorithme BackwardChaining(K, Q, L)
+Données : K = (BF, BR), Q un atome, L un ensemble d'atomes (à ne pas générer)
+Resultat : Vrai ssi Q est prouvable
+Début
+	si Q ∈ BF
+		retourner vrai
+	pour toute règle R = H1 ∧ ... ∧ Hn → Q de BR
+		si aucun des H1 ... Hn n'appartient à L // Sinon on va boucler
+			i ← 1
+			tant que i ≤ n et BackwardChaining(K, Hi, L U {Q})
+				i++
+			si i > n
+				retourner vrai // Hypothèse de R prouvée, donc Q aussi
+	retourner faux // Aucun des faits et aucune des règles ne permet de prouver Q
+Fin
+```
+
+### Representation [↺](#sommaire-)
+
+Graphe ET OU
+
+## Système à base de règles d'ordre 1 (Logique des predicats) [↺](#sommaire-)
+
+### Homomorphisme [↺](#sommaire-)
+
+Un homomorphisme H d'un requete Q dans BF est une substitution des variables de Q par des constantes de BF tel que h(Q) inclus dans BF
+
+### Forward Chaining [↺](#sommaire-)
+
+```
+Algorithme ForwardChaining(K) // d'ordre 1
+Données : K = (BF, BR)
+Resultat : BF saturée par BR
+Debut
+	fin ← faux
+	tant que non fin
+		nouv_faits ← {}
+		pour toute règle R : H → C ∈ BR
+			pour tout (nouvel) homomorphisme S de H dans BF
+				si S(C) ∈ (BF U nouv_faits)
+					ajouter S(C) à nouv_faits
+		si nouv_faits = {}
+			fin ← vrai
+		sinon
+			ajouter les éléments de nouv_fais à BF
+Fin
+```
+### Reduction polynomiale [↺](#sommaire-)
+
+#### HOM → CSP [↺](#sommaire-)
+
+HOM:
+A1 = { p(x, y), p(y, z), q(z, x) }
+A2 = { p(a, b), p(b, a), p(a, c), q(b, b), q(a, c), q(b, c) }
+Qu'elles sont les Homomorphismes de A1 dans A2 ?
+
+CSP:
+Réseau(X, D, C)
+Ce réseau est-il (globalement) consistant ?
+
+X : variables de A1
+D : constantes de A2
+C : les atomes de A1 fournissent les contraintes, les atomes de A2 fournissent les tuples de ces contraintes
+
+transformations:
+si p(x, x) avec x variable
+	p(x, y) et x = y (y nouvelle variable)
+
+si p(x, a) avec x variable et a constante
+	p(x, y) avec Domaine(y) = {a} (y nouvelle variable)
+
+#### CSP → HOM [↺](#sommaire-)
+
+A1 ← ensemble des variables de X
+A2 ← ensemble des valeurs des variables x ∈ X
+
+A1 = { Ci(x1, ..., xk) | Ci ∈ C et porte sur (x1, ..., ck)}
+A2 = { Ci(a1, ..., ak) | Ci ∈ C et (a1, ..., ak) est dans la définition de ci}
 
 
-- Etats : Ensemble de variables partiellement valuées
-- Fonction but : Ensemble de contraintes
 
-**Resau de contraintes**
 
-- Triplet (X, D, C)
-	- X = {x_1, x_2, ..., x_n} est un ensemble finis de variables
-	- D, le domaine de X est une fonction qui associe à chaque variable x_i un ensemble fini de valeurs D(x_i)
-	- C = {c_1, c_2, ..., c_n} est un ensemble de contraintes
 
-Chaque contrainte c_i est une relation (un ensemble de tuples de)
 
-**graphe**
+#### Negation Monde ouvert/clos
 
-**Resolution CSP**
+Mecanisme de chaînage avant/arrière est en
+	- **Adéquation** (ou correction) : si l'atome A est produit par un mecanisme de chaînage alors A est conséquence logique de la base de connaissances
+	pour tout atome A, si A est dans BF*, A est consequence logique de K
+	- **Completude** : si l'atome A est conséquence logique de la base alors un mecanisme de chaînage le produit forcement
+		pour tout atome A, si A est consequence de K alors A est dans BF*
+Règle negative : 
 
-**heuristique**
+**Adéquation** : il ne fait que des déduction
+	- Chainage avant : si ∀ A, A ∈ BF* alors BF, BR |= A  
+	- Chainage arrière : si ∀ A, A est prouvé alors BF, BR |= A
 
-choisir la variable ayant le plut petit domaine
+**Complétude** : il fait toute les déduction
+	- Chainage avant : si ∀ A, BF, BR |= A alors A ∈ BF*  
+	- Chainage avant : si ∀ A, BF, BR |= A alors A est prouvé  
+
+**règle conjonctive positive** : adéquation et completude 
+**règle conjonctive (pas forcement positive)** : adéquation mais pas complétude 
+
+BF = {A}
+R1 : A, not B → C
+R1 : A → B
+
+Si on applique R1 avant R2, on obtient BF* = {A, C, B}. Mais ceci est problématique car on s'est servi de l'absence de B pour produire C, alors qu'on a finalement B présent. Le résultat ovulu est BF* = {A, B}
+
+Si on utilise not B pour inférer quelque chose il faut être sur qu'on ne vas pas produire B par la suite
+
+Il faut ajouter des règles qui assurent que :
+
+	- la négation est utilisée correctement : l'application d'une règle dont l'hypothèse contient not B intervient toujours après les applications des règles qui produisent B
+	- le résultat de la saturation est unique
+
+**Règles semi-positif** : seuls les symboles qui n'apparaissent pas en conclusion de règles peuvent être niés. L'ordre des règles n'a alors aucune importance.
+
+**Règles stratifié** : l'idée est de mettre les règles dans un ordre qui assure que l'orsqu'on utillise un litéral négatif dans une hypothèse de règle, on ne peut plus produire ce littéral en positif. A chaque symbole p on asscie un entier α(p). Les règles sont ensuite rangées en strates suivant le numéro α associé à leur conclusion. On éxécute les règles en marche avant par ordre croissant des strates : à l'étape i, on sature la base de faits calculée à l'étape i - 1 avec la règles de la strate i.
+
+un ensemble de règles est stratifiable ssi son graphe de précedence n'admet aucun circuit avec un arc négatif
+
+
+

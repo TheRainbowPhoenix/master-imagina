@@ -7,7 +7,6 @@
 - Formules (fbf) : A -> B ^ !c
 
 (1) A, B, C... atomes
-
 (2) si A et B sont des fbf, !A, (A^B), (AvB), (A->B) sont des fbf
 
 **literal** : symbole ou negation d'un symbole.

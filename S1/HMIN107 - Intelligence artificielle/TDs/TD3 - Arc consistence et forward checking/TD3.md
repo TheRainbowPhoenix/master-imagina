@@ -15,16 +15,16 @@ C2:
 | x3 | x2 |
 |----|----|
 | 0  | 1  |
-| 1  | 2  | 
 | 0  | 2  |
+| 1  | 2  | 
 
 ```
 Ce réseau n'est pas consistent, on peut trouver un exemple qui le prouve.
 
 x1 ----- c1 ----- x3 ----- c2 ----- x2
 0        0|1     ~0~       0|1     ~0~                  
-~1~               1        1|2     ~1~
-                           0|2      2       
+~1~               1        0|2     ~1~
+                           1|2      2       
 ```
 
 **Question 2**

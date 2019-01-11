@@ -10,8 +10,8 @@
 
 ### Examens [↺](#sommaire-)
 
-- Note final : 
+- Note final : 60% Exam + 40% TP
 
 ### Ressources [↺](#sommaire-)
 
-- [Cours et TDs-TPs]()
+- [Cours et TDs-TPs](http://www.lirmm.fr/~wpuech/enseignement/master_informatique/Analyse_Traitement_Image/)

@@ -3,20 +3,20 @@
 <!-- 
 	Les matières que je liste ici en commentaire sont celles que j'ai choisis, les autres matières sont obligatoires.
 
-	S1
+	Semestre 1
 	
 	HMIN102 - Ingenierie logicielle, 
 	HMIN105 - Programmation concurrente et repartie
 	
-	S2
+	Semestre 2
 	
 	HMIN204 - Conduite de projet
 	
-	S3
+	Semestre 3
 
 	HMIN303 - Developpement logiciel pour l'embarque
 
-	S4
+	Semestre 4
 
 	HMIN403 - Stage industriel
 -->
