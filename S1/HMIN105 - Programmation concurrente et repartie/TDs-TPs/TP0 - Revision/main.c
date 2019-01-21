@@ -184,6 +184,20 @@ int main(/*int argc, const char *argv[]*/) {
 
 	printf("EXERCICE 1\n\n");
 
+	printf("Question 1)\n\n"); 
+	{
+		printf("int a = 10;\n");
+		printf("int b = 25;\n");
+		printf("int* p = &b;\n");
+		printf("int* pp = &a;\n\n");
+
+		printf("1. *(&(*(*(&p))))     -> la valeur de b\n");
+		printf("2. *(p-1)             -> la valeur de a\n");
+		printf("3. *(*(&p)-1)         -> la valeur de a\n");
+		printf("4. *(*(&pp)+1)        -> la valeur de b\n");
+		printf("5. *(&(*(*(&p))) - 1) -> la valeur de a\n\n");
+	}
+
 	printf("Question 2)\n\n"); 
 	{
 		int array[] = {1, 3, 5, 7, 9};

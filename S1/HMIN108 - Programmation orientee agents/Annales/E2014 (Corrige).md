@@ -1,0 +1,372 @@
+# Exercice 1
+
+### Question a)
+
+'of' ([var] of agent) renvoie la valeur de la variable var de l'agent agent
+
+### Question b)
+
+'any?' envoie vrai si un agent set n'est pas vide et faux sinon
+'empty?' envoie vrai si une liste un chaine de charactère et vide, et faux sinon
+
+la différence et donc le type de donnée sur lesquels ces procedures agissent
+
+### Question c)
+
+'ask' permet de faire executer une procedure à un agent/groupe d'agent
+
+**Exemple** : ask patches [set pcolor red]
+
+### Question d)
+
+'breed [group individu]' permet de donnez vie à une espece
+
+**Exemple** : breed  [loups loup]
+
+### Question e)
+
+un champs de potentiel est un signal qui permet de remonter ou de fuire ça source, concretement ils ce composent d'élement appelé gradiants qui sont des variables dont la valeur change selon si on ce rapproche de la source.
+
+**Exemple** : on peut utiliser les champ de potientiel pour modeliser un odeur qui ce diffuse dans l'envirronement comme vue dans le tp sur les lapins, quand les prédateur sente cette odeurs ils essaient de remonter à la source pour trouver leur repas.
+
+### Question f)
+
+FSM, FSM hiérarchique, FSM hiérarchique à reflexes, architecture de subsumption.
+
+### Question g)
+
+```netlogo
+to-report fibo [n]
+	ifelse n = 0 [
+		report 0
+	][
+		ifelse n = 1 [
+			report 1
+		][
+			report (fibo n - 1) + (fibo n - 2)
+		]
+	]
+```
+
+### Question h)
+
+si il y a dans les 8 patches autour de l'agent courant un ou plusieurs patches dont la couleur est verte et la hauteur > 50 alors l'expression renvoie un de ces patches, sinon elle renvoie nobody
+
+### Question i)
+
+FSM : ce qui determine le plus sont comportement c'est l'état dans lequel l'agent ce trouve, les perceptions contribuent à modifier l'etat courant.
+(comportement procedural en fonction de condition extérieures)
+(pas d'improvisation quant pas prévu)
+
+Subsomption : ce qui determine le plus le comportement de l'agent ce sont ces perceptions dans l'immediat
+(prend en compte l'état immédiat)
+(difficile de faire des suites d'actions)
+
+```netlogo
+; FSM
+
+set ctask "vadrouiller"
+
+to go
+	ask animals [run ctask]
+end
+
+to fuire-fsm
+	let p one-of predateurs in-radius champ-vision
+	if p != nobody [
+		set heading (- towards p)
+		fd 1
+	][
+		set ctask "chercher-nourriture-fsm"
+	]
+end
+
+to chercher-nourriture-fsm
+	let p one-of predateurs in-radius champ-vision
+	if p != nobody [
+		set heading (- towards p)
+		fd 1
+		set ctask "fuire-fsm"
+	][
+		ifelse nourriture? [
+			rammasser
+		][
+			vadrouiller
+		]
+	]
+end
+
+; Subsumption
+
+to go
+	ask animal [
+		ifelse predateur? [
+			fuire
+		][
+			chercher-nourriture
+		]
+	]
+end 
+```
+
+### Question j)
+
+```netlogo
+; On suppose que les taux sont en pourcentage
+
+patches-own [parfum]
+
+to pchit-pchit
+	set parfum parfum + 100
+end
+
+to evaporation
+	set parfum parfum - (100 * taux-evap) / 100 
+end
+
+to go
+	diffuse parfum taux-diffusion / 100
+	ask patches [evaporation]
+end
+```
+
+### Question k)
+
+```java
+public abstract class WarExplorerBrainController extends WarExplorerBrain {
+
+    public WarExplorerBrainController() {
+        super();
+    }
+
+    @Override
+    public String action() {
+        List<WarAgentPercept> percepts = getPercepts();
+
+        for (WarAgentPercept p : percepts) {
+            switch (p.getType()) {
+                case WarBase:
+                    if (isEnemy(p)) {
+                        broadcastMessageToType(WarRocketLauncher, "Enemy base on sight", String.valueOf(p.getAngle()), String.valueOf(p.getDistance()));
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (isBlocked())
+            setRandomHeading();
+
+        return WarExplorer.ACTION_MOVE;
+    }
+}
+```
+
+### Question l)
+
+```java
+public abstract class WarExplorerBrainController extends WarExplorerBrain {
+
+    public WarExplorerBrainController() {
+        super();
+    }
+
+    @Override
+    public String action() {
+        List<WarAgentPercept> percepts = getPercepts();
+
+        for (WarAgentPercept p : percepts) {
+            switch (p.getType()) {
+                case WarFood:
+                    if (p.getDistance() < WarFood.MAX_DISTANCE_TAKE && !isBagFull()) {
+                        setHeading(p.getAngle());
+                        return WarExplorer.ACTION_TAKE;
+                    } else if (!isBagFull()) {
+                        setHeading(p.getAngle());
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        if (isBlocked())
+            setRandomHeading();
+        
+        return WarExplorer.ACTION_MOVE;
+    }
+}
+```
+
+# Exercice 2
+
+```netlogo
+
+breed [Leaders Leader]
+breed [Suiveurs Suiveur]
+
+turtles-own [ctask]
+
+to setup
+	create-Leaders ... [
+		...
+	]
+
+	create-Suiveurs ... [
+		...
+		set ctask "move-Suiveur"
+		...
+	]
+end
+
+to go
+	ask Leaders [vadrouiller 1.2]
+	ask Suiveurs [run ctask]
+end
+
+to vadrouiller [spd]
+	fd spd
+	rt 50
+	lt 50
+end
+
+to-report trouverTruc [n]
+	report one-of Truc in-radius n
+end
+
+to move-Suiveur
+	let L trouverTruc dist
+	ifelse L != nobody [
+		face L
+		fd 0.8
+		set ctask word "suivre-Leader " L
+	][
+		vadrouiller 0.8
+	]
+end
+
+to suivre-Leader [l]
+	ifelse l != nobody [
+		face l
+		fd 0.8
+	][
+		vadrouiller 0.8
+		set ctask "move-Suiveur"
+	]
+end
+```
+
+# Exercice 3
+
+### Question a)
+
+```
+1. predateurs -> eviter-predateurs
+2. iplus de nourriture -> chasser
+3. jai des petits et les petits ont faim -> nourrire-petits
+4. animals -> s'accoupler
+```
+
+### Question b)
+	
+```netlogo
+to go
+	ask predateurs [go-predateurs]
+	ask animals [go-animals]
+end
+
+to go-animals
+	ifelse predateurs? [
+		eviter-predateurs
+	][
+		ifelse not nourriture? [
+			chasser
+		][
+			ifelse petits-faim? [
+				nourrire-petits
+			][
+				chercher-partenaire
+			]
+		]
+	]
+end
+```
+
+### Question c)
+
+```
+(faire schéma)
+```
+
+### Question d)
+
+```netlogo
+
+turtles-own [stack ctask]
+
+set stack []
+set ctask "chercher-partenaire"
+
+to go
+	ask turtles [
+		deliberer
+		run ctask
+	]
+end
+
+to go-mode [mode]
+	if ctask != mode [
+		set stack fput ctask stack
+		set ctask mode
+	]
+end
+
+to return-mode
+	ifelse not empty? stack [
+		set ctask first stack
+		set stack bf stack
+	]
+end
+
+to deliberer
+	ifelse predateurs? [
+		go-mode "eviter-predateurs"
+	][
+		ifelse not nourriture? [
+			go-mode "chasser"
+		][
+			ifelse petits-faim? [
+				go-mode "nourrire-petits"
+			][
+				go-mode "chercher-partenaire"
+			]
+		]
+	]
+end 
+
+to eviter-predateurs 
+	...
+	return-mode
+end
+
+to chasser 
+	...
+	return-mode
+end
+
+to nourrire-petits 
+	...
+	return-mode
+end
+
+to chercher-partenaire
+	...
+	return-mode
+end
+```
+
+### Question e)
+
+fsm permet d'avoir une vue procedurale des action, basée sur les etat, et subsumption deduis ces actions en fonction de l'état courant cependant il est plus compliqué de continuer une action avec ce genre d'architecture.
+

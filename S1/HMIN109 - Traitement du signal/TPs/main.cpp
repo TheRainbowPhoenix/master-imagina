@@ -15,10 +15,6 @@ vector<unsigned char> to_data8(vector<double>& signal);
 
 void write_signal(string& filepath, vector<double>& signal, int nb_channels, int sampling_freq);
 
-void DFT(vector<double>& signal, vector<double>& signal_imag, vector<double>& signal_reel);
-
-void IDFT(vector<double>& signal, vector<double>& signal_imag, vector<double>& signal_reel);
-
 /*
 	This FFT has been proposed by Paul Bourke 
 	http://paulbourke.net/miscellaneous/dft/
@@ -33,7 +29,7 @@ void IDFT(vector<double>& signal, vector<double>& signal_imag, vector<double>& s
 	with your signal and fill the rest with 0
 	WARNING : you must pass m, not nm !!!
 */
-int FFT (int dir, int m, double* x, double* y);
+int FFT(int dir, int m, double* x, double* y);
 
 vector<double> FFT_visualize(vector<double>& signal_real, vector<double>& signal_imaginary);
 
@@ -65,13 +61,18 @@ int main(int argc, const char *argv[]) {
 
 	vector<double> signal;
 
-	double la = 440.0;
+	double do3 = 261.63;
+	double re3 = 293.66;
+	double mi3 = 329.63;
+	double fa3 = 349.23;
+	double sol3 = 392.0;
+	double la3 = 440.00;
+	double si3 = 493.88;
 
-	add_note(signal, la, sample_time, sampling_freq);
+	add_note(signal, la3, sample_time, sampling_freq);
 
 	/* les signaux doivent avoir une taille en puissance de deux pour que la FFT
 	   puisse fonctionnée convenablement */
-
 
 	int FFT_m = next_pow2(signal.size());
 	long long FFT_size = pow(2, FFT_m);
@@ -138,14 +139,6 @@ void write_signal(string& filepath, vector<double>& signal, int nb_channels, int
 
 	// convertie en char* car la fonction write de modifie pas la constante de toute façon
 	wave.write((char*)filepath.c_str());
-}
-
-void DFT(vector<double>& signal, vector<double>& signal_imag, vector<double>& signal_reel) {
-
-}
-
-void IDFT(vector<double>& signal, vector<double>& signal_imag, vector<double>& signal_reel) {
-
 }
 
 int FFT(int dir, int m, double *x, double *y) {
@@ -283,33 +276,3 @@ void normalisation(double* signal, int N) {
 		pt++;
 	}
 }
-
-/* 
-pas recopier sujet tp
-pas donner de code
-pas copier wikipedia
-
-sitation bienvenue
-
-vue outils
-
-filtres
-transformé
-comment créé sons
-filtrer sons
-
-constater ce qui ce passe sur des sons créé
-
-voir filtre sur sont créée
-voir filtre sur vrai sont
-
-
-rendre constation sur ce qu'on a fait
-rendre difficulté a avoir
-
-rendu après vacances en pdf.
-
-minuit = deadline
-
-pas plus de 15 pages (avec graphics et tout)
-*/

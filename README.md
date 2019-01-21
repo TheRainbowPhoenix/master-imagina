@@ -1,26 +1,5 @@
 # Master Imagina
 
-<!-- 
-	Les matières que je liste ici en commentaire sont celles que j'ai choisis, les autres matières sont obligatoires.
-
-	Semestre 1
-	
-	HMIN102 - Ingenierie logicielle, 
-	HMIN105 - Programmation concurrente et repartie
-	
-	Semestre 2
-	
-	HMIN204 - Conduite de projet
-	
-	Semestre 3
-
-	HMIN303 - Developpement logiciel pour l'embarque
-
-	Semestre 4
-
-	HMIN403 - Stage industriel
--->
-
 ### Semestre 1
 
 - [HMIN102 - Ingenierie logicielle](../../tree/master/S1/HMIN102%20-%20Ingenierie%20logicielle)

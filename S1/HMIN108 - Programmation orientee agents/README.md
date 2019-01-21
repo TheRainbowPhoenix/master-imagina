@@ -387,7 +387,7 @@ to go
 	ask groupe_1 [...]
 	ask groupe_2 [...]
 	...
-	ask groupe_n [...]s
+	ask groupe_n [...]
 	tick
 	update-plots
 end
@@ -439,7 +439,7 @@ end
 ```netlogo
 to reproduction
   if count animaux < nb-animaux-max and random-float 100 < taux-reproduction-animaux [
-    hatch 1 ; Création d'un copie de moi-même
+	hatch 1 ; Création d'un copie de moi-même
   ]
 end
 ```
@@ -449,7 +449,7 @@ end
 ```netlogo
 to go
   ask lapins [run ctask]
-  diffuse odeur taux-diffusion
+  diffuse odeur taux-diffusion / 100
   ask patches [colore]
   ask loups [run ctask]
   ask patches [evapore]
@@ -461,7 +461,7 @@ to colore
 end
 
 to evapore
-  set odeur odeur - (odeur * taux-evaporation)
+	set odeur odeur * (100 - taux-evaporation) / 100
 end
 
 to depose-odeur
@@ -495,3 +495,192 @@ to vadrouille
   fd vitesse
 end
 ```
+
+ **reflexe** : action qui peut être faite à chaque tick et qui se termine à chaque tick
+ **mode** : FMS hierarchique
+
+
+```java   
+ public String action() {
+        List<WarAgentPercept> percepts = getPercepts();
+
+        for (WarAgentPercept p : percepts) {
+            switch (p.getType()) {
+                case WarFood:
+                    if (p.getDistance() < WarFood.MAX_DISTANCE_TAKE && !isBagFull()) {
+                        setHeading(p.getAngle());
+                        return WarExplorer.ACTION_TAKE;
+                    } else if (!isBagFull()) {
+                        setHeading(p.getAngle());
+                    }
+                    break;
+                case WarBase:
+                    if (isEnemy(p)) {
+                        broadcastMessageToAll("Enemy base on sight", String.valueOf(p.getAngle()), String.valueOf(p.getDistance()));
+                    }
+                    break;
+                case WarEngineer:
+                    if (p.getDistance() < WarEngineer.MAX_DISTANCE_GIVE && getNbElementsInBag() > 0) {
+                        setDebugString("Giving food");
+                        setIdNextAgentToGive(p.getID());
+                        return WarExplorer.ACTION_GIVE;
+                    }
+                    if (isBagEmpty()) {
+                        setDebugString("Searching food");
+                        if (isBlocked())
+                            setRandomHeading();
+                        return WarExplorer.ACTION_MOVE;
+                    }
+                    break;
+                default:
+                    break;
+            }
+}
+ ```
+
+```java
+public abstract class WTask {
+	WarBrain myBrain;
+	
+	abstract String exec(WarBrain bc);
+}
+```
+```java
+public abstract class WarExplorerBrainController extends WarExplorerBrain {
+
+	WTask ctask;
+	
+	static WTask handleMsgs = new WTask(){ 
+		String exec(WarBrain bc){return "";}
+	};
+	
+	static WTask returnFoodTask = new WTask(){
+		String exec(WarBrain bc){
+			WarExplorerBrainController me = (WarExplorerBrainController) bc;
+				if(me.isBagEmpty()){
+					me.setHeading(me.getHeading() + 180);
+
+					me.ctask = getFoodTask;
+					return(null);
+				}
+					
+				me.setDebugStringColor(Color.green.darker());
+				me.setDebugString("Returning Food");
+				
+				if(me.isBlocked())
+					me.setRandomHeading();
+
+				ArrayList<WarAgentPercept> basePercepts = (ArrayList<WarAgentPercept>) me.getPerceptsAlliesByType(WarAgentType.WarBase);
+				
+				//Si je ne vois pas de base
+				if(basePercepts == null | basePercepts.size() == 0){
+					
+					WarMessage m = me.getMessageFromBase();
+					//Si j'ai un message de la base je vais vers elle
+					if(m != null)
+						me.setHeading(m.getAngle());
+					
+					//j'envoie un message aux bases pour savoir où elle sont..
+					me.broadcastMessageToAgentType(WarAgentType.WarBase, "Where are you?", (String[]) null);
+					
+					return(MovableWarAgent.ACTION_MOVE);
+					
+				}else{//si je vois une base
+					WarAgentPercept base = basePercepts.get(0);
+					
+					if(base.getDistance() > MovableWarAgent.MAX_DISTANCE_GIVE){
+						me.setHeading(base.getAngle());
+						return(MovableWarAgent.ACTION_MOVE);
+					}else{
+						me.setIdNextAgentToGive(base.getID());
+						return(MovableWarAgent.ACTION_GIVE);
+					}
+					
+				}
+				
+			}
+		};
+	
+	static WTask getFoodTask = new WTask(){
+		String exec(WarBrain bc){
+			WarExplorerBrainController me = (WarExplorerBrainController) bc;
+			if(me.isBagFull()){
+
+				me.ctask = returnFoodTask;
+				return(null);
+			}
+			
+			if(me.isBlocked())
+				me.setRandomHeading();
+			
+			me.setDebugStringColor(Color.BLACK);
+			me.setDebugString("Searching food");
+			
+			ArrayList<WarAgentPercept> foodPercepts = (ArrayList<WarAgentPercept>) me.getPerceptsResources();
+			
+			//Si il y a de la nouriture
+			if(foodPercepts != null && foodPercepts.size() > 0){
+				WarAgentPercept foodP = foodPercepts.get(0); //le 0 est le plus proche normalement
+				
+				if(foodP.getDistance() > WarResource.MAX_DISTANCE_TAKE){
+					me.setHeading(foodP.getAngle());
+					return(MovableWarAgent.ACTION_MOVE);
+				}else{
+					return(MovableWarAgent.ACTION_TAKE);
+				}
+			} else {
+				return(MovableWarAgent.ACTION_MOVE);
+			}
+		}
+	};
+
+	
+	
+	public WarExplorerBrainController() {
+		super();
+		ctask = getFoodTask; // initialisation de la FSM
+	}
+
+    @Override
+	public String action() {
+		
+		// Develop behaviour here
+		
+		String toReturn = ctask.exec(this);   // le run de la FSM
+		
+		if(toReturn == null){
+			if (isBlocked())
+				setRandomHeading();
+			return WarExplorer.ACTION_MOVE;
+		} else {
+			return toReturn;
+		}
+	}
+		
+	
+	private WarMessage getMessageAboutFood() {
+		for (WarMessage m : getMessages()) {
+			if(m.getMessage().equals("foodHere"))
+				return m;
+		}
+		return null;
+	}
+	
+	private WarMessage getMessageFromBase() {
+		for (WarMessage m : getMessages()) {
+			if(m.getSenderType().equals(WarAgentType.WarBase))
+				return m;
+		}
+		
+		broadcastMessageToAgentType(WarAgentType.WarBase, "Where are you?", "");
+		return null;
+	}
+
+}
+```
+
+FSM : permet de bin décrire des comportements lié à des activités bien réglées
+mais trop d'engagement necessite des techniques particulières pour gérer les réflexes et besoins de survie
+
+Subsomption : permet d'écrire des comportements fuides liés aux perceptions
+mais pas assez d'engagement les agents perdent ce qu'ils sont entrain de faire

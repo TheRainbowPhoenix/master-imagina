@@ -284,6 +284,9 @@ T un paquet-liaison = 0.83s
 100 octets
 Transit = 0.417s
 
+
+# ICI
+
 ## Traitement Linéaire Des Signaux
 
 ### I. Signal
@@ -559,3 +562,108 @@ h_2 = y_2 = (1 / 3) . (-(5 / 9) + (2 / 3)) = (1 / 3) . ((-3 + 6) / 9) = (1 / 27)
 ### Bruits
 
 ### Conclusion
+
+# FIN
+
+
+
+# Memo partie transmission signal
+
+# TD1 - codage/decodage d'un signal avec verrification d'erreur
+
+**terme**
+	- bit parité : bit à 1 si message pair 0 sinon
+	- LRC (longitudinal redundancy check) : bit protegean la parité de chaque caractère de meme rang
+	- VRC (vertical redundancy check): bit protegeant tout les bit d'un caractère y compris le bit LRC 
+	- CRC (Cyclic Redundancy Check) : le reste d'un division des bits de données, supposés etre le coefficient d'un polynome par un polynome generateur
+
+- (Ex1) codage LRC
+- (Ex1) verification d'erreur/ correction
+- (Ex2) decodage
+- (Ex2) correction erreur
+- (Ex3) codage CRC
+- (Ex4) representation signal en bande passante
+	- NRZ
+	- biphase
+	- biphase différenciel
+	- Miller
+	- bipolaire simple
+- (Ex5) resumé (memo)
+
+# TD2 - transmission d'un signal
+
+**terme**
+	- bande passante (Hz) :
+	- rapport signal à bruit (dB = S/B) :
+	- taux d'erreur binaire (Te = (nb_bits_erronnés/nb_bits_transmis)) :
+	- taux de transfert d'information (TTI = nb_bits_utiles / durée_transmission) :
+	- probabilité de transmission d'erreur (Pe = (1 -Te)^n avec n = nb_bits_msg)  
+	
+- (Ex1) capacité de transmission d'un canal
+- (Ex2) probabilité d'erreur d'un message
+- (EX3) TTI sans erreur/ avec erreur
+- (Ex4) temps de transmission
+- (Ex5) rapport signal bruit
+
+# TD3 - compression d'image et multiplexeur
+
+**terme**
+	codage huffman :
+	debit binaire :
+	multiplexeur : permet de repartir la bande passante
+
+- (Ex1) codage huffman
+- (Ex2) transmission image comprimé
+- (Ex3) debit binaire pour transmettre image
+- (Ex4) multiplexeur
+- (Ex5) multiplexeur
+- (EX6) meme que Ex5 du td1
+
+# TD4 - trafics téléphoniques
+
+**terme** :
+	- Erlangs (E) : 
+	- Circuit : 
+	- Faisceaux :
+
+- (Ex1) nombre abonnés desservis
+- (Ex2) efficacité traffic
+- (Ex2) niveau de traffic
+- (Ex3) nombre ligne selon charge
+- (Ex4) resumé (memo)
+
+# TD5 - gestion de reseaux TCP/IP
+
+**terme** : 
+	- fenetrage : reception d'accusé de reception ACK de plusieurs element d'information
+
+- (Ex1) efficacité liaisons
+- (Ex2) fenêtrage
+- (Ex3) communication de messages/paquets
+
+# Memo partie traitement signal
+
+
+
+
+Dans le partiel :
+
+Definir en traitement du signal :
+- une impulsion :
+- un echelon :
+- un diagramme de Bode :
+
+Donnez : 
+- forme analytique d'un signal donné
+- techniques différente permettant d'obtenir un même filtrage
+- différentes familles de filtres fréquentiels
+- différences Laplace vs Fourier
+- algorithme recursif d'un filtre numérique. est-il causal ? 
+
+Dessinez :
+- qualitativement le diagramme de Bode d'une fonction de transfert F(p)
+
+Question:
+- pourquoi dit-on transformé de Laplace linéraire ?
+- si y(t) est la sortie du filtre de fonction de tranfert F(p), quel est le signal x(t) en entrée de ce filtre ?
+

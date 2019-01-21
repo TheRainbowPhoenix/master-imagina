@@ -3,15 +3,27 @@
 ## Sommaire [↺](#sommaire-)
 
 - [Informations](#informations-)
-  - [Examens](#examens-)
-  - [Ressources](#ressources-)
-- [Multithreading](#Multithreading-)
-  - [Thread](#thread-)
-  - [Mutex](#mutex-)
-  - [Variable conditionnelle](#variable-conditionnelle-)
-  - [Thread vs Fork](#thread-vs-fork-)
-
-## Informations [↺](#sommaire-)
+    - [Examens](#examens-)
+    - [Ressources](#ressources-)
+- [Programmation concurrente](#programmation-concurrente-)
+    - [Processus leger](#processus-leger-)
+        - [Thread](#thread-)
+        - [Mutex](#mutex-)
+        - [Variable conditionnelle](#variable-conditionnelle-)
+    - [Processus lourd](#precessus-lourd-)
+        - [Fork](#fork-)
+        - [IPCs](#ipcs-)
+            - [File de message](#file-de-message-)
+            - [Mémoire partagée](#memoire-partagee-)
+            - [Sémaphores](#semaphores-)
+- [Programmation repartie](#programmation-repartie-)
+    - [Communication distante](#communication-distante-)
+        - [Socket](#socket-)
+        - [Protocole](#protocole-)
+    - [Remote controle procedure](#remote-controle-procedure-)
+        - [RPCL](#rpcl-)
+        - [MPI](#mpi-)
+        - [OpenMP](#openmp-)
 
 ### Examens [↺](#sommaire-)
 
@@ -24,16 +36,26 @@
 - [Cours et TPs](https://moodle.umontpellier.fr/course/view.php?id=675)
 - [System Programming Wiki](https://github.com/angrave/SystemProgramming/wiki)
 
-## Multithreading [↺](#sommaire-)
+## Programmation concurrente [↺](#sommaire-)
 
-Les objets et leurs operations en rapport avec le multithreading posix sont definis dans le fichier **pthread.h** sous la forme :
+Fork                                            | Thread
+----------------------------------------------- | --------------------------------------------------------------------
+Processus lourd                                 | Processus leger
+Changement de contexte couteux                  | Partie d'un processus
+Espace d'adressage de processus non partageable | Peu partager des données en memoire avec d'autres threads
+Outils de synchronisation difficiles            | Permet d'executer plusieurs unités d'execution de manière asynchrone
+Plus difficile à implementer                    | Execute une fonction
+
+### Processus leger [↺](#sommaire-)
+
+Les processus legers sont appelés des threads, les objets et leurs operations en rapport avec le threads posix sont definis dans le fichier **pthread.h** sous la forme :
 
 - **pthread_objet_t**
 - **pthread_objet_opération()**
 
-L'option **-lpthread** ou **-pthread** peut être necessaire à la compilation.
+L'option **-lpthread** ou **-pthread** sont necessaire à la compilation.
 
-### Thread [↺](#sommaire-)
+#### Thread [↺](#sommaire-)
 
 Sur un thread on peut effectuer les actions suivantes :
 
@@ -80,7 +102,7 @@ void pthread_exit(
 
 **Attention !** La fonction exit() termine le processus même si l'appelant est un thread secondaire.
 
-### Mutex [↺](#sommaire-)
+#### Mutex [↺](#sommaire-)
 
 Sur un mutex on peut effectuer les actions suivantes :
 
@@ -134,7 +156,7 @@ int pthread_mutex_destroy(
 - Cette portion de code est appelée **section critique**.
 - Si un thread est dans une **section critique**, il doit être garanti qu'aucun autre thread n'y sois pas simultanément c'est **l'exclusion mutuelle**.
 
-### Variable conditionnelle [↺](#sommaire-)
+#### Variable conditionnelle [↺](#sommaire-)
 
 Sur une variable conditionnelle et un mutex on peut effectuer les actions suivantes :
 
@@ -211,17 +233,11 @@ int pthread_cond_destroy(
 - Après engendre qu'un thread réveillé ne pourra pas obtenir le verrouillage immédiatement car le verrou est toujours indisponible. Donc le thread réveillé devra se bloquer temporairement.
 - Avant peut être plus efficace, mais il se peut aussi qu'un thread Tz non (encore) en attente obtienne le verrouillage. Il n'y a pas d'équité, alors que le thread réveillé Ta peut être plus prioritaire (Tz moins prioritaire a obtenu le verrouillage alors que Ta, en attente de l'annonce, ne pouvait l'obtenir).
 
-### Thread vs Fork [↺](#sommaire-)
+### Processus lourd [↺](#sommaire-)
 
-Fork                                            | Thread
------------------------------------------------ | --------------------------------------------------------------------
-Processus lourd                                 | Processus leger
-Changement de contexte couteux                  | Partie d'un processus
-Espace d'adressage de processus non partageable | Peu partager des données en memoire avec d'autres threads
-Outils de synchronisation difficiles            | Permet d'executer plusieurs unités d'execution de manière asynchrone
-Plus difficile à implementer                    | Execute une fonction
+#### Fork [↺](#sommaire-)
 
-## Communication entre processus (IPC)
+#### IPCs [↺](#sommaire-)
 
 visualisation des information avec la commande `ipcs`.
 
@@ -231,11 +247,11 @@ objet ipc privé: utilise la clé IPC_PRIVATE les autres processus doivent obten
 
 genere un clé publique en fonction du fichier existant et de l'id du projet (>0).
 
-```
+```c
 key_t key = ftok(const char* pahtname, int proj_id);
 ```
 
-### File de messsages
+##### File de message [↺](#sommaire-)
 
 analogie boite contenant des message avec des etiquettes
 
@@ -248,7 +264,6 @@ depos de message atomique
 si file pleine ecrivain endormie
 
 si la file est vide lecteur endormie
-
 
 Action                            | Fonction
 --------------------------------- | ----------------------------------------------
@@ -283,7 +298,7 @@ int msgsnd(int msgid, const void *msgp, size_t msgsz, int msgflg);
 
 ```
 
-### Memoire partagée
+##### Mémoire partagée [↺](#sommaire-)
 
 permet a plusieurs programmes d'avoir un espace commun de mémoire
 
@@ -305,11 +320,9 @@ int shmdt(const void *shmaddr);
 
 // destruction
 int shmctl(int shmid, int cmd, struct shmid_ds *buf);
-
-
 ```
 
-### Sémaphores
+##### Sémaphores [↺](#sommaire-)
 
 mecanisme de synchronisation de processus.
 
@@ -319,7 +332,6 @@ Creation                          | `msgget(key, rights)`
 Attachement                       | `pthread_cond_wait(*cond, *mutex)`
 Dettachement                      | `pthread_cond_timedwait(*cond, *mutex, *time)`
 Controle                          | `pthread_cond_signal(*cond)`
-
 
 ```c
 int semget(key_t key, int nsems, int semflg);
@@ -349,30 +361,18 @@ union semun {
 int semctl(semid, 0, IPC_RMID);
 
 ```
-
 - différences entre processus et thread
 - partage des ressources inter-processus et inter-threads
 - synchronisation entre processus et threads (exclusion mutuelle attente d'un evenement)
 - Attention à la synchronisation, problème d'interblocage
 
+## Programmation repartie [↺](#sommaire-)
 
-## IPC : Inter Process Communication
+### Communication distante [↺](#sommaire-)
 
-**Concurrence** : exécution de plusieurs code en même temps sur la même machine
+#### Socket [↺](#sommaire-)
 
-**Application distribuée** : qui s'executent sur plusieurs machine connecté a un meme réseau.
-
-**IPC (Inter-Process Communication)** : utilisé pour les processus lourd dont les espaces mémoires ne sont pas partagés (Files de messages, mémoire partagée et ensembles de sémaphores)
-
-**union** : structure dont les membres partage le meme champ mémoire, la taille de l'union est la taille du membre le plus grand. (permet d'economiser l'espace mémoire)
-
-semaphore 
-
-defintion
-
-se qu'on peut faire avec
-
-## Communication distante en réseau TCP et UDP
+##### Protocole [↺](#sommaire-)
 
 **client** : processus qui envoie des requetes au processus dit serveur, et attend une réponse adapté
 
@@ -381,9 +381,6 @@ se qu'on peut faire avec
 **requete** : instruction, commande ou structure permettant les echange entre un client et un serveur
 
 **socket** : comme un tube/pipe, avec en plus la communication distante et le choix de protocole de communicaiton , (socket = prise en anglais) c'est un extrémité du canal de communication bidirectionnel entre deux processus.
-
-
-IPv4 (PF_INET) 
 
 ### Type de socket:
 
@@ -404,7 +401,6 @@ IPv4 (PF_INET)
 
 **Non connecté** : la destination d'un message à émettre via un socket en mode non connectée n'est pas nécessairement la même que celle du message suivant. A chaque émission, une adresse de destination doit être spécifiée (comme un communication postal)
 
-
 #### Protocole
 
 | TCP                    | UDP                  |
@@ -424,7 +420,6 @@ Pour faire cela on peut soit :
 - laisser le système choisir une ou des adresses.
 
 port a utiliser sont > 1024
-
 
 Action                            | Fonction
 --------------------------------- | ----------------------------------------------
@@ -475,75 +470,110 @@ UDP vs TCP
 - messages cours, requetes indépendantes et traitement court, UDP iteratif
 - messages longs, requetes dépendantes ou traitement long, TCP concurrent
 
-## RPC : Remote Procedure Call
+##### Mode de connexion [↺](#sommaire-)
 
-protocole réseau permettant de faire des appels de procedure sur un ou plusieurs ordinateurs distant du réseau.
+### Remote controle procedure [↺](#sommaire-)
 
-comme code marche sur machine différent il faut gerer la manière dont on code les informations avant des les envoyé
+#### RPCL [↺](#sommaire-)
 
-les deux machine doivent ce mettre d'accord, c'est possible avec le XDR
-
-```c
-XDR* xdrs;        // Pointer vers un buffer XDR
-char buf[BUFSIZE] // Buffer pour recevoir els données encodées
-xdr_mem_create(xdrs, buf, BUFSIZE, XDR_ENCODE);
-
-// Chaque appel à une fcontion de codage va placer le résultat à la fin du buffer xdrs
-
-int i;
-...
-i = 100;
-xdr_int(xdrs, &i); // Code l'entier i et le place à la fin du buffer
-
-// Le programme recepteur decodera les données avec xdr_mem_create(..., XDR_DECODE)
+**Contrat PROG_NAME.x** :
 
 ```
+program PROG_NAME {
+    version PROG_VERSION {
+        TYPE_RETOUR_1 PROC_NAME_1(TYPE_PARAM_1_1, ..., TYPE_PARAM_1_N) = 1
+        ...
+        TYPE_RETOUR_N PROC_NAME_N(TYPE_PARAM_N_1, ..., TYPE_PARAM_N_N) = n
+    } = 1;
+} = 1;
+```
 
-Primitives XDR
+**Compiler PROG_NAME.x** : rpcgen -a PROG_NAME.x
 
-| Fonction    | Arguments                      | Type de donnée converti        |
-|-------------|--------------------------------|--------------------------------|
-| xdr_bool    | xdrs, ptrbool                  | booléen                        |
-| xdr_bytes   | xdrs, ptrstr, strsize, maxsize | chaîne de caractères           |
-| xdr_char    | xdrs, ptrchar                  | caractère                      |
-| xdr_double  | xdrs, ptrdouble                | virgule flot, double précision |
-| xdr_enum    | xdrs, ptrint                   | type énuméré                   |
-| xdr_float   | xdrs, ptrfloat                 | virgule flot, simple précision |
-| xdr_int     | xdrs, ip                       | entier 32 bits                 |
-| xdr_long    | xdrs, ptrlong                  | entier 64 bits                 |
-| xdr_opaque  | xdrs, ptrchar, count           | données non converties         |
-| xdr_pointer | xdrs, ptrobj                   | pointeur                       |
-| xdr_short   | xdrs, ptrshort                 | entier 16 bits                 |
-| xdr_string  | xdrs, ptrstr, maxsize          | chaine de caractères           |
-| xdr_u_char  | xdrs, ptruchar                 | entier 8 bits non signé        |
-| xdr_u_int   | xdrs, ptrint                   | entier 32 bits non signé       |
+- PROG_NAME_client.c → appels au serveur (à implementer)
+- PROG_NAME_clnt.c   → conversion données client au format xdr
+- PROG_NAME_server.c → procedure à executer (à implementer)
+- PROG_NAME_svc.c    → converstion données serveur au format xdr
+- PROG_NAME_xdr.c    → fonction pour convertir les données au format xdr
+- PROG_NAME.h        → definitions des fonctions et structures de données
+- Makefile.PROG_NAME → makefile pour l'application RPC
 
-Trouver le serveur ?
+**PROG_NAME_server.c** :
 
-coder l'adresse en dur => probleme si le serveur change d'adresse
-nommage dynamique => gestionnaire de noms, portmapper
+```c
+TYPE_RETOUR_1 *
+PROC_NAME_1_svc(TYPE_PARAM_1_1 *var_1, ..., TYPE_PARAM_1_1 *var_n, struct svc_req *rqstp) {
+    
+    static TYPE_RETOUR_1 result;
 
-serveur doit s'enregistrer auprès du portmapper (nom, version, adresse IP+port)
-client demande de connexion au portmapper via le nom et la version du serveur
+    return &result;
+}
+
+...
+
+TYPE_RETOUR_N *
+PROC_NAME_1_svc(TYPE_PARAM_N_1 *var_1, ..., TYPE_PARAM_N_N *var_n,, struct svc_req *rqstp) {
+    
+    static TYPE_RETOUR_N result;
+
+    return &result;
+}
+```
+
+**PROG_NAME_client.c** :
+
+```c
+void PROG_NAME_1(char *host) {
+    CLIENT *clnt;
+    TYPE_RETOUR_1  *result_1;
+    TYPE_PARAM_1_1  PROC_NAME_1_1_arg_1; ...; TYPE_PARAM_1_N  PROC_NAME_1_1_arg_n; 
+    ...
+    TYPE_RETOUR_N *result_n;
+    TYPE_PARAM_N_1 PROC_NAME_N_1_arg; ...; TYPE_PARAM_N_N PROC_NAME_N_1_arg_n;
 
 
-Que faire si erreur ?
+#ifndef DEBUG
+    clnt = clnt_create (host, CONCOURS_PROG, CONCOURS_VERS, "udp");
+    if (clnt == NULL) {
+        clnt_pcreateerror (host);
+        exit (1);
+    }
+#endif  /* DEBUG */
 
-- requete client perdue ? ré-envoyer la requete
-- réponse serveur perdue ? ré-envoyer la requete par le client (risque de ré-ecécuter la requete)
+    result_1 = PROC_NAME_1_1(&PROC_NAME_1_1_arg_1, ..., &PROC_NAME_1_1_arg_n, clnt);
+    if (result_1 == (TYPE_RETOUR_1 *) NULL) {
+        clnt_perror (clnt, "call failed");
+    }
 
-solution bit dans l'en-tête du message indiquant s'il s'agit dune trasmission ou retransmission
+    ...
+
+    result_n = PROC_NAME_N_1(&PROC_NAME_N_1_arg, ..., &PROC_NAME_N_1_arg_n, clnt);
+    if (result_n == (TYPE_RETOUR_N *) NULL) {
+        clnt_perror (clnt, "call failed");
+    }
+
+#ifndef DEBUG
+    clnt_destroy (clnt);
+#endif   /* DEBUG */
+}
 
 
-Comment gerer les erreurs ?
+int main (int argc, char *argv[]) {
+    char *host;
 
-- Une fois au moins : le client ré-émet jusqu'à avoir une réponse
-- Une fois au plus : le client abandonne et renvoie un message d'erreur
-- Ne rien garantir : le client n'a aucune aide
+    if (argc < 3) {
+        printf ("usage: %s server_host\n", argv[0]);
+        exit (1);
+    }
 
-## Programmation parallèle et/ou distribué autres moyens
+    host = argv[1];
+    PROG_NAME_1(host);
+    
+    exit(0);
+}
+```
 
-## MPI : Message Passing Interface
+#### MPI [↺](#sommaire-)
 
 **Compiler**
 mpicc main.c -o main
@@ -587,12 +617,11 @@ MPI_Gather => collect data all to one
 MPI_Alltoall => Distribute all to all
 MPI_Allgather => collect all to all
 
-
 Syncronisation 
 
 MPI_Barrier(MPI_COMM_WORLD)
 
-## OpenMP
+#### OpenMP [↺](#sommaire-)
 
 directives de compilation pour paralléliser un code sur une architecture SMP
 
@@ -619,89 +648,39 @@ Partage du travail             | for, sections, single
 Synchronisation                | master, critical, atomic
 
 
+## TP0 - Fork, tube
 
-## Parallelisation
+- architecture d'arbre avec fork
+- commande pstree -p PID pour visualiser fork
+- (à faire mais pas vitale) utilisation des tubes  
 
-### Thread : processs leger
+# TP1 - Thread, mutex, cond
 
-#### Synchronisation
+- EX1 : comportement des thread
+- EX2 : exclusion mutuel thread (mutex)
+- EX3 (à refaire) : rendez-vous thread (variable conditionnelle) : chaque thread lancé par main incremente une variable puis s'endors, quand asser de thread dormes on les reveilles 
+- EX4 (à refaire) : traitement synchronisé thread
 
-### Fork : processus lourd 
+# TP2 - File de messages
 
-#### IPC
+- EX1 : envoie et recuperation de message avec une certaines etiquette
+- EX2 (à refaire en fork) : meme chose mais avec des processus concurrent (fork)
 
-### Thread vs Fork
+# TP3 - Memoire partagé
 
-## Distribution
+- EX1 (à refaire) : mise en place shm et parking_setup, parking_entrer, parking_sortir + semaphore pour acces concurrent
+- EX2 (à refaire): rendez-vous processus
+- EX3 (à refaire): traitement synchronisé thread
 
-### TCP/UDP : Communication distantes 
+# TP4 - Communications client-serveur
 
-### RPC : Remote Procedure Call
+- EX1 : communication UDP chat
+- EX2 (à faire) : communication TCP traitement simultané clients
 
+# TP5 - Remote procedure call
 
+histoire de contrats à comprendre
 
-
-
-## Creation de processus lourd : fork
-
-different schema
-passage de message avec tube dans processus car memoire non partagé
-
-donner exemple schema
-probleme communication entre process
-et communication processus schéma
-methode pour visualiser le schéma
-
-## Creation de processus leger : thread
-
-- example
-- probleme synchro
-- Rendez-vous
-- synchronisation
-
-## Communication avancé entre process 
-
-IPC moins couteux et plus efficace etc..
-
-example utilisation pour chaque
-
-File de message
-Memoire partagées
-Semaphore rendez-vous / synchro
-
-## Application distribué client serveur
-
-TCP
-
-UDP etc..
-
-exemple concurrent, iteratif, connecté, non connecté etc..
-
-## Remote procedure call
-
-svc_create, etc..
-
-example
-
-amelioration avec OpenMP et MPI etc
-
-savoir donner des schéma algorithmique etc..
-
-
-
-# FORK
-
-pid_t fork(void) : si erreur -> -1, si dans fils -> 0, sinon dans pere -> ID du fils > 0 
-pid_t wait(&status) : si erreur -> -1, sinon -> ID du fils terminé
-
-# PIPE
-
-int descripteur[2]
-pipe(descripteur) : création du pipe(0 -> lecture, 1 = ecriture)
-write(descripteur[1], message, taille-message) : ecriture dans le pipe
-read(descripteur[0], message, taille-message) : lecture dans le pipe
-close(descritpeur[0]) : fermeture du tube en lecture
-
-# THREAD
-
-pthread_t thread_id
+- EX1 : client demande serveur calcul si nb est premier (prime.x)
+- EX2 : tableau dinamique en rpc/xdr
+- EX3 (à faire) : renvoyer liste dynamique
