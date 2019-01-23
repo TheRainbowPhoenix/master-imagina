@@ -22,7 +22,7 @@
 
 CC      = g++
 CFLAGS  = -Wall -Wextra
-LDFLAGS = -lglut -lGL -lGLU -lm
+LDFLAGS = -lglut -lGL -lGLU
 
 # Dossiers de sorties pour les fichiers objets et binaires.
 

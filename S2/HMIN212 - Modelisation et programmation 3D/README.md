@@ -3,8 +3,22 @@
 ## Sommaire [↺](#sommaire-)
 
 - [Informations](#informations-)
-  - [Examens](#examens-)
-  - [Ressources](#ressources-)
+	- [Examens](#examens-)
+	- [Ressources](#ressources-)
+- [Modelisation](#modelisation-)
+	- [Vecteur 3D](#vecteur-3d-)
+		- [Multiplication par un scalaire](#multiplication-par-un-scalaire-)
+		- [Norme](#norme-)
+		- [Produit scalaire](#produit-scalaire-)
+		- [Produit vectoriel](#produit-vectoriel-)
+		- [Projections](#projections-)
+			- [Sur une droite](#sur-une-droite-)
+			- [Sur un plan](#sur-un-plan-)
+	- [Transformations](#transformations-)
+		- [Translation](#translation-)
+		- [Mise à l'echelle](#mise-à-l'echelle-)
+		- [Rotation](#rotation-)
+	- [Gestion des objets 3D](#gestion-des-objets-3d-)
 
 ## Informations [↺](#sommaire-)
 
@@ -14,87 +28,187 @@
 
 ### Ressources [↺](#sommaire-)
 
-- [Cours et TDs-TPs]()
+- [Cours et TDs-TPs](https://moodle.umontpellier.fr/course/view.php?id=5880)
 
-**Modele 3D** :
-	- Ensemble de points
-	- Surfaces
-		- Discretes (Ensemble de point relié par des facettes)
-		- Continue (Equation géométrique)
-	- Volumes
-		- Discret (Voxels = pixel 3D)
-		- Continu (Equation géométrique)
+## Modelisation [↺](#sommaire-)
 
-# Vecteurs
+**Modele 3D** : on peut representer un modele 3D de plusieurs façon 
 
-**Vecteur** :
-	- Direction dans l'espace entre 2 points
-	- Permet de translater
+1. Ensemble de points
+2. Ensemble de Surfaces
+	- Discretes (Ensemble de point relié par des facettes)
+	- Continue (Equation géométrique)
+3. Ensemble de Volumes
+	- Discret (Voxels = pixel 3D)
+	- Continu (Equation géométrique)
 
-norme |U| = sqrt(U_x² + U_y² + U_z²)
+### Vecteur 3D [↺](#sommaire-)
 
-produit scalaire U.V = U_x * V_x + U_y * V_y + U_z + V_z
-U.V = cos(α) * |U| * |V|
+- **Vecteur** : un vecteur represente une direction dans l'espace
 
-si U.V = 0 -> α = 90° ou 270° 
-produit vectoriel :
-donne un vecteur orthogonal au deux autres
-|U^V| = sin(α) * |U|.|V|
+#### Multiplication par un scalaire [↺](#sommaire-)
 
-si U^V = 0 :
+Permet d'augmenter/diminuer la longueur/intensité d'un vecteur U
+
+```
+U'x = Ux * s
+U'y = Uy * s
+U'z = Uz * s
+```
+
+#### Norme [↺](#sommaire-)
+
+La norme d'un vecteur U represente ça longueur/intensité elle se note |U|
+
+```
+|U| = sqrt(Ux² + Uy² + Uz²)
+```
+
+#### Produit scalaire [↺](#sommaire-)
+
+Le produit scalaire de 2 vecteurs U, V est un multiplication de ces 2 vecteurs, il se note U.V
+
+```
+U.V = (Ux * Vx) + (Uy * Vy) + (Uz + Vz)
+```
+
+Il permet de determiné l'angle α existant entre 2 vecteurs
+
+```
+U.V = cos(α) * (|U| * |V|)
+α = acos(U.V / (|U| * |V|)) 
+```
+
+- **Si U.V = 0** 
+	- α = 90° ou 270° 
+	- U et V sont orthogonaux
+
+#### Produit vectoriel [↺](#sommaire-)
+
+Le produit vectoriel entre 2 vecteurs U, V permet de calculer le vecteur orthogonal à U et V on le note U^V
+
+```
+      | (Uy * Vz) - (Uz * Vy) |
+U^V = | (Uz * Vx) - (Ux * Vz) |
+      | (Ux * Vy) - (Uy * Vx) |
+```
+
+Il permet egalement de determiné l'angle α existant entre 2 vecteurs
+
+```
+|U^V| = sin(α) * (|U| * |V|)
+α = asin(U.V / (|U| * |V|)) 
+```
+- **Si U^V = 0** 
 	- α = 0° ou 180°
 	- U et V sont dits colinéaires
 
-# Matrices
+#### Projections [↺](#sommaire-)
 
-**Matrices** : un ensembles de vecteurs
+##### Sur une droite [↺](#sommaire-)
 
-# Projections
+```
+|BA'| = BA.BC / |BC|
 
-un point sur une droite :
-|B->A'| = B->A.B->C / |B->C|
+A'x = Bx + (Ux * |BA'|) 
+A'y = By + (Uy * |BA'|) 
+A'z = Bz + (Uz * |BA'|) 
+```
+##### Sur un plan [↺](#sommaire-)
 
-un point sur un plan :
+**Projection orthogonale**
 
-# Transformation
+```
+|MM'| = MA.n / |n|
 
-**deplacement**
+M'x = Mx - (nx * |MM'|) 
+M'y = My - (ny * |MM'|) 
+M'z = Mz - (nz * |MM'|) 
+```
 
-**mise à l'echelle** : probleme de choisir un bon centre
+**Projection non orthogonale**
 
-**rotation** : 
-	on utillise des matrices de rotation pour chaques axes
+```
+|MI| = (|MM'| * |U| * |n|) / (U.n)
+```
 
-# Gestion des objets 3D
+### Transformations [↺](#sommaire-)
 
-Step/Iges : format ouverts
+#### Translation [↺](#sommaire-)
 
-Creation d'objet
+- Une translation represente le deplacement d'un objet en lui
+	- On applique addition le vecteur de translation à chaque points de l'objet
 
-Recuperation
+#### Mise à l'echelle [↺](#sommaire-)
+
+- On met à l'echelle un objet à partir d'un centre C et d'un rayon r
+	- Pour chaque point on calcule le vecteur de mise à l'echelle entre le centre et ce point
+	- Attention en fonction du centre choisie l'objet peut avoir sa forme modifié
+
+#### Rotation [↺](#sommaire-)
+
+- On applique un rotation selon un axe représenter par le vecter A et un angle α
+	- On utillise des matrices de rotation pour chaques axes de A
+
+```
+                     | 1   0      0     |
+Autour de l'axe OX = | 0 cos(α) -sin(α) |
+                     | 0 sin(α) cos(α)  |
+
+x' = x
+y' = (y * cos(α)) - (z * sin(α))
+z' = (y * sin(α)) + (z * cos(α))
+
+                     | cos(α)  0 sin(α) |
+Autour de l'axe OY = |   0     1   0    |
+                     | -sin(α) 0 cos(α) |
+
+x' = (x * cos(α)) - (z * sin(α))
+y' = y
+z' = (x * -sin(α)) + (z * cos(α))
+
+                     | cos(α) -sin(α) 0 |
+Autour de l'axe OZ = | sin(α) cos(α)  0 |
+                     |   0      0     1 |
+
+x' = (x * cos(α)) - (y * sin(α))
+y' = (x * sin(α)) + (y * cos(α))
+z' = z
+```
+
+**Matrice générale**
+
+```
+|       Ux² + (1 - Ux²) * cos(α)          Ux.Uy * (1 - cos(α)) - (Uz * sin(α))    Ux.Uz(1 - cos(α)) + (Uy * sin(α)) |
+| Ux.Uy * (1 - cos(α)) + (Uz * sin(α))          Uy² + (1 - Uy²) * cos(α)          Uy.Uz(1 - cos(α)) - (Ux * sin(α)) |
+| Ux.Uz * (1 - cos(α)) - (Uy * sin(α))    Uy.Uz * (1 - cos(α)) + (Ux * sin(α))         Uz² + (1 - Uz²) * cos(α)     |
+```
+
+### Gestion des objets 3D [↺](#sommaire-)
+
+- Recuperation
 	- Digitalisation
-	- lecture dans un fichier
+	- Lecture dans un fichier
 
-Habillage
-	- coloration
-	- eclairage (ce qui donne l'effet 3D)
-	- materiaux (modifie les effets de la lumière)
-		- spéculaire
-		- diffuse
-		- ambiante
-	- texture
+- Habillage
+	- Coloration
+	- Materiaux (modifie les effets de la lumière)
+		- Spéculaire
+		- Diffuse
+		- Ambiante
+	- Texture
 
-Scene 3D
-	- eclairage
-	- point de vue
+- Scene 3D
+	- Eclairage (ce qui donne l'effet 3D)
+	- Point de vue
 
-Animation
-	- rotation / translation
-	- deformation
+- Animation
+	- Rotation / Translation
+	- Deformation
 
-
-GL_SMOOTH : lumière calculer par les points 
-GL_FLAT: lumière calculer par surfaces 
+- OpenGl (glut)
+	- GL_SMOOTH : lumière calculer par les points 
+	- GL_FLAT: lumière calculer par surfaces 
 
 # Courbes paramétriques 
 

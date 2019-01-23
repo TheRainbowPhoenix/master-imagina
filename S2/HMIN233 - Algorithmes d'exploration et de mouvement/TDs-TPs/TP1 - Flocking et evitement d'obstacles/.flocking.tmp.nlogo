@@ -1,141 +1,128 @@
+
+breed [flockers flocker]
+breed [orange_things orange_thing]
+
 turtles-own [
+  ctask
   flockmates         ;; agentset of nearby turtles
   nearest-neighbor   ;; closest one of our flockmates
-  randcolor
 ]
 
 to setup
   clear-all
-  crt population
-    [ ;;set color green - 2 + random 7  ;; random shades look nice
-      set size 1.5  ;; easier to see
-      set randcolor random 2
-      ifelse randcolor = 0
-      [set color green]
-      [set color yellow]
-
-      setxy random-xcor random-ycor ]
+  create-flockers population [
+    ifelse random 100 < 50 [
+      set color blue  ;; random shades look nice
+    ][
+      set color green  ;; random shades look nice
+    ]
+    set size 1.5  ;; easier to see
+    setxy random-xcor random-ycor
+    set flockmates no-turtles
+    set ctask "flock"
+  ]
   reset-ticks
 end
 
+to add-orange
+  create-orange_things 1 [
+    set color orange
+    set size 1.5
+    setxy random-xcor random-ycor
+  ]
+end
+
+to wiggle
+  fd 0.2
+  lt 50
+  rt 50
+end
+
+
+to decide
+  ifelse any? orange_things in-radius vision-orange [
+    set ctask "wiggle"
+  ][
+    set ctask "flock"
+  ]
+end
+
 to go
-  ask turtles [ flock ]
+  ask flockers [
+    decide
+    run ctask
+  ]
+
+  ask orange_things [
+    wiggle
+  ]
   ;; the following line is used to make the turtles
   ;; animate more smoothly.
-  repeat 5 [ ask turtles [ fd 0.5 ] display ]
+  repeat 5 [ ask turtles [ fd 0.2 ] display ]
   ;; for greater efficiency, at the expense of smooth
   ;; animation, substitute the following line instead:
   ;;   ask turtles [ fd 1 ]
   tick
 end
 
-
-
 to flock  ;; turtle procedure
-    find-flockmates
-    if any? flockmates
-    [let a angleFromVect vectDirect
-    turn-towards a max-angle-turn]
-
-
-;  if any? flockmates
-;    [ find-nearest-neighbor
-;      ifelse distance nearest-neighbor < minimum-separation
-;;        [ separate ]
-;;
-;;        [ align
-;;          cohere ] ]
-end
-
-
-to-report angleFromVect [vect]
-    let a atan item 0  vect item 1 vect
-    report a
-end
-
-to-report vectDirect
-  let va multiplyScalarvect factor-align vectAlign
-  let vs multiplyScalarvect factor-separate vectSeparate
-  let vc multiplyScalarvect factor-cohere vectCohere
-
-  let vr additionvect va vs
-  set vr additionvect vr vc
-  report vr
-;
+  find-flockmates
+  if any? flockmates
+    [ find-nearest-neighbor
+      ifelse distance nearest-neighbor < minimum-separation
+        [ separate ]
+        [ align
+          cohere ] ]
 end
 
 to find-flockmates  ;; turtle procedure
-  set flockmates other turtles with  [color = [color] of myself] in-radius vision
+  ;; MODIFICATION condition de couleur
+  set flockmates other turtles in-radius vision with [color = [color] of myself]
 end
 
 to find-nearest-neighbor ;; turtle procedure
-  set nearest-neighbor min-one-of flockmates [distance myself]
+  set nearest-neighbor min-one-of flockmates with [color = [color] of myself] [distance myself]
 end
 
 ;;; SEPARATE
 
-
-to-report vectSeparate
-  let vs 0
-  find-nearest-neighbor
-  ifelse (nearest-neighbor = nobody)
-  [set vs VectFromAngle random 180 0]
-  [set vs VectFromAngle (towards nearest-neighbor + 180 ) (1 / distance nearest-neighbor)]
-  report vs
+to separate  ;; turtle procedure
+  turn-away ([heading] of nearest-neighbor) max-separate-turn
 end
-
-;to separate  ;; turtle procedure
-;  turn-away ([heading] of nearest-neighbor) max-separate-turn
-;end
 
 ;;; ALIGN
 
-to-report vectAlign
-  let x-component sum [dx] of flockmates
-  let y-component sum [dy] of flockmates
-  report (list x-component y-component)
+to align  ;; turtle procedure
+  turn-towards average-flockmate-heading max-align-turn
 end
 
-;to align  ;; turtle procedure
-;  turn-towards average-flockmate-heading max-align-turn
-;end
-
-;to-report average-flockmate-heading  ;; turtle procedure
-;  ;; We can't just average the heading variables here.
-;  ;; For example, the average of 1 and 359 should be 0,
-;  ;; not 180.  So we have to use trigonometry.
-;  let x-component sum [dx] of flockmates
-;  let y-component sum [dy] of flockmates
-;  ifelse x-component = 0 and y-component = 0
-;    [ report heading ]
-;    [ report atan x-component y-component ]
-;end
+to-report average-flockmate-heading  ;; turtle procedure
+  ;; We can't just average the heading variables here.
+  ;; For example, the average of 1 and 359 should be 0,
+  ;; not 180.  So we have to use trigonometry.
+  let x-component sum [dx] of flockmates
+  let y-component sum [dy] of flockmates
+  ifelse x-component = 0 and y-component = 0
+    [ report heading ]
+    [ report atan x-component y-component ]
+end
 
 ;;; COHERE
 
-;to cohere  ;; turtle procedure
-;  turn-towards average-heading-towards-flockmates max-cohere-turn
-;end
-
-to-report vectCohere
-
-  let x-component mean [sin (towards myself + 180)] of flockmates
-  let y-component mean [cos (towards myself + 180)] of flockmates
-  report (list x-component y-component)
+to cohere  ;; turtle procedure
+  turn-towards average-heading-towards-flockmates max-cohere-turn
 end
 
-
-;to-report average-heading-towards-flockmates  ;; turtle procedure
-;  ;; "towards myself" gives us the heading from the other turtle
-;  ;; to me, but we want the heading from me to the other turtle,
-;  ;; so we add 180
-;
-;  let x-component mean [sin (towards myself + 180)] of flockmates
-;  let y-component mean [cos (towards myself + 180)] of flockmates
-;  ifelse x-component = 0 and y-component = 0
-;    [ report heading ]
-;    [ report atan x-component y-component ]
-;end
+to-report average-heading-towards-flockmates  ;; turtle procedure
+  ;; "towards myself" gives us the heading from the other turtle
+  ;; to me, but we want the heading from me to the other turtle,
+  ;; so we add 180
+  let x-component mean [sin (towards myself + 180)] of flockmates
+  let y-component mean [cos (towards myself + 180)] of flockmates
+  ifelse x-component = 0 and y-component = 0
+    [ report heading ]
+    [ report atan x-component y-component ]
+end
 
 ;;; HELPER PROCEDURES
 
@@ -157,30 +144,17 @@ to turn-at-most [turn max-turn]  ;; turtle procedure
     [ rt turn ]
 end
 
-to-report multiplyScalarvect [factor vect]
-   report (list (item 0 vect * factor) (item 1 vect * factor))
-end
-to-report additionvect [v1 v2]
-   report (list (item 0 v1 + item 0 v2) (item 1 v1 + item 1 v2) )
-end
-to-report vectFromAngle [angle len]
-   let l (list (len * sin angle) (len * cos angle))
-   report l
-end
 
-
-
-
-; Copyright 1998 Uri Wilensky - 2015 Modified J. Ferber for vector based behavior
+; Copyright 1998 Uri Wilensky.
 ; See Info tab for full copyright and license.
 @#$#@#$#@
 GRAPHICS-WINDOW
 250
 10
-757
-538
-35
-35
+755
+516
+-1
+-1
 7.0
 1
 10
@@ -233,7 +207,7 @@ NIL
 NIL
 NIL
 NIL
-1
+0
 
 SLIDER
 9
@@ -244,10 +218,55 @@ population
 population
 1.0
 1000.0
-300
+308.0
 1.0
 1
 NIL
+HORIZONTAL
+
+SLIDER
+4
+217
+237
+250
+max-align-turn
+max-align-turn
+0.0
+20.0
+5.0
+0.25
+1
+degrees
+HORIZONTAL
+
+SLIDER
+4
+251
+237
+284
+max-cohere-turn
+max-cohere-turn
+0.0
+20.0
+3.0
+0.25
+1
+degrees
+HORIZONTAL
+
+SLIDER
+4
+285
+237
+318
+max-separate-turn
+max-separate-turn
+0.0
+20.0
+6.0
+0.25
+1
+degrees
 HORIZONTAL
 
 SLIDER
@@ -259,7 +278,7 @@ vision
 vision
 0.0
 10.0
-3
+6.0
 0.5
 1
 patches
@@ -274,68 +293,85 @@ minimum-separation
 minimum-separation
 0.0
 5.0
-1
+0.75
 0.25
 1
 patches
 HORIZONTAL
 
-SLIDER
-9
-258
-232
-291
-factor-align
-factor-align
-0
-1
-0.5
-0.1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-9
-297
-232
+BUTTON
+67
 330
-factor-cohere
-factor-cohere
-0
+183
+363
+NIL
+add-orange
+NIL
 1
-0.5
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+SLIDER
+38
+376
+210
+409
+vision-orange
+vision-orange
+0
+20
+5.0
 0.1
 1
 NIL
 HORIZONTAL
 
 SLIDER
-9
-338
-232
-371
-factor-separate
-factor-separate
-0
-1
-0.7
-0.1
-1
-NIL
-HORIZONTAL
-
-SLIDER
-8
-207
-232
-240
-max-angle-turn
-max-angle-turn
-0
-180
 30
+431
+202
+464
+factor-align
+factor-align
+0
 1
+1.0
+0.1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+30
+466
+202
+499
+factor-cohere
+factor-cohere
+0
+1
+1.0
+0.1
+1
+NIL
+HORIZONTAL
+
+SLIDER
+30
+501
+202
+534
+factor-separate
+factor-separate
+0
+1
+1.0
+0.1
 1
 NIL
 HORIZONTAL
@@ -411,31 +447,39 @@ Notice the need for the `subtract-headings` primitive and special procedure for 
 
 * Moths
 * Flocking Vee Formation
+* Flocking - Alternative Visualizations
 
 ## CREDITS AND REFERENCES
 
 This model is inspired by the Boids simulation invented by Craig Reynolds.  The algorithm we use here is roughly similar to the original Boids algorithm, but it is not the same.  The exact details of the algorithm tend not to matter very much -- as long as you have alignment, separation, and cohesion, you will usually get flocking behavior resembling that produced by Reynolds' original model.  Information on Boids is available at http://www.red3d.com/cwr/boids/.
 
-
 ## HOW TO CITE
 
-If you mention this model in a publication, we ask that you include these citations for the model itself and for the NetLogo software:
-- Wilensky, U. (1998).  NetLogo Flocking model.  http://ccl.northwestern.edu/netlogo/models/Flocking.  Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
-- Wilensky, U. (1999). NetLogo. http://ccl.northwestern.edu/netlogo/. Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
+If you mention this model or the NetLogo software in a publication, we ask that you include the citations below.
+
+For the model itself:
+
+* Wilensky, U. (1998).  NetLogo Flocking model.  http://ccl.northwestern.edu/netlogo/models/Flocking.  Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
+
+Please cite the NetLogo software as:
+
+* Wilensky, U. (1999). NetLogo. http://ccl.northwestern.edu/netlogo/. Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
 
 ## COPYRIGHT AND LICENSE
 
 Copyright 1998 Uri Wilensky.
 
-![CC BY-NC-SA 3.0](http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png)
+![CC BY-NC-SA 3.0](http://ccl.northwestern.edu/images/creativecommons/byncsa.png)
 
-This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License.  To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
+This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License.  To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
 
 Commercial licenses are also available. To inquire about commercial licenses, please contact Uri Wilensky at uri@northwestern.edu.
 
 This model was created as part of the project: CONNECTED MATHEMATICS: MAKING SENSE OF COMPLEX PHENOMENA THROUGH BUILDING OBJECT-BASED PARALLEL MODELS (OBPML).  The project gratefully acknowledges the support of the National Science Foundation (Applications of Advanced Technologies Program) -- grant numbers RED #9552950 and REC #9632612.
 
 This model was converted to NetLogo as part of the projects: PARTICIPATORY SIMULATIONS: NETWORK-BASED DESIGN FOR SYSTEMS LEARNING IN CLASSROOMS and/or INTEGRATED SIMULATION AND MODELING ENVIRONMENT. The project gratefully acknowledges the support of the National Science Foundation (REPP & ROLE programs) -- grant numbers REC #9814682 and REC-0126227. Converted from StarLogoT to NetLogo, 2002.
+
+<!-- 1998 2002 -->
 @#$#@#$#@
 default
 true
@@ -718,9 +762,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.3.1
+NetLogo 6.0.4
 @#$#@#$#@
 set population 200
 setup
@@ -739,7 +782,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@

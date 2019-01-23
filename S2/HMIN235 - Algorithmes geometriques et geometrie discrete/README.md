@@ -1,4 +1,4 @@
-# HMIN214 - Algorithmique geometrique et geometrie discrete
+# HMIN235 - Algorithmique geometrique et geometrie discrete
 
 ## Sommaire [↺](#sommaire-)
 
@@ -7,6 +7,8 @@
   - [Ressources](#ressources-)
 
 ## Informations [↺](#sommaire-)
+
+- Anciennemnt : HMIN214
 
 ### Examens [↺](#sommaire-)
 

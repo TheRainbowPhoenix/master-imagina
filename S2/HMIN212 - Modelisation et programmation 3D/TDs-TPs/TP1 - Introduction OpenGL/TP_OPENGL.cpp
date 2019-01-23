@@ -9,6 +9,7 @@
 // La forme représentée ici est un polygone blanc dessiné sur un fond rouge
 ///////////////////////////////////////////////////////////////////////////////  
 
+#include <iostream>
 #include <stdio.h>      
 #include <stdlib.h>     
 #include <math.h>
@@ -22,6 +23,8 @@ Si vous mettez glut dans le répertoire courant, on aura alors #include "glut.h"
 #include <GL/glut.h> 
 #include "Vector3.h"
 #include "Point3.h"
+
+using namespace std;
 
 // Définition de la taille de la fenêtre
 #define WIDTH  480
@@ -37,6 +40,10 @@ Si vous mettez glut dans le répertoire courant, on aura alors #include "glut.h"
 
 // Touche echap (Esc) permet de sortir du programme
 #define KEY_ESC 27
+#define KEY_I 105
+#define KEY_J 106
+#define KEY_K 107
+#define KEY_L 108
 
 
 // Entêtes de fonctions
@@ -47,9 +54,12 @@ GLvoid window_display();
 GLvoid window_reshape(GLsizei width, GLsizei height); 
 GLvoid window_key(unsigned char key, int x, int y); 
 
+double random(double n, long long precision = 100000);
+double random(double min, double max, long long precision = 100000);
 
-int main(int argc, char **argv) 
-{  
+int main(int argc, char **argv)
+{ 
+  srand(time(0));
   // initialisation  des paramètres de GLUT en fonction
   // des arguments sur la ligne de commande
   glutInit(&argc, argv);
@@ -123,6 +133,8 @@ GLvoid window_reshape(GLsizei width, GLsizei height)
   glMatrixMode(GL_MODELVIEW);
 }
 
+Point3 point(-2 + random(4), -2 + random(4));
+
 // fonction de call-back pour la gestion des événements clavier
 
 GLvoid window_key(unsigned char key, int x, int y) 
@@ -130,67 +142,95 @@ GLvoid window_key(unsigned char key, int x, int y)
   switch (key) {    
   case KEY_ESC:  
     exit(1);                    
-    break; 
-    
+    break;
+  case KEY_I:
+    point += Vector3::up * 0.1;
+    glutPostRedisplay();
+    break;
+  case KEY_J:
+    point += Vector3::left * 0.1;
+    glutPostRedisplay();
+    break;
+  case KEY_K:
+    point += Vector3::down * 0.1;
+    glutPostRedisplay();
+    break;
+  case KEY_L:
+    point += Vector3::right * 0.1;
+    glutPostRedisplay();
+    break;
   default:
     printf ("La touche %d n´est pas active.\n", key);
     break;
   }     
 }
 
-
-GLvoid drawPoint(const Point3& p){
-   // Création de deux lignes
+GLvoid draw_point(const Point3& point){
   glPointSize(4);
   glBegin(GL_POINTS);
-    glVertex3f(p.x, p.y, p.z);
+    glVertex3dv(point);
   glEnd();
 }
 
-GLvoid drawLine(const Point3& start, const Point3& end){
+GLvoid draw_line(const Point3& start, const Point3& end){
   glBegin(GL_LINES);
-    glVertex3f(start.x, start.y, start.z);
-    glVertex3f(end.x, end.y, end.z);
+    glVertex3dv(start);
+    glVertex3dv(end);
   glEnd();
 }
 
+
+double random(double n, long long precision){
+  long long num = n * precision;
+  return (rand() % num) / (double)precision;
+}
+
+double random(double min, double max, long long precision){
+  return min + random((max - min), precision);
+}
 //////////////////////////////////////////////////////////////////////////////////////////
 // Fonction que vous allez modifier afin de dessiner
 /////////////////////////////////////////////////////////////////////////////////////////
 void render_scene()
 {
 //Définition de la couleur
- glColor3f(1.0, 0, 0);
 
   //  Nous créons ici un polygone. Nous pourrions aussi créer un triangle ou des lignes. Voir ci-dessous les parties 
   // en commentaires (il faut commenter le bloc qui ne vous intéresse pas et décommenter celui que vous voulez tester.
 
    // Création de deux lignes
 /*
-	glBegin(GL_LINES);
-		glVertex3f(-1, -1, 0);
-		glVertex3f(1, 1, 0);
-		glVertex3f(1, -1, 0);
+  glBegin(GL_LINES);
+    glVertex3f(-1, -1, 0);
+    glVertex3f(1, 1, 0);
+    glVertex3f(1, -1, 0);
     glVertex3f(-1, 1, 0); 
   glEnd();
 */
+  glEnable(GL_LINE_STIPPLE);
+  glLineStipple(1, 0x0C0F);
+
+  Point3 line_start(-2, 2);
+  Point3 line_end(2, -2);
+
+  Point3 projection = point.project_on_line(line_start, line_end);
+
+  //cout << "point = " << point << "\n";
+  //cout << "line_start = " << line_start << "\n";
+  //cout << "line_end = " << line_end << "\n";
+  //cout << "projection(point, line_start, line_end) = " << projection << "\n";
+
+  glColor3f(0, 0, 1);
+
+  draw_point(point);
+  draw_line(point, projection);
+
+  glColor3f(1, 0, 0);
  
- Point3 p(0.5, 0.5, 0);
+  draw_point(projection);
+  draw_line(line_start, line_end);
 
- Point3 line_start(-1, 1, 0);
- Point3 line_end(1, -1, 0);
 
- Point3 projection = p.project_on_line(line_start, line_end);
-
- drawPoint(p);
-
- drawLine(line_start, line_end);
-
- glColor3f(0, 0, 1);
-
- drawPoint(projection);
-
-  
  // création d'un polygone
 /*	glBegin(GL_POLYGON);
 		glVertex3f(-1, -1, 0);
@@ -200,7 +240,6 @@ void render_scene()
 	glEnd();
 */
 
-
 /*
 // création d'un triangle
 	glBegin(GL_TRIANGLES);
@@ -209,7 +248,4 @@ void render_scene()
 		glVertex3f(1, 1, 0);
 	glEnd();
 */
-
-
-
 }

@@ -50,14 +50,19 @@ montrer la deformation des sons selon la methodes
 	- creation de son en ajoutant des raies 
 	- modification de l'espace temporelle a partir de l'espace frequenciel (ajouter des raies au pif)
 
-
 # 1 Introduction
 
-On présente dans l'introduction l'objectif du travail pratique ainsi que les notions nécessaires à la compréhension de l'étude : connaissances actuelles sur le sujet (avec références bibliographiques), définitions des mots nouveaux ou complexes utilisés, rappel ou mise au point des notions nécessaires à la compréhension du rapport par un étudiant de même âge mais non-initié.
+Ce rapport à pour but de montrez quelques experimentations faisable à l'aide de la transformé de fourrier : 
+	- Annalyse d'un son sur l'espace frequenciel (à l'aide de la trasnformé de fourrier)
+	- Création de gamme chromatiques (à l'aide de la transformé de fourrier inverse)
 
-2 Matériel et méthode
+# 2 Matériel et méthode
 
-2.1 Matériel
+# 2.1 Matériel
+
+Pour visualiser les fichiers sonores nous utilisont le logiciel audacity
+
+![signal_1](siganal_1.png)
 
 On y décrit de façon détaillée le matériel utilisé lors de l'expérimentation, y compris la nature du sujet d'expérimentation et, le cas échéant, le lieu d'observation.
 
