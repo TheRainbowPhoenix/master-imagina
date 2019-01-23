@@ -45,5 +45,3 @@
 
 + [HMIN401 - Etude bibliographique](../../tree/master/S4/HMIN401%20-%20Etude%20bibliographique)
 + [HMIN401 - Stage academique](../../tree/master/S4/HMIN401%20-%20Stage%20academique)
-
-test
