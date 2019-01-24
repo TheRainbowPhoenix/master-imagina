@@ -21,7 +21,7 @@ void Vector3::normalize() {
 }
 
 Vector3 Vector3::normalized() const {
-	return *this / length();
+	return *this / length();	
 }
 
 double Vector3::length() const {

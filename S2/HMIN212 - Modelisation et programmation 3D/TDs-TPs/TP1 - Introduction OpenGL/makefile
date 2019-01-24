@@ -22,7 +22,7 @@
 
 CC      = g++
 CFLAGS  = -Wall -Wextra
-LDFLAGS = -lglut -lGL -lGLU
+LDFLAGS = -lglut -lGL -lGLU -lm
 
 # Dossiers de sorties pour les fichiers objets et binaires.
 
@@ -35,8 +35,6 @@ BIN_DIR = bin
 SRC_SEARCH_DIRS = .
 INC_SEARCH_DIRS = .
 LIB_SEARCH_DIRS = .
-
-DEBUG = true
 
 # Extra element for the compiler and linker
 
@@ -78,23 +76,27 @@ PREREQ_BIN_DIRS := $(sort $(dir $(BINS)) $(BIN_DIR))
 PREREQ_OBJ_DIRS := $(sort $(dir $(OBJS)) $(OBJ_DIR))
 PREREQ_DIRS     := $(sort $(PREREQ_BIN_DIRS) $(PREREQ_OBJ_DIRS))
 
-ifeq ($(DEBUG),true)
-	CFLAGS += -g -D DEBUG
-else
+ifeq ($(findstring release,$(MAKECMDGOALS)),release)
 	CFLAGS += -O3
+else
+	CFLAGS += -g -D DEBUG
 endif
 
 ### REGLES DE CONSTRUCTION
 
 # Cibles qui ne represent pas des fichiers.
 
-.PHONY: all clean clean-all
+.PHONY: all debug clean clean-all
 
 # Si le fichier $(BINS_LIST) n'existe pas on le créé et on relance
 # le makefile pour qu'il prenne sa creation.
 # Sinon on créé les binaires.
 
-all: build-bins
+all: debug
+
+debug: build-bins
+
+release: build-bins
 
 ifeq ("$(wildcard $(BINS_LIST))","")
 build-bins: $(BINS_LIST)
@@ -110,15 +112,11 @@ build-bins: $(BINS_LIST)
 		echo "ATTENTION : aucun main trouvé (verifiez qu'aucun fichier ne comporte d'espace dans son chemin)"; \
 	fi
 else
-build-bins: $(BINS) 
+build-bins: $(BINS)
 endif
 
-lib: DEBUG=no
-lib: $(BINS_LIST)
-
-
 $(OBJS): | $(PREREQ_OBJ_DIRS)
-$(BINS) $(BINS_LIST): | $(PREREQ_BIN_DIRS)
+$(BINS) $(BINS_LIST): | $(PREREQ_BIN_DIRS) $(OBJS)
  
 $(BINS_LIST): $(OBJS)
 	@rm -f $@; \
@@ -132,14 +130,25 @@ $(BINS_LIST): $(OBJS)
 $(PREREQ_DIRS):
 	mkdir -p $@
 
+# Verifie si le fichier .o passé en paramètre contient une fonction main
+
+define check_main_obj
+	contain_main=$$(nm "$1" | grep -w "main"); \
+	if [ -n "$$contain_main" ]; then \
+		printf "$1\n" | sed -e "s/$(OBJ_DIR)\//$(BIN_DIR)\//" | rev | cut -d '.' -f2- | rev >> $(BINS_LIST); \
+	fi
+endef
+
 # Définition : template de règles pour la compilation de .$(EXT) en .o
 
 define rule_compile_src_template
 $$(OBJ_DIR)/%.o: %.$1
 	$$(CC) $$(CFLAGS) $$(IFLAGS) -c $$< -o $$@
 endef
+#	$$(call check_main_obj,$$@)
 
 # Extensions possibles pour les sources
+# Pour voir le resultat de l'expansion de variable Utilisez info au lieux de eval
 
 SRC_EXTS = c C cc CC cpp CPP c++ C++ cxx CXX s S
 
@@ -182,8 +191,5 @@ clean-all: clean
 # uniq = $(if $1,$(firstword $1) $(call uniq,$(filter-out $(firstword $1),$1)))
 # rwildcard = $(strip $(foreach d,$(wildcard $(addsuffix *,$(1))),$(call rwildcard,$(d)/,$(2)) $(filter $(subst *,%,$(2)),$(d))))
 #
-# - Construct lib
-# 
-# g++ -Wall -fPIC -c $(find src -name "*.cpp")
-# g++ -shared -Wl,-soname,libunidraw.so -o libunidraw.so *.o
-# g++ -Wall -L. -Wl,-rpath,. -Isrc test/test_par.cpp -o test_par -lunidraw -lncursesw
+#
+# faire un diff sur la liste des obj ajouter

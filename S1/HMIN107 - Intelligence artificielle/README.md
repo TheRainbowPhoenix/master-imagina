@@ -2,9 +2,40 @@
 
 ## Sommaire [↺](#sommaire-)
 
-* [Informations](#informations-)
-  + [Examens](#examens-)
-  + [Ressources](#ressources-)
+- [Informations](#informations-)
+	- [Examens](#examens-)
+	- [Ressources](#ressources-)
+- [CSP \(Constraint Satisfaction Problem\)](#csp-\(constraint-satisfaction-problem\)-)
+	- [Representation](#representation-)
+	- [Resolution](#resolution-)
+		- [Backtrack](#backtrack-)
+		- [Heuristique](#heuristique-)
+			- [Ordre des variables](#ordre-des-variables-)
+			- [Arc-Consistance](#arc-consistance-)
+			- [Forward Checking](#forward-checking-)
+- [SAT \(Problème de satisfiabilité booléenne\)](#sat-\(problème-de-satisfiabilité-booléenne\)-)
+	- [Logique des propositions](#logique-des-propositions-)
+		- [Syntaxe](#syntaxe-)
+		- [Sémantique](#sémantique-)
+		- [Conséquence logique](#conséquence-logique-)
+	- [Resolution](#resolution-)
+		- [DPLL](#dpll-)
+		- [Heuristique](#heuristique-)
+		- [Reduction polynomiale](#reduction-polynomiale-)
+			- [SAT → CSP](#sat-→-csp-)
+			- [CSP → SAT](#csp-→-sat-)
+- [Système à base de règles d'ordre 0 \(Logique des propositions\)](#système-à-base-de-règles-d'ordre-0-\(logique-des-propositions\)-)
+	- [Resolution](#resolution-)
+		- [Forward Chaining](#forward-chaining-)
+		- [Backward Chaining](#backward-chaining-)
+	- [Representation](#representation-)
+- [Système à base de règles d'ordre 1 \(Logique des predicats\)](#système-à-base-de-règles-d'ordre-1-\(logique-des-predicats\)-)
+	- [Homomorphisme](#homomorphisme-)
+	- [Forward Chaining](#forward-chaining-)
+	- [Reduction polynomiale](#reduction-polynomiale-)
+		- [HOM → CSP](#hom-→-csp-)
+		- [CSP → HOM](#csp-→-hom-)
+		- [Negation Monde ouvert/clos](#negation-monde-ouvert/clos-)
 
 ## Informations [↺](#sommaire-)
 
@@ -141,6 +172,48 @@ Fin
 (exemple)
 
 ## SAT (Problème de satisfiabilité booléenne) [↺](#sommaire-)
+
+### Logique des propositions [↺](#sommaire-)
+
+#### Syntaxe [↺](#sommaire-)
+
+- Symboles propositionnels (variables propositionnels) A, B, C...
+- Connecteurs : !, ^, v, ->, <->, ...
+- Formules (fbf) : A -> B ^ !c
+
+(1) A, B, C... atomes
+(2) si A et B sont des fbf, !A, (A^B), (AvB), (A->B) sont des fbf
+
+**literal** : symbole ou negation d'un symbole.
+**clause** : disjonction de litteraux (Ex. A v !B v C v !D)
+**CNF** : forme normale conjonctive (conjonctions de clauses)
+
+#### Sémantique [↺](#sommaire-)
+
+- Vocabulaire E
+- Interpretation I:E -> {vrai, faux} 
+
+v(A -> B, I) = faux ssi A et B faux
+
+I **modèle** de F = v(F, I) = vrai
+F **satisfiable** s'il existe un modèle de F
+F_1 et F_2 sont **équivalente** si ∀I, v(F_1, I), = v(F_2, I)
+
+Toute formule est equivalente à 1 CNF
+
+#### Conséquence logique [↺](#sommaire-)
+
+De H_1, ...., H_k, peut-on conclure C ?
+
+{H_1, ..., H_k} |= C
+H_1, ..., H_k |= C
+H_1 ^ ... ^ H_k |= C
+
+Tout modèle I de H_1 ^ ... ^ H_k est un modèle de C
+
+**Théoreme fondamental** : {H_1, ..., H_k} |= C ssi H_1 ^ ... ^ H_k ^ !C est insatisfiable
+
+F_1 !(|=) F2 != F_1 |= !(F2)
 
 ### Resolution [↺](#sommaire-)
 
@@ -344,12 +417,7 @@ A2 ← ensemble des valeurs des variables x ∈ X
 A1 = { Ci(x1, ..., xk) | Ci ∈ C et porte sur (x1, ..., ck)}
 A2 = { Ci(a1, ..., ak) | Ci ∈ C et (a1, ..., ak) est dans la définition de ci}
 
-
-
-
-
-
-#### Negation Monde ouvert/clos
+#### Negation Monde ouvert/clos [↺](#sommaire-)
 
 Mecanisme de chaînage avant/arrière est en
 	- **Adéquation** (ou correction) : si l'atome A est produit par un mecanisme de chaînage alors A est conséquence logique de la base de connaissances
