@@ -51,19 +51,23 @@ protected:
 	void copy(const ImageBase &copy);
 
 public:
-	int getHeight() { return height; };
-	int getWidth() { return width; };
-	int getTotalSize() { return nTaille; };
-	int getValidity() { return isValid; };
-	bool getColor() { return color; };
+	int getHeight() const { return height; };
+	int getWidth() const { return width; };
+	int getTotalSize() const { return nTaille; };
+	int getValidity() const { return isValid; };
+	bool getColor() const { return color; };
 	unsigned char *getData() { return data; };
-
 
 	void load(const char *filename);
 	bool save(const char *filename);
 
-	ImageBase *getPlan(PLAN plan);
+	ImageBase* getPlan(PLAN plan);
+	void setPlan(PLAN plan, const ImageBase* plan_data);
 
 	unsigned char *operator[](int l);
 };
 
+/* assigne les données du plan à l'image coloré, dont la taille doit être 3 fois superieur à celle du plan */
+void set_plan_R(unsigned char *image_data, unsigned char *plan_R, int taille_plan);
+void set_plan_G(unsigned char *image_data, unsigned char *plan_G, int taille_plan);
+void set_plan_B(unsigned char *image_data, unsigned char *plan_B, int taille_plan);

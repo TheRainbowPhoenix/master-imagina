@@ -160,6 +160,29 @@ ImageBase *ImageBase::getPlan(PLAN plan)
 	return greyIm;
 }
 
+void ImageBase::setPlan(PLAN plan, const ImageBase* plan_data){
+	
+	if( !isValid || !color )
+		return;
+	
+	switch(plan)
+	{
+	case PLAN_R:
+		set_plan_R(data, plan_data->getData(), height * width);
+		break;
+	case PLAN_G:
+		set_plan_G(data, plan_data->getData(), height * width);
+		break;
+	case PLAN_B:
+		set_plan_B(data, plan_data->getData(), height * width);
+		break;
+	default:
+		printf("Il n'y a que 3 plans, les valeurs possibles ne sont donc que 'PLAN_R', 'PLAN_G', et 'PLAN_B'");
+		exit(0);
+		break;
+	}
+}
+
 void ImageBase::copy(const ImageBase &copy)
 {
 	reset();
@@ -203,4 +226,25 @@ unsigned char *ImageBase::operator[](int l)
 	}
 	
 	return data+l*width;
+}
+
+void set_plan_R(unsigned char *image_data, unsigned char *plan_R, int taille_plan){
+  int i;
+  for (i=0; i<taille_plan; i++){
+    image_data[3*i] = plan_R[i];
+  }
+}
+
+void set_plan_G(unsigned char *image_data, unsigned char *plan_G, int taille_plan){
+  int i;
+  for (i=0; i<taille_plan; i++){
+    image_data[3*i+1] = plan_G[i];
+  }
+}
+
+void set_plan_B(unsigned char *image_data, unsigned char *plan_B, int taille_plan){
+  int i;
+  for (i=0; i<taille_plan; i++){
+    image_data[3*i+2] = plan_B[i];
+  }
 }

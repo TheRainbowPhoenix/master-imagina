@@ -210,6 +210,47 @@ z' = z
 	- GL_SMOOTH : lumière calculer par les points 
 	- GL_FLAT: lumière calculer par surfaces 
 
-# Courbes paramétriques 
+### Courbes paramétriques
 
-# Surfaces paramétriques
+Peut être vue comme le deplacement d'un point dans l'espace
+
+defini par
+	- un scalaire u ∈ [0, 1]
+	- l'abscisse curviligne s ∈ [0, l]
+	- valeur de la courbure k = 1 / r
+
+```
+            | x(u) = fx(u) |
+u -> p(u) = | y(u) = fy(u) |
+            | z(u) = fz(u) |
+```
+
+#### Courbes Cubiques
+
+de la forme P(u) = au³ + bu² + cu + d
+
+- defini par 
+	- point de depart P0(u=0)
+	- point d'arrivé P1(u=1)
+```
+
+P(u) 
+
+```
+
+#### Courbes de bézier
+
+Un point de la courbe est une combinaison affine des points de contrôle Pi, si u ∈ [a, b]
+
+```
+equation
+```
+
+#### Courbes B-Splines
+
+- ensemble de point de contrôle
+- vecteur de noeud
+- ensemble de multiplicité
+- ensemble de poids
+
+### Surfaces paramétriques
