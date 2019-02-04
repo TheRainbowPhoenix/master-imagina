@@ -13,19 +13,19 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  ImageBase image_in;
-  image_in.load(argv[1]);
+  ImagePGM image;
+  image.load(argv[1]);
 
   map<int, int> grey_occurrences;
 
-  for (int x = 0; x < image_in.getHeight(); ++x){
-    for (int y = 0; y < image_in.getWidth(); ++y){
-      grey_occurrences[image_in[x][y]]++;
+  for (int i = 0; i < image.height(); ++i){
+    for (int j = 0; j < image.width(); ++j){
+      grey_occurrences[image[i][j]]++;
     }
   }
 
   for (auto it = grey_occurrences.begin() ; it != grey_occurrences.end() ; ++it){
-    cout << it->first << " " << it->second / (double)(image_in.getHeight() * image_in.getWidth()) << "\n";
+    cout << it->first << " " << it->second / (double)(image.height() * image.width()) << "\n";
   }
 
   return 0;

@@ -6,27 +6,27 @@
 
 using namespace std;
 
-void seuillage(ImageBase* image_in, ImageBase* image_out, const vector<int>& seuils){
+void seuillage(ImagePGM& image, const vector<int>& seuils){
   
   bool assigned = false;
   
   if(seuils.size() > 0) {
 
-    for (int x = 0; x < image_in->getHeight(); ++x){
-      for (int y = 0; y < image_in->getWidth(); ++y){
+    for (int i = 0; i < image.height(); ++i){
+      for (int j = 0; j < image.width(); ++j){
         
         assigned = false;
 
-        for (size_t i = 0; i < seuils.size(); ++i){
-          if ((*image_in)[x][y] < seuils[i]){
-            (*image_out)[x][y] = (255 / seuils.size()) * i ;
+        for (size_t k = 0; k < seuils.size(); ++k){
+          if (image[i][j] < seuils[k]){
+            image[i][j] = (255 / seuils.size()) * k ;
             assigned = true;
             break;
           }
         }
 
         if (!assigned)
-          (*image_out)[x][y] = 255;
+          image[i][j] = 255;
 
       }
     }
@@ -52,27 +52,6 @@ void print_v(vector<int>& v){
   cout << "\n";
 }
 
-void set_plan_R(unsigned char *image_data, unsigned char *plan_R, int taille_plan){
-  int i;
-  for (i=0; i<taille_plan; i++){
-    image_data[3*i] = plan_R[i];
-  }
-}
-   
-void set_plan_G(unsigned char *image_data, unsigned char *plan_G, int taille_plan){
-  int i;
-  for (i=0; i<taille_plan; i++){
-    image_data[3*i+1] = plan_G[i];
-  }
-}
-
-void set_plan_B(unsigned char *image_data, unsigned char *plan_B, int taille_plan){
-  int i;
-  for (i=0; i<taille_plan; i++){
-    image_data[3*i+2] = plan_B[i];
-  }
-}
-
 int main(int argc, const char *argv[]) {
 
   if (argc <= 3) {
@@ -81,8 +60,7 @@ int main(int argc, const char *argv[]) {
     return 1;
   }
 
-  ImageBase image_in; image_in.load(argv[1]);
-  ImageBase image_out(image_in.getWidth(), image_in.getHeight(), image_in.getColor());
+  ImagePPM image; image.load(argv[1]);
 
   vector<int> R_seuils, G_seuils, B_seuils;
 
@@ -112,29 +90,19 @@ int main(int argc, const char *argv[]) {
   cout << "G_seuils : "; print_v(G_seuils);
   cout << "B_seuils : "; print_v(B_seuils);
 
-/* Seuillage des rouges */
+  ImagePGM R = image.get_plan(ImagePPM::PLAN_R);
+  ImagePGM G = image.get_plan(ImagePPM::PLAN_G);
+  ImagePGM B = image.get_plan(ImagePPM::PLAN_B);
 
-  ImageBase* R_in = image_in.getPlan(ImageBase::PLAN_R);
-  ImageBase* R_out = image_out.getPlan(ImageBase::PLAN_R);
-  seuillage(R_in, R_out, R_seuils);
+  seuillage(R, R_seuils);
+  seuillage(G, G_seuils);
+  seuillage(B, B_seuils);
 
-/* Seuillage des verts */
+  image.set_plan(ImagePPM::PLAN_R, R);
+  image.set_plan(ImagePPM::PLAN_G, G);
+  image.set_plan(ImagePPM::PLAN_B, B);
 
-  ImageBase* G_in = image_in.getPlan(ImageBase::PLAN_G);
-  ImageBase* G_out = image_out.getPlan(ImageBase::PLAN_G);
-  seuillage(G_in, G_out, G_seuils);
-
-/* Seuillage des bleues */  
-
-  ImageBase* B_in = image_in.getPlan(ImageBase::PLAN_B);
-  ImageBase* B_out = image_out.getPlan(ImageBase::PLAN_B);
-  seuillage(B_in, B_out, B_seuils);
-
-  set_plan_R(image_out.getData(), R_out->getData(), R_out->getWidth() * R_out->getHeight());
-  set_plan_G(image_out.getData(), G_out->getData(), G_out->getWidth() * G_out->getHeight());
-  set_plan_B(image_out.getData(), B_out->getData(), B_out->getWidth() * B_out->getHeight());
-
-  image_out.save(argv[2]);
-
+  image.save(argv[2]);
+  
   return 0;
 }

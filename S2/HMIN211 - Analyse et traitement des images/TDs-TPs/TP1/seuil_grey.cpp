@@ -5,27 +5,27 @@
 
 using namespace std;
 
-void seuillage(ImageBase* image_in, ImageBase* image_out, const vector<int>& seuils){
+void seuillage(ImagePGM& image, const vector<int>& seuils){
   
   bool assigned = false;
   
   if(seuils.size() > 0) {
 
-    for (int x = 0; x < image_in->getHeight(); ++x){
-      for (int y = 0; y < image_in->getWidth(); ++y){
+    for (int i = 0; i < image.height(); ++i){
+      for (int j = 0; j < image.width(); ++j){
         
         assigned = false;
 
-        for (size_t i = 0; i < seuils.size(); ++i){
-          if ((*image_in)[x][y] < seuils[i]){
-            (*image_out)[x][y] = (255 / seuils.size()) * i ;
+        for (size_t k = 0; k < seuils.size(); ++k){
+          if (image[i][j] < seuils[k]){
+            image[i][j] = (255 / seuils.size()) * k ;
             assigned = true;
             break;
           }
         }
 
         if (!assigned)
-          (*image_out)[x][y] = 255;
+          image[i][j] = 255;
 
       }
     }
@@ -47,12 +47,11 @@ int main(int argc, char **argv) {
       seuils.push_back(atoi(argv[i]));
   }
 
-  ImageBase image_in; image_in.load(argv[1]);
-  ImageBase image_out(image_in.getWidth(), image_in.getHeight(), image_in.getColor());
+  ImagePGM image; image.load(argv[1]);
 
-  seuillage(&image_in, &image_out, seuils);
+  seuillage(image, seuils);
 
-  image_out.save(argv[2]);
+  image.save(argv[2]);
 
   return 0;
 }

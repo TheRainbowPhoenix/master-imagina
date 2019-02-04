@@ -66,3 +66,19 @@
 ## Rendez-vous du
 
 ### Preparation
+
+- Var
+
+- Sensor
+
+- Skill
+	- Flee
+	- Shoot
+	- Avoid
+	- GoTo
+	- Hide
+
+- Actuator
+
+### Comparer différentes méthodes d'entrainement
+

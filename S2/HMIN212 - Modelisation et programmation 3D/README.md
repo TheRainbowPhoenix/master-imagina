@@ -254,3 +254,41 @@ equation
 - ensemble de poids
 
 ### Surfaces paramétriques
+
+en fonction de deux paramètre on peut calculer tout les points d'une surfaces
+
+```
+(1 - u) * P_0 + u * P_1
+```
+
+dans un plan
+
+P(U,V) = P0,0 + (P1,0 - P0,0) * U + (P0,1 - P0,0) * V
+
+dans un cercle
+
+P(u) = | x(u) = r.cos(u)
+       | y(u) = r.sin(u)
+
+#### Surface balayées
+
+Modélisation de surface facile à manipuler via un ordinateur.
+
+- **Surface de révolution**
+	- Axe de révolution
+	- Génératrice
+
+- **Surface cylindriques**
+	- droite directrice
+	- Génératrice
+
+- **Surface d'extrusion généralisée**
+	- courbe trajectoire
+	- courbe plane fermée
+
+- **Surface réglées**
+	- Deux courbes directrices
+	- Segment de droite entre un point de la première courbe et un point de la seconde courbe au même u.
+
+#### Carreaux surfaciques
+

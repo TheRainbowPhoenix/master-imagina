@@ -13,36 +13,24 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  ImageBase image_in;
-  image_in.load(argv[1]);
+  ImagePPM image;
+  image.load(argv[1]);
 
   map<int, array<int, 3> > RGB_occurrences;
 
-  ImageBase* R = image_in.getPlan(ImageBase::PLAN_R);
+  ImagePGM R = image.get_plan(ImagePPM::PLAN_R);
+  ImagePGM G = image.get_plan(ImagePPM::PLAN_G);
+  ImagePGM B = image.get_plan(ImagePPM::PLAN_B);
 
-  for (int x = 0; x < image_in.getHeight(); ++x){
-    for (int y = 0; y < image_in.getWidth(); ++y){
-      RGB_occurrences[(*R)[x][y]][0]++;
+  for (int i = 0; i < image.height(); ++i){
+    for (int j = 0; j < image.width(); ++j){
+      RGB_occurrences[R[i][j]][0]++;
+      RGB_occurrences[G[i][j]][1]++;
+      RGB_occurrences[B[i][j]][2]++;
     }
   }
 
-  ImageBase* G = image_in.getPlan(ImageBase::PLAN_G);
-
-  for (int x = 0; x < image_in.getHeight(); ++x){
-    for (int y = 0; y < image_in.getWidth(); ++y){
-      RGB_occurrences[(*G)[x][y]][1]++;
-    }
-  }
-
-  ImageBase* B = image_in.getPlan(ImageBase::PLAN_B);
-
-  for (int x = 0; x < image_in.getHeight(); ++x){
-    for (int y = 0; y < image_in.getWidth(); ++y){
-      RGB_occurrences[(*B)[x][y]][2]++;
-    }
-  }
-
-  double nb_pixels = image_in.getHeight() * image_in.getWidth();
+  double nb_pixels = image.height() * image.width();
 
   for (auto it = RGB_occurrences.begin() ; it != RGB_occurrences.end() ; ++it){
     cout << it->first << " " << it->second[0] / nb_pixels << " " << it->second[1] / nb_pixels << " " << it->second[2] / nb_pixels << "\n";

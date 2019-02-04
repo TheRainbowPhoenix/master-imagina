@@ -97,5 +97,30 @@ end
 
 ### Evitement [↺](#sommaire-)
 
+#### Evitement vectoriel
+
+plus simple quand obstacle : on retourne en arrière avec un peu d'aléatoire puis on recommence
+
+```netlogo
+to avoid-obstacles
+  set obstacles patches
+  in-cone vision angle-avoidance with [pcolor != black]
+  if any? obstacles [
+    flee
+  ]
+end
+
+to flee
+  let obstacles-in-front obstacles in-cone 3 angle
+  if any? obstacles-in-front [
+    rt 180
+    rt random 10
+    lt random 10 
+  ]
+end
+```
+#### Champ de potentiel
+
+champ de potientiel utilliser pour representer les repulstion et l'attraction
 
 ## Exploration [↺](#sommaire-)
