@@ -20,13 +20,7 @@
 
 ### Image de reference [↺](#sommaire-)
 
-<table style="width:33%" align="center">
-	<tr>
-		<td>
-			<img src="images/02.jpg"/>
-		</td>
-	</tr>
-</table>
+<p align="center"><img src="images/02.jpg" width="33%"/></p>
 
 ### Seuillage [↺](#sommaire-)
 
@@ -34,74 +28,33 @@ On realise plusieurs seuillage sur l'image de réference avec S representant la 
 
 #### Un Niveaux de Seuil [↺](#sommaire-)
 
-<table>
-    <tr>
-		<th>
-			<h7>S = 64</h7>
-		</th>
-		<th>
-			<h7>S = 128</h7>
-		</th>
-		<th>
-			<h7>S = 192</h7>
-		</th>
-    </tr>
-	<tr>
-		<td>
-			<img src="images/02_64.jpg"/>
-		</td>
-		<td>
-			<img src="images/02_128.jpg"/>
-		</td>
-		<td>
-			<img src="images/02_192.jpg"/>
-		</td>
-	</tr>
-</table>
+| S = 64                | S = 128                 | S = 192                     |
+| ----------------      | ----------------------- | --------------------------- |
+| ![](images/02_64.jpg) | ![](images/02_128.jpg)  | ![](images/02_192.jpg)      |
 
 Plus le seuil est bas plus la couleur blanche aura de chances d'apparaitre.
 
 #### Plusieurs Niveaux de Seuils [↺](#sommaire-)
 
-<table>
-    <tr>
-		<th>
-			<h7>S = ( 85, 170 )</h7>
-		</th>
-		<th>
-			<h7>S = ( 64, 128, 192 )</h7>
-		</th>
-		<th>
-			<h7>S = ( 50, 100, 150, 200 )</h7>
-		</th>
-    </tr>
-	<tr>
-		<td>
-			<img src="images/02_85_170.jpg"/>
-		</td>
-		<td>
-			<img src="images/02_64_128_192.jpg"/>
-		</td>
-		<td>
-			<img src="images/02_50_100_150_200.jpg"/>
-		</td>
-	</tr>
-</table>
+| S = ( 85, 170 )           | S = ( 64, 128, 192 )          | S = ( 50, 100, 150, 200 )         |
+| ----------------          | -----------------------       | ---------------------------       |
+| ![](images/02_85_170.jpg) | ![](images/02_64_128_192.jpg) | ![](images/02_50_100_150_200.jpg) |
 
 ### Profil d'Une Ligne et d'Une Colonne [↺](#sommaire-)
 
 On realise les profils de l'image de référence (format 512x512) sur la ligne d'indice 255 et la colonne d'indice 255 nous permettant de visualisé plus précisement la valeur de niveau de gris de chaque indice de la ligne/colonne.
 
+<p align="center">
+	<p>Profil ligne et colonne = 255</p>
+	<img src="images/02.jpg" width="33%" align="center"/>
+</p>
+
 <table style="width:33%" align="center">
 	<tr>
-		<th>
-			<h7>Profil ligne et colonne = 255</h7>
-		</th>
+		<th>Profil ligne et colonne = 255</th>
     </tr>
 	<tr>
-		<td>
-			<img src="images/02_profil.gif"/>
-		</td>
+		<td><img src="images/02_profil.gif"/></td>
 	</tr>
 </table>
 
@@ -109,20 +62,12 @@ A l'aide de gnuplot nous obtenons les profils suivants :
 
 <table>
     <tr>
-		<th>
-			<h7>Profil ligne = 255</h7>
-		</th>
-		<th>
-			<h7>Profil colonne = 255</h7>
-		</th>
+		<th>Profil ligne = 255</th>
+		<th>Profil colonne = 255</th>
     </tr>
 	<tr>
-		<td>
-			<img src="images/02_profil_raw_255.png"/>
-		</td>
-		<td>
-			<img src="images/02_profil_col_255.png"/>
-		</td>
+		<td><img src="images/02_profil_raw_255.png"/></td>
+		<td><img src="images/02_profil_col_255.png"/></td>
 	</tr>
 </table>
 
@@ -144,9 +89,7 @@ Voici ci-dessous l'histogramme de notre image de reference :
 
 <table style="width:33%" align="center">
 	<tr>
-		<td>
-			<img src="images/02_histo.png"/>
-		</td>
+		<td><img src="images/02_histo.png"/></td>
 	</tr>
 </table>
 
@@ -158,9 +101,7 @@ Il nous permet d'observé 4 pics de couleurs dont du noir(0-10) 50%, du gris(60-
 
 <table style="width:33%" align="center">
 	<tr>
-		<td>
-			<img src="images/lena.jpg"/>
-		</td>
+		<td><img src="images/lena.jpg"/></td>
 	</tr>
 </table>
 
@@ -170,9 +111,7 @@ Ici on realise l'histogramme de l'image en prenant en compte les composantes rou
 
 <table style="width:33%" align="center">
 	<tr>
-		<td>
-			<img src="images/lena_histo.png"/>
-		</td>
+		<td><img src="images/lena_histo.png"/></td>
 	</tr>
 </table>
 
@@ -189,26 +128,14 @@ On seuil sur chaque images une composante de l'image
 
 <table>
     <tr>
-		<th>
-			<h7>Sr = 255</h7>
-		</th>
-		<th>
-			<h7>Sr = Sg = 255</h7>
-		</th>
-		<th>
-			<h7>Sr = Sg = Sb = 255 </h7>
-		</th>
+		<th>Sr = 255</th>
+		<th>Sr = Sg = 255</th>
+		<th>Sr = Sg = Sb = 255</th>
     </tr>
 	<tr>
-		<td>
-			<img src="images/lena_seuil_r.jpg"/>
-		</td>
-		<td>
-			<img src="images/lena_seuil_rg.jpg"/>
-		</td>
-		<td>
-			<img src="images/lena_seuil_rgb.jpg"/>
-		</td>
+		<td><img src="images/lena_seuil_r.jpg"/></td>
+		<td><img src="images/lena_seuil_rg.jpg"/></td>
+		<td><img src="images/lena_seuil_rgb.jpg"/></td>
 	</tr>
 </table>
 
@@ -222,25 +149,13 @@ On utillise ici le meme niveau de seuils sur chaque composantes de Rouge/Vert/Bl
 
 <table>
     <tr>
-		<th>
-			<h7>Srgb = ( 85, 170 )</h7>
-		</th>
-		<th>
-			<h7>Srgb = ( 64, 128, 192 )</h7>
-		</th>
-		<th>
-			<h7>Srgb = ( 50, 100, 150, 200 )</h7>
-		</th>
+		<th>Srgb = ( 85, 170 )</th>
+		<th>Srgb = ( 64, 128, 192 )</th>
+		<th>Srgb = ( 50, 100, 150, 200 )</th>
     </tr>
 	<tr>
-		<td>
-			<img src="images/lena_seuil_rgb_85_170.jpg"/>
-		</td>
-		<td>
-			<img src="images/lena_seuil_rgb_64_128_192.jpg"/>
-		</td>
-		<td>
-			<img src="images/lena_seuil_rgb_50_100_150_200.jpg"/>
-		</td>
+		<td><img src="images/lena_seuil_rgb_85_170.jpg"/></td>
+		<td><img src="images/lena_seuil_rgb_64_128_192.jpg"/></td>
+		<td><img src="images/lena_seuil_rgb_50_100_150_200.jpg"/></td>
 	</tr>
 </table>

@@ -99,16 +99,79 @@ std::vector<Point3> bezier_curve_casteljau(const std::vector<Point3>& control_po
 	return std::move(points);
 }
 
-void draw_surface_cylindrique(const std::vector<Point3>& courbe_bezier, const Point3& line_start, const Point3& line_end, long nb_u) {
+void draw_surface_cylindrique(const std::vector<Point3>& courbe_bezier, const Point3& line_start, const Point3& line_end, long nb_v) {
 
-	std::vector<Point3> points; 
+	Vector3 direction = line_end - line_start;
 
-	for (long i = 0; i <= nb_u; ++i){
+	for (long i = 0; i <= nb_v; ++i){
 
-		double u = 1 / (double)nb_u * i;
-		
-		points.push_back(Point3(point));
+		double v = 1 / (double)nb_v * i;
+
+		std::vector<Point3> courbe_v;
+
+		for (size_t j = 0; j < courbe_bezier.size(); ++j){
+			Point3 point = courbe_bezier[j] + (1 - v) * direction; 
+			courbe_v.push_back(point);
+		}
+		draw_curve(courbe_v);
 	}
 
-	return std::move(points);
+	return;
+}
+
+void draw_surface_reglee(const std::vector<Point3>& courbe_bezier1, const std::vector<Point3> courbe_bezier2, long nb_v) {
+
+	for (long i = 0; i <= nb_v; ++i){
+
+		double v = 1 / (double)nb_v * i;
+
+		std::vector<Point3> courbe_v;
+
+		for (size_t j = 0; j < courbe_bezier1.size(); ++j){
+
+			Point3 point = Point3((1 - v) * Vector3(courbe_bezier1[j]) + v * Vector3(courbe_bezier2[j])); 
+
+			courbe_v.push_back(point);
+		}
+
+		draw_curve(courbe_v);
+	}
+
+	return;
+}
+
+std::vector<Point3> bezier_surface_bernstein(const std::vector<std::vector<Point3> >& control_grid, long nb_u, long nb_v) {
+
+	std::vector<Point3> surface;
+	std::vector<std::vector<Point3> > courbes;
+	
+	for (size_t k = 0; k < control_grid.size(); ++k) {
+		courbes.push_back(bezier_curve_bernstein(control_grid[k], nb_u));
+		draw_curve(courbes[k]);
+	}
+
+	std::vector<Point3> surface_control(courbes.size());
+
+	for (int u = 0; u <= nb_u; ++u){
+
+		for (size_t l = 0; l < courbes.size(); ++l){
+			surface_control[l] = courbes[l][u];
+		}
+
+		std::vector<Point3> res;
+		res = bezier_curve_bernstein(surface_control, nb_v);
+		draw_curve(res);
+
+		surface.insert(surface.end(), res.begin(), res.end());
+	}
+
+	return std::move(surface);
+}
+
+void draw_surface(const std::vector<Point3>& points){
+	glBegin(GL_POINTS); //	GL_QUAD_STRIP;
+	for (size_t i = 0; i < points.size(); ++i) {
+		glVertex3dv(points[i]);		
+	}
+	glEnd();
 }

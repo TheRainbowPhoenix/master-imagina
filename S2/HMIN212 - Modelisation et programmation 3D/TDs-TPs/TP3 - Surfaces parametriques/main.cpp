@@ -56,6 +56,10 @@ using namespace std;
 #define KEY_U 117
 #define KEY_O 111
 
+#define KEY_H 104
+#define KEY_M 109
+
+#define KEY_SPACE 32
 
 // Entêtes de fonctions
 void init_scene();
@@ -149,12 +153,23 @@ GLvoid window_reshape(GLsizei width, GLsizei height)
 
 Point3 point(-2 + random(4), -2 + random(4));
 
-vector<Point3> control_points = {Point3(-2, 0), Point3(-2, 2), Point3(2, 2), Point3(2, 0)};
-size_t current_control_point = 0;
-long precision_courbe = 10;
+vector<vector<Point3> > curve_controls = {
+  { Point3(1, 1), Point3(1, 3), Point3(4, 3), Point3(4, 1) },
+  { Point3(-4, -2), Point3(-4, 0), Point3(0, 0), Point3(0, -2) }
+};
 
-size_t select_next(const vector<Point3>& control_points, size_t current){
+size_t current_control_point = 0;
+size_t current_curve_control = 0;
+
+long precision_courbe = 20;
+long precision_surface = 20;
+
+size_t select_next_control_point(const vector<Point3>& control_points, size_t current){
   return ++current >= control_points.size() ? 0 : current;
+}
+
+size_t select_next_curve_control(const vector<vector<Point3> >& curve_controls, size_t current){
+  return ++current >= curve_controls.size() ? 0 : current;
 }
 
 // fonction de call-back pour la gestion des événements clavier
@@ -166,7 +181,7 @@ GLvoid window_key(unsigned char key, int x, int y)
     exit(1);                    
     break;
   case KEY_TAB:
-    current_control_point = select_next(control_points, current_control_point);
+    current_control_point = select_next_control_point(curve_controls[current_curve_control], current_control_point);
     break;
   case KEY_U:
     precision_courbe =  --precision_courbe >= 0 ? precision_courbe : 0;  
@@ -174,17 +189,26 @@ GLvoid window_key(unsigned char key, int x, int y)
   case KEY_O:
     precision_courbe++;
     break;
+  case KEY_H:
+    precision_surface =  --precision_surface >= 0 ? precision_surface : 0;  
+    break;
+  case KEY_M:
+    precision_surface++;
+    break;
   case KEY_I:
-    control_points[current_control_point] += Vector3::up * 0.1;
+    curve_controls[current_curve_control][current_control_point] += Vector3::up * 0.1;
     break;
   case KEY_K:
-    control_points[current_control_point] += Vector3::down * 0.1;
+    curve_controls[current_curve_control][current_control_point] += Vector3::down * 0.1;
     break;
   case KEY_J:
-    control_points[current_control_point] += Vector3::left * 0.1;
+    curve_controls[current_curve_control][current_control_point] += Vector3::left * 0.1;
     break;
   case KEY_L:
-    control_points[current_control_point] += Vector3::right * 0.1;
+    curve_controls[current_curve_control][current_control_point] += Vector3::right * 0.1;
+    break;
+  case KEY_SPACE:
+    current_curve_control = select_next_curve_control(curve_controls, current_curve_control);
     break;
   default:
     printf ("La touche %d n´est pas active.\n", key);
@@ -199,16 +223,16 @@ GLvoid window_special_key(int key, int x, int y){
     exit(1);                    
     break;
   case KEY_UP:
-    control_points[current_control_point] += Vector3::up * 0.1;
+    curve_controls[current_curve_control][current_control_point] += Vector3::up * 0.1;
     break;
   case KEY_DOWN:
-    control_points[current_control_point] += Vector3::down * 0.1;
+    curve_controls[current_curve_control][current_control_point] += Vector3::down * 0.1;
     break;
   case KEY_LEFT:
-    control_points[current_control_point] += Vector3::left * 0.1;
+    curve_controls[current_curve_control][current_control_point] += Vector3::left * 0.1;
     break;
   case KEY_RIGHT:
-    control_points[current_control_point] += Vector3::right * 0.1;
+    curve_controls[current_curve_control][current_control_point] += Vector3::right * 0.1;
     break;
   default:
     printf ("La touche %d n´est pas active.\n", key);
@@ -216,7 +240,6 @@ GLvoid window_special_key(int key, int x, int y){
   }
   glutPostRedisplay();
 }
-
 
 double random(double n, long long precision){
   long long num = n * precision;
@@ -265,7 +288,8 @@ void render_scene() {
 
 
   glColor3f(1, 0, 0);
-  draw_curve(control_points);
+  draw_curve(curve_controls[0]);
+  draw_curve(curve_controls[1]);
 
   glColor3f(0, 0, 1);
   
@@ -273,14 +297,34 @@ void render_scene() {
   //courbe_bezier_bernstein = bezier_curve_bernstein(control_points, precision_courbe); 
   //draw_curve(courbe_bezier_bernstein);
 
+/*
   vector<Point3> courbe_bezier_casteljau;
-  courbe_bezier_casteljau = bezier_curve_casteljau(control_points, precision_courbe); 
+  courbe_bezier_casteljau = bezier_curve_casteljau(curve_controls[0], precision_courbe); 
   draw_curve(courbe_bezier_casteljau);
 
-  glColor3f(1, 1, 0);
-  draw_point(control_points[current_control_point]);
+  vector<Point3> courbe_bezier_casteljau2;
+  courbe_bezier_casteljau2 = bezier_curve_casteljau(curve_controls[1], precision_courbe); 
+  draw_curve(courbe_bezier_casteljau2);
+
+  Point3 line_start(2, 0);
+  Point3 line_end(4, 2);
+
+
+  //draw_surface_cylindrique(courbe_bezier_casteljau, line_start, line_end, precision_surface);
+  draw_surface_reglee(courbe_bezier_casteljau, courbe_bezier_casteljau2, precision_surface);
+*/
   
+  vector<Point3> surface;
+  surface = bezier_surface_bernstein(curve_controls, precision_courbe, precision_surface);
+
+  draw_surface(surface);
+
+
+
+  glColor3f(1, 1, 0);
+  draw_point(curve_controls[current_curve_control][current_control_point]);
+
   //print_v(courbe_bezier_bernstein);
-  print_v(courbe_bezier_casteljau);
+ // print_v(courbe_bezier_casteljau);
   cout << "fin\n";
 }
