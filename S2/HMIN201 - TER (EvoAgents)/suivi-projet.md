@@ -55,6 +55,11 @@
 - Créer une classe qui héritera de **RewardFunction** (Ex: RW_GoToObjectAvoid)
 - Définir les recompenses à l'aide des methodes **public double computeRewardValue()** et **public void reset()**.
 
+##### Execution du jar
+
+- Se deplacer dans **EvoAgentMind**
+- java -jar ./EXE/EvoAgentApp_181125.jar ./Minds/Arnhulator/Tasks/CTF.simbatch
+
 #### Plan du rapport
 
 1. Rapport intro genéral
@@ -66,3 +71,56 @@
 ## Rendez-vous du
 
 ### Preparation
+
+- Var
+
+- Sensor
+
+- Skill
+	- Flee
+	- Shoot
+	- Avoid
+	- GoTo
+	- Hide
+
+- Actuator
+
+### Pour la prochaine fois
+
+- Definir des règles strict pour le jeux
+	- 1 tir = 1 mort
+	- vitesse porteur drapeau div/2
+- Hierarchie de skills
+- Idées d'entrainement pour les skills
+- Lire les articles cité dans le sujet
+
+### Skills
+
+#### Base
+
+- AttractionEnv
+- RepulsionEnv
+- AttractionTarget (var)
+- RepulsionTarget (var)
+- Shoot
+
+#### Complex
+
+- ProcheEnv
+	- AttractionEnv
+	- RepulsionEnv
+
+- ProcheTarget (var)
+	- AttractionTarget (var)
+	- RepulsionTarget (var)
+
+- Hide
+	- ProcheEnv
+	- RepulsionTarget (Sensor ennemi)
+
+- Fight
+
+- Defend
+
+- ProtectFlagOwner
+

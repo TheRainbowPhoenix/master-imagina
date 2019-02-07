@@ -153,7 +153,7 @@ to-report generate
     let lst1 [self] of aset ;; transformer en listes...
                             ;; show (sentence "aset : " lst1)
     set lst1 (remove-nodes lst1 out-nodes) ;; delete nodes which have already been visited
-    let result map [make-node ? current] lst1 ;; make a list of nodes [patch value]
+    let result map [ ?1 -> make-node ?1 current ] lst1 ;; make a list of nodes [patch value]
     report result
   ]
   [
@@ -205,10 +205,10 @@ end
 
 to-report sort-nodes [lst-nodes]
    ; let lst sort-by [(cost ?1) < (cost ?2)] lst-nodes
-   let lst sort-by [(get-val ?1) < (get-val ?2)] lst-nodes
+   let lst sort-by [ [?1 ?2] -> (get-val ?1) < (get-val ?2) ] lst-nodes
    if (lst = []) [
      (show "pas de solution !!" )
-     stop
+    report []
    ]
    report lst
 end
@@ -320,10 +320,10 @@ end
 GRAPHICS-WINDOW
 262
 10
-764
-533
-20
-20
+762
+511
+-1
+-1
 12.0
 1
 12
@@ -421,7 +421,7 @@ number-turtles
 number-turtles
 1
 10
-1
+0.0
 1
 1
 NIL
@@ -831,9 +831,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.1.0
+NetLogo 6.0.4
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -849,7 +848,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@

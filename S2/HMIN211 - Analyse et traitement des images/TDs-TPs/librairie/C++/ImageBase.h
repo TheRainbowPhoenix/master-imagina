@@ -59,8 +59,8 @@ public:
 	unsigned char *getData() { return data; };
 
 
-	void load(char *filename);
-	bool save(char *filename);
+	void load(const char *filename);
+	bool save(const char *filename);
 
 	ImageBase *getPlan(PLAN plan);
 

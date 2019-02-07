@@ -1,3 +1,0 @@
-
-def actionWarKamikaze():
-	return move();

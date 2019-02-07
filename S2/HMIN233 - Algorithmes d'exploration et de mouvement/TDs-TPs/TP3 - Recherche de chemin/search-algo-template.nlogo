@@ -1,18 +1,18 @@
 globals [continue]
 
-turtles-own [mygoal in-nodes out-nodes current]
+turtles-own [my-goal in-nodes out-nodes current]
 
 patches-own [
-  isgoal
+  is-goal
   obstacle
 ]
 
 to setup
   clear-all
+
   ask patches [
-    set isgoal 0
+    set is-goal 0
     set obstacle 0
-   ;; set potential 0
   ]
 
   ask patch max-pxcor max-pycor [set-goal]
@@ -26,40 +26,42 @@ end
 
 to reset
   ask patches [
-    ifelse obstacle = 1
-    [set-obstacle]
-    [ifelse (isgoal = 1)
-        [set-goal]
-        [set pcolor black]
+    ifelse obstacle = 1 [
+      set-obstacle
+    ][
+      ifelse (is-goal = 1) [
+        set-goal
+      ][
+        set pcolor black
+      ]
     ]
   ]
   ask turtles [die]
 end
 
-
-to createGoals
+to create-goals
   ask patch 0 5 [set-goal]
   ask patch -4 -8 [set-goal]
   repeat 3 [ask patch random-pxcor random-pycor [set-goal]]
 end
 
-
 to set-obstacle
   set obstacle 1
-  if (isgoal = 1)[set isgoal 0]
+
+  if (is-goal = 1)[
+    set is-goal 0
+  ]
+
   set pcolor red
-  ;; set potential (- potential-level)
 end
 
 to set-goal
-  set isgoal 1
-   set pcolor yellow
-   ;; set potential potential-level
+  set is-goal 1
+  set pcolor yellow
 end
 
 to erase-obstacle
   set pcolor black set obstacle 0
-  ;; set potential 0
 end
 
 to create-agents
@@ -69,11 +71,10 @@ to create-agents
     setxy random-xcor random-ycor
     set in-nodes []
     set out-nodes []
-    set mygoal min-one-of patches with [isgoal = 1][distance self]
+    set my-goal min-one-of patches with [is-goal = 1][distance self]
     set current init-current
-    show (sentence "current node : " current "current goal " mygoal)
+    show (sentence "current node : " current "current goal " my-goal)
   ]
-
 end
 
 ;;------------------------------------
@@ -86,89 +87,110 @@ end
 to-report get-patch [node]
   report first node
 end
+
 ;; get the value of the node
 to-report get-val [node]
   report item 1 node
 end
 
 to search
-  while [get-patch current != mygoal] [
-  search-step
+  while [get-patch current != my-goal] [
+    search-step
   ]
 end
 
-;; %%A DEFINIR ...
+;; A DEFINIR ...
 to search-step
+  ; print (sentence "current is: " current)
+  set in-nodes sort-nodes merge-nodes generate in-nodes
+  print in-nodes
+  set in-nodes sort-nodes in-nodes
+  let proposed first in-nodes
 
+  if (proposed = [])[
+    stop
+  ]
+
+  set current proposed
+  set in-nodes bf in-nodes
+  set out-nodes (fput (get-patch current) out-nodes) ;; on ne met que les patches dans la liste de sortie
+                                                     ;; show (sentence "current node : " current)
+  ask (get-patch current) [set pcolor blue]
 end
 
-
 ;; %%A DEFINIR en fonction des algorithmes...
-to-report make-node [p n]
- report (list p 0)
+to-report make-node [p val n]
+  report (list p val 0)  ;; !! prend en compte une valeur associÃ©e au noeud
 end
 
 ;; %%A DEFINIR en fonction des algos
 to-report init-current
-  ;; Dijkstra: (list patch-here 0)
+  ;; Dijkstra: report (list patch-here 0)
   report (list patch-here distance-to-goal patch-here)
 end
 
 ;; peut etre defini de maniere generique
 to-report generate
-let aset ([neighbors] of (get-patch current)) with [obstacle = 0]
+  let aset ([neighbors] of (get-patch current)) with [obstacle = 0]
   ifelse (any? aset) [
     ask aset [set pcolor white]
     let lst1 [self] of aset ;; transformer en listes...
                             ;; show (sentence "aset : " lst1)
-    set lst1 (remove-nodes lst1 out-nodes) ;; supprime les lieux qui ont déjà été visités
-    let result map [make-node ? current] lst1 ;; make a list of nodes [patch value]
-    ;; print (sentence "liste à ajouter: " length result ", " result)
+    set lst1 (remove-nodes lst1 out-nodes) ;; supprime les lieux qui ont dÃ©jÃ  Ã©tÃ© visitÃ©s
+
+    let result map [
+      x -> make-node x    ;; heuristique : distance au but...
+      distance-to-goal get-patch current
+      current
+    ] lst1 ;; make a list of nodes [patch value]
+           ;; print (sentence "liste Ã  ajouter: " length result ", " result)
     report result
-  ]
-  [
-    show (sentence "coincé ;-) ")
-    stop
+  ][
+    show (sentence "coincÃ© ;-) ")
     report []
   ]
 end
 
 to-report distance-to-goal [p]
-  let r round [distance p] of mygoal
- ;; show (sentence "distance from " p " to " goal " = " r)
+  let r round [distance p] of my-goal
+  ;; show (sentence "distance from " p " to " goal " = " r)
   report r
 end
 
-
-
 to-report sort-nodes [lst-nodes]
-   let lst sort-by [(get-val ?1) < (get-val ?2)] lst-nodes
-   if (lst = []) [
-     (show "pas de solution !!" )
-     stop
-   ]
-   report lst
+  let lst sort-by [ [x y] -> (get-val x) < (get-val y) ] lst-nodes
+
+  if (lst = []) [
+    (show "pas de solution !!" )
+    report []
+  ]
+
+  report lst
 end
 
-
-;; crée une liste avec le min des distances en fusionnant les listes
+;; crÃ©e une liste avec le min des distances en fusionnant les listes
 ;; ecriture un peu lourde, on doit pouvoir faire mieux...
 ;; chaque noeud est de la forme [<patch> <valeur>]
 to-report merge-nodes [lst-new lst-ref]
   let res []
   let lst map get-patch lst-ref
+
   while [lst-new != []] [
+
     let node (first lst-new)
     let pos position (get-patch node) lst
+
     ifelse (pos = false)[
       set res (fput node res)
     ][
       let r 0
+
       ifelse ((get-val node) < (get-val (item pos lst-ref))) [
         set r get-val node
       ][
         set r get-val (item pos lst-ref)
       ]
+
       set res (fput (list (get-patch node) r) res)
       set lst-ref remove-item pos lst-ref
       set lst map get-patch lst-ref
@@ -192,7 +214,6 @@ to-report remove-nodes [lst ref-lst]
   report res
 end
 
-
 ;;------------------------------------
 ;;
 ;;    Turtles
@@ -208,7 +229,6 @@ to step-turtles
   ask turtles [search-step]
 end
 
-
 to find-path
   search
 end
@@ -220,38 +240,45 @@ end
 ;;----------------------------------------
 
 to draw-goals
-  if mouse-down?
-  [ ask patches
-    [ if ((abs (pxcor - mouse-xcor)) < 1) and ((abs (pycor - mouse-ycor)) < 1)
-      [ set-goal]]]
+  if mouse-down? [
+    ask patches [
+      if ((abs (pxcor - mouse-xcor)) < 1) and ((abs (pycor - mouse-ycor)) < 1) [
+        set-goal
+      ]
+    ]
+  ]
   display
 end
 
-
-
 to draw-obstacles
-  if mouse-down?
-  [ ask patches
-    [ if ((abs (pxcor - mouse-xcor)) < 1) and ((abs (pycor - mouse-ycor)) < 1)
-      [ set-obstacle]]]
+  if mouse-down? [
+    ask patches [
+      if ((abs (pxcor - mouse-xcor)) < 1) and ((abs (pycor - mouse-ycor)) < 1) [
+        set-obstacle
+      ]
+    ]
+  ]
   display
 end
 
 to eraser
-  if mouse-down?
-  [ ask patches
-    [ if ((abs (pxcor - mouse-xcor)) < 1) and ((abs (pycor - mouse-ycor)) < 1)
-      [ erase-obstacle]]]
+  if mouse-down? [
+    ask patches [
+      if ((abs (pxcor - mouse-xcor)) < 1) and ((abs (pycor - mouse-ycor)) < 1) [
+        erase-obstacle
+      ]
+    ]
+  ]
   display
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
 234
 10
-654
-451
-20
-20
+652
+429
+-1
+-1
 10.0
 1
 10
@@ -349,7 +376,7 @@ number-turtles
 number-turtles
 1
 10
-1
+1.0
 1
 1
 NIL
@@ -762,9 +789,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.3.1
+NetLogo 6.0.4
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -780,7 +806,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@

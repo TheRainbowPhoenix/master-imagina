@@ -97,5 +97,41 @@ end
 
 ### Evitement [↺](#sommaire-)
 
+#### Evitement vectoriel [↺](#sommaire-)
+
+plus simple quand obstacle : on retourne en arrière avec un peu d'aléatoire puis on recommence
+
+```netlogo
+to avoid-obstacles
+  set obstacles patches
+  in-cone vision angle-avoidance with [pcolor != black]
+  if any? obstacles [
+    flee
+  ]
+end
+
+to flee
+  let obstacles-in-front obstacles in-cone 3 angle
+  if any? obstacles-in-front [
+    rt 180
+    rt random 10
+    lt random 10 
+  ]
+end
+```
+#### Champ de potentiel [↺](#sommaire-)
+
+champ de potientiel utilliser pour representer les repulstion et l'attraction
 
 ## Exploration [↺](#sommaire-)
+
+### Heuristique
+
+- Explorer tout l'espace et essayer de trouver le meilleur chemin à partir de ce que l'on a exploré.
+  - Algorithme de Dijkstra
+
+- Essayer d'aller vers le but en utillisant une heureustique (se rapprocher du but)
+  - Algorithme de best-first
+
+- Essayer de combiner le mieux dans ces deux approches
+  - Algorithme de A*

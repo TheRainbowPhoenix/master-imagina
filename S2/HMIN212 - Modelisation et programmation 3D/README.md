@@ -210,6 +210,85 @@ z' = z
 	- GL_SMOOTH : lumière calculer par les points 
 	- GL_FLAT: lumière calculer par surfaces 
 
-# Courbes paramétriques 
+### Courbes paramétriques
 
-# Surfaces paramétriques
+Peut être vue comme le deplacement d'un point dans l'espace
+
+defini par
+	- un scalaire u ∈ [0, 1]
+	- l'abscisse curviligne s ∈ [0, l]
+	- valeur de la courbure k = 1 / r
+
+```
+            | x(u) = fx(u) |
+u -> p(u) = | y(u) = fy(u) |
+            | z(u) = fz(u) |
+```
+
+#### Courbes Cubiques
+
+de la forme P(u) = au³ + bu² + cu + d
+
+- defini par 
+	- point de depart P0(u=0)
+	- point d'arrivé P1(u=1)
+```
+
+P(u) 
+
+```
+
+#### Courbes de bézier
+
+Un point de la courbe est une combinaison affine des points de contrôle Pi, si u ∈ [a, b]
+
+```
+equation
+```
+
+#### Courbes B-Splines
+
+- ensemble de point de contrôle
+- vecteur de noeud
+- ensemble de multiplicité
+- ensemble de poids
+
+### Surfaces paramétriques
+
+en fonction de deux paramètre on peut calculer tout les points d'une surfaces
+
+```
+(1 - u) * P_0 + u * P_1
+```
+
+dans un plan
+
+P(U,V) = P0,0 + (P1,0 - P0,0) * U + (P0,1 - P0,0) * V
+
+dans un cercle
+
+P(u) = | x(u) = r.cos(u)
+       | y(u) = r.sin(u)
+
+#### Surface balayées
+
+Modélisation de surface facile à manipuler via un ordinateur.
+
+- **Surface de révolution**
+	- Axe de révolution
+	- Génératrice
+
+- **Surface cylindriques**
+	- droite directrice
+	- Génératrice
+
+- **Surface d'extrusion généralisée**
+	- courbe trajectoire
+	- courbe plane fermée
+
+- **Surface réglées**
+	- Deux courbes directrices
+	- Segment de droite entre un point de la première courbe et un point de la seconde courbe au même u.
+
+#### Carreaux surfaciques
+

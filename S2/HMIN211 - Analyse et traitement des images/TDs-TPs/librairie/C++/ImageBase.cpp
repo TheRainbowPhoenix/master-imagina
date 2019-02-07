@@ -72,7 +72,7 @@ void ImageBase::reset()
 	isValid = false;
 }
 
-void ImageBase::load(char *filename)
+void ImageBase::load(const char *filename)
 {
 	init();
 
@@ -117,7 +117,7 @@ void ImageBase::load(char *filename)
 	isValid = true;
 }
 
-bool ImageBase::save(char *filename)
+bool ImageBase::save(const char *filename)
 {
 	if(!isValid)
 	{

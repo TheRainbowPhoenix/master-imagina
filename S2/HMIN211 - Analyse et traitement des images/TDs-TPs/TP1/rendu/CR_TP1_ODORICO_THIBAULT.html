@@ -1,0 +1,968 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>@font-face {
+  font-family: octicons-anchor;
+  src: url(https://cdnjs.cloudflare.com/ajax/libs/octicons/4.4.0/font/octicons.woff) format('woff');
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    width: 980px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+body .markdown-body {
+    padding: 45px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    word-wrap: break-word;
+}
+
+pre {
+    font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color: #333;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body input {
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.markdown-body a {
+  color: #4078c0;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body .select::-ms-expand {
+  opacity: 0;
+}
+
+.markdown-body .octicon {
+  font: normal normal normal 16px/1 octicons-anchor;
+  display: inline-block;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .octicon-link:before {
+  content: '\f05c';
+}
+
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body .anchor {
+  display: inline-block;
+  padding-right: 2px;
+  margin-left: -18px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #000;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h1 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h3 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h5 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body h6 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+
+.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .pl-c {
+  color: #969896;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #0086b3;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #795da3;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #333;
+}
+
+.markdown-body .pl-ent {
+  color: #63a35c;
+}
+
+.markdown-body .pl-k {
+  color: #a71d5d;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #183691;
+}
+
+.markdown-body .pl-v {
+  color: #ed6a43;
+}
+
+.markdown-body .pl-id {
+  color: #b52a1d;
+}
+
+.markdown-body .pl-ii {
+  background-color: #b52a1d;
+  color: #f8f8f8;
+}
+
+.markdown-body .pl-sr .pl-cce {
+  color: #63a35c;
+  font-weight: bold;
+}
+
+.markdown-body .pl-ml {
+  color: #693a17;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  color: #1d3e81;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mq {
+  color: #008080;
+}
+
+.markdown-body .pl-mi {
+  color: #333;
+  font-style: italic;
+}
+
+.markdown-body .pl-mb {
+  color: #333;
+  font-weight: bold;
+}
+
+.markdown-body .pl-md {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.markdown-body .pl-mi1 {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.markdown-body .pl-mdr {
+  color: #795da3;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mo {
+  color: #1d3e81;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .plan-price-unit {
+  color: #767676;
+  font-weight: normal;
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 0.35em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.markdown-body .plan-choice {
+  padding: 15px;
+  padding-left: 40px;
+  display: block;
+  border: 1px solid #e0e0e0;
+  position: relative;
+  font-weight: normal;
+  background-color: #fafafa;
+}
+
+.markdown-body .plan-choice.open {
+  background-color: #fff;
+}
+
+.markdown-body .plan-choice.open .plan-choice-seat-breakdown {
+  display: block;
+}
+
+.markdown-body .plan-choice-free {
+  border-radius: 3px 3px 0 0;
+}
+
+.markdown-body .plan-choice-paid {
+  border-radius: 0 0 3px 3px;
+  border-top: 0;
+  margin-bottom: 20px;
+}
+
+.markdown-body .plan-choice-radio {
+  position: absolute;
+  left: 15px;
+  top: 18px;
+}
+
+.markdown-body .plan-choice-exp {
+  color: #999;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.markdown-body .plan-choice-seat-breakdown {
+  margin-top: 10px;
+  display: none;
+}
+
+.markdown-body :checked+.radio-label {
+  z-index: 1;
+  position: relative;
+  border-color: #4078c0;
+}
+
+@media print {
+  body .markdown-body {
+    padding: 0;
+    border: none;
+  }
+}
+</style><script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js'></script><script>MathJax.Hub.Config({
+  config: ["MMLorHTML.js"],
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+  tex2jax: {
+    inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+    displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+    processEscapes: true,
+    processEnvironments: true,
+    ignoreClass: ".*|",
+    processClass: "arithmatex"
+  },
+  TeX: {
+    extensions: ["AMSmath.js", "AMSsymbols.js"],
+    TagSide: "right",
+    TagIndent: ".8em",
+    MultLineWidth: "85%",
+    equationNumbers: {
+      autoNumber: "AMS",
+    },
+    unicode: {
+      fonts: "STIXGeneral,'Arial Unicode MS'"
+    }
+  },
+  showProcessingMessages: false,
+  messageStyle: 'none'
+});
+</script><title>CR_TP1_ODORICO_THIBAULT</title></head><body><article class="markdown-body"><h1>
+<a id="user-content-hmin211---compte-rendu-tp1-odorico-thibault" class="anchor" href="#hmin211---compte-rendu-tp1-odorico-thibault" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>HMIN211 - Compte Rendu TP1 (Odorico Thibault)</h1>
+<h2>
+<a id="user-content-sommaire-" class="anchor" href="#sommaire-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sommaire <a href="#sommaire-">z</a>
+</h2>
+<ul>
+<li>
+<a href="#image-en-niveaux-de-gris-format-pgm-">Image En Niveaux de gris (Format PGM)</a>
+<ul>
+<li><a href="#image-de-reference-">Image de reference</a></li>
+<li>
+<a href="#seuillage-">Seuillage</a>
+<ul>
+<li><a href="#un-niveaux-de-seuil-">Un Niveaux de Seuil</a></li>
+<li><a href="#plusieurs-niveaux-de-seuils-">Plusieurs Niveaux de Seuils</a></li>
+</ul>
+</li>
+<li><a href="#profil-d-une-ligne-et-d-une-colonne-">Profil d'Une Ligne et d'Une Colonne</a></li>
+<li><a href="#histogramme">Histogramme</a></li>
+</ul>
+</li>
+<li>
+<a href="#image-en-couleurs-format-ppm-">Image En Couleurs (Format PPM)</a>
+<ul>
+<li><a href="#image-de-r%C3%A9ference-">Image de Réference</a></li>
+<li><a href="#histogramme-">Histogramme</a></li>
+<li>
+<a href="#seuillage-">Seuillage</a>
+<ul>
+<li><a href="#un-niveaux-de-seuil-">Un Niveaux de Seuil</a></li>
+<li><a href="#plusieurs-niveaux-de-seuils-">Plusieurs Niveaux de Seuils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2>
+<a id="user-content-image-en-niveaux-de-gris-format-pgm-" class="anchor" href="#image-en-niveaux-de-gris-format-pgm-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Image En Niveaux de gris (Format PGM) <a href="#sommaire-">z</a>
+</h2>
+<h3>
+<a id="user-content-image-de-reference-" class="anchor" href="#image-de-reference-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Image de reference <a href="#sommaire-">z</a>
+</h3>
+<table align="center">
+	<tr>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02.jpg" style="max-width:100%;"></a></td>
+	</tr>
+</table>
+<h3>
+<a id="user-content-seuillage-" class="anchor" href="#seuillage-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Seuillage <a href="#sommaire-">z</a>
+</h3>
+<p>On realise plusieurs seuillage sur l'image de réference avec S representant la valeur du seuil.</p>
+<h4>
+<a id="user-content-un-niveaux-de-seuil-" class="anchor" href="#un-niveaux-de-seuil-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Un Niveaux de Seuil <a href="#sommaire-">z</a>
+</h4>
+<table>
+    <tr>
+		<th>S = 64</th>
+		<th>S = 128</th>
+		<th>S = 192</th>
+    </tr>
+	<tr>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_64.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_64.jpg" style="max-width:100%;"></a></td>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_128.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_128.jpg" style="max-width:100%;"></a></td>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_192.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_192.jpg" style="max-width:100%;"></a></td>
+	</tr>
+</table>
+<p>Plus le seuil est bas plus la couleur blanche aura de chances d'apparaitre.</p>
+<h4>
+<a id="user-content-plusieurs-niveaux-de-seuils-" class="anchor" href="#plusieurs-niveaux-de-seuils-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plusieurs Niveaux de Seuils <a href="#sommaire-">z</a>
+</h4>
+<table>
+<thead>
+<tr>
+<th>S = ( 85, 170 )</th>
+<th>S = ( 64, 128, 192 )</th>
+<th>S = ( 50, 100, 150, 200 )</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_85_170.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_85_170.jpg" alt="" style="max-width:100%;"></a></td>
+<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_64_128_192.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_64_128_192.jpg" alt="" style="max-width:100%;"></a></td>
+<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_50_100_150_200.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_50_100_150_200.jpg" alt="" style="max-width:100%;"></a></td>
+</tr>
+</tbody>
+</table>
+<h3>
+<a id="user-content-profil-dune-ligne-et-dune-colonne-" class="anchor" href="#profil-dune-ligne-et-dune-colonne-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Profil d'Une Ligne et d'Une Colonne <a href="#sommaire-">z</a>
+</h3>
+<p>On realise les profils de l'image de référence (format 512x512) sur la ligne d'indice 255 et la colonne d'indice 255 nous permettant de visualisé plus précisement la valeur de niveau de gris de chaque indice de la ligne/colonne.</p>
+<table align="center">
+	<tr>
+		<th>Profil ligne et colonne = 255</th>
+    </tr>
+	<tr>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_profil.gif" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_profil.gif" style="max-width:100%;"></a></td>
+	</tr>
+</table>
+<p>A l'aide de gnuplot nous obtenons les profils suivants :</p>
+<table>
+    <tr>
+		<th>Profil ligne = 255</th>
+		<th>Profil colonne = 255</th>
+    </tr>
+	<tr>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_profil_raw_255.png" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_profil_raw_255.png" style="max-width:100%;"></a></td>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_profil_col_255.png" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_profil_col_255.png" style="max-width:100%;"></a></td>
+	</tr>
+</table>
+<ul>
+<li>
+<strong>Profil de la ligne 255</strong>
+<ul>
+<li>Le profil est globalement noir sauf au centre ou l'on à une bande de blanc (~ de l'indice 200 à 260)</li>
+</ul>
+</li>
+<li>
+<strong>Profil de la colonne 255</strong>
+<ul>
+<li>Le profil est plus varié on peut le decoupé en 3 parties
+<ul>
+<li>(de l'indice 0 à 150) on observe une alternance de claire et de foncée</li>
+<li>(de l'indice 150 à 250) on observe une bande de claire</li>
+<li>Et enfin (de l'indice 250 à 512) on observe une bande de couleur foncée</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Ces deux profils confirment bien ce que nous observont dans l'image, les parties foncées correspondent aux roches, aux herbes et les parties clairs correspondent à la neige.</p>
+<h3>
+<a id="user-content-histogramme-" class="anchor" href="#histogramme-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Histogramme <a href="#sommaire-">z</a>
+</h3>
+<p>L'histogramme d'une image nous permet d'observer les occurences d'une couleur (ici en niveau de gris) dans l'image.</p>
+<p>Voici ci-dessous l'histogramme de notre image de reference :</p>
+<table align="center">
+	<tr>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_histo.png" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/02_histo.png" style="max-width:100%;"></a></td>
+	</tr>
+</table>
+<p>Il nous permet d'observé 4 pics de couleurs dont du noir(0-10) 50%, du gris(60-70) à 10%, du gris(150-170) à 5% et du blanc(250-255) à 2% avec les taux representant leurs occurences dans l'image.</p>
+<h2>
+<a id="user-content-image-en-couleurs-format-ppm-" class="anchor" href="#image-en-couleurs-format-ppm-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Image En Couleurs (Format PPM) <a href="#sommaire-">z</a>
+</h2>
+<h3>
+<a id="user-content-image-de-réference-" class="anchor" href="#image-de-r%C3%A9ference-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Image de Réference <a href="#sommaire-">z</a>
+</h3>
+<table align="center">
+	<tr>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena.jpg" style="max-width:100%;"></a></td>
+	</tr>
+</table>
+<h3>
+<a id="user-content-histogramme--1" class="anchor" href="#histogramme--1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Histogramme <a href="#sommaire-">z</a>
+</h3>
+<p>Ici on realise l'histogramme de l'image en prenant en compte les composantes rouge/vert/bleu de l'image</p>
+<table align="center">
+	<tr>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_histo.png" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_histo.png" style="max-width:100%;"></a></td>
+	</tr>
+</table>
+<h3>
+<a id="user-content-seuillage--1" class="anchor" href="#seuillage--1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Seuillage <a href="#sommaire-">z</a>
+</h3>
+<ul>
+<li>On realise plusieurs seuillage sur l'image de réference avec :
+<ul>
+<li>Sr representant la valeur du seuil pour les couleurs rouges de l'image</li>
+<li>Sg representant la valeur du seuil pour les couleurs vertes de l'image</li>
+<li>Sb representant la valeur du seuil pour les couleurs bleues de l'image</li>
+</ul>
+</li>
+</ul>
+<h4>
+<a id="user-content-un-niveaux-de-seuil--1" class="anchor" href="#un-niveaux-de-seuil--1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Un Niveaux de Seuil <a href="#sommaire-">z</a>
+</h4>
+<p>On seuil sur chaque images une composante de l'image</p>
+<table>
+    <tr>
+		<th>Sr = 255</th>
+		<th>Sr = Sg = 255</th>
+		<th>Sr = Sg = Sb = 255</th>
+    </tr>
+	<tr>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_r.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_r.jpg" style="max-width:100%;"></a></td>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_rg.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_rg.jpg" style="max-width:100%;"></a></td>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_rgb.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_rgb.jpg" style="max-width:100%;"></a></td>
+	</tr>
+</table>
+<ul>
+<li>En seuillant le rouge, l'image devient cyan comme il reste les compostante verte et bleu de l'image</li>
+<li>En seuillant le rouge et le vert, l'image devient bleu comme c'est la seule composante restante de l'image</li>
+<li>En seuillant le rouge, le vert et le bleu, l'image devient noir comme il ne restent plus aucune composante à l'image</li>
+</ul>
+<h4>
+<a id="user-content-plusieurs-niveaux-de-seuils--1" class="anchor" href="#plusieurs-niveaux-de-seuils--1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plusieurs Niveaux de Seuils <a href="#sommaire-">z</a>
+</h4>
+<p>On utillise ici le meme niveau de seuils sur chaque composantes de Rouge/Vert/Bleu de l'image</p>
+<table>
+    <tr>
+		<th>Srgb = ( 85, 170 )</th>
+		<th>Srgb = ( 64, 128, 192 )</th>
+		<th>Srgb = ( 50, 100, 150, 200 )</th>
+    </tr>
+	<tr>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_rgb_85_170.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_rgb_85_170.jpg" style="max-width:100%;"></a></td>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_rgb_64_128_192.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_rgb_64_128_192.jpg" style="max-width:100%;"></a></td>
+		<td><a href="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_rgb_50_100_150_200.jpg" target="_blank" rel="noopener noreferrer"><img src="/home/thibault/Cours/Master/S2/HMIN211%20-%20Analyse%20et%20traitement%20des%20images/TDs-TPs/TP1/rendu/images/lena_seuil_rgb_50_100_150_200.jpg" style="max-width:100%;"></a></td>
+	</tr>
+</table>
+</article></body></html>
