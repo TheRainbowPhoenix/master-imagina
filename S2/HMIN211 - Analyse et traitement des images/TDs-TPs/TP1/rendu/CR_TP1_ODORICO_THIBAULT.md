@@ -20,7 +20,24 @@
 
 ### Image de reference [↺](#sommaire-)
 
-<p align="center"><img src="images/02.jpg" width="33%"/></p>
+<style type='text/css'>
+img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ table {
+   margin-left:auto; 
+   margin-right:auto;
+   width:100%;
+ }
+</style>
+
+![](images/02.jpg)
+
+When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
+$$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
 
 ### Seuillage [↺](#sommaire-)
 
@@ -43,11 +60,6 @@ Plus le seuil est bas plus la couleur blanche aura de chances d'apparaitre.
 ### Profil d'Une Ligne et d'Une Colonne [↺](#sommaire-)
 
 On realise les profils de l'image de référence (format 512x512) sur la ligne d'indice 255 et la colonne d'indice 255 nous permettant de visualisé plus précisement la valeur de niveau de gris de chaque indice de la ligne/colonne.
-
-<p align="center">
-	<p>Profil ligne et colonne = 255</p>
-	<img src="images/02.jpg" width="33%" align="center"/>
-</p>
 
 <table style="width:33%" align="center">
 	<tr>
@@ -147,7 +159,7 @@ On seuil sur chaque images une composante de l'image
 
 On utillise ici le meme niveau de seuils sur chaque composantes de Rouge/Vert/Bleu de l'image
 
-<table>
+<table align="center">
     <tr>
 		<th>Srgb = ( 85, 170 )</th>
 		<th>Srgb = ( 64, 128, 192 )</th>
@@ -159,3 +171,7 @@ On utillise ici le meme niveau de seuils sur chaque composantes de Rouge/Vert/Bl
 		<td><img src="images/lena_seuil_rgb_50_100_150_200.jpg"/></td>
 	</tr>
 </table>
+
+| S = ( 85, 170 )           | S = ( 64, 128, 192 )          | S = ( 50, 100, 150, 200 )         |
+| ----------------          | -----------------------       | ---------------------------       |
+| ![](images/lena_seuil_rgb_85_170.jpg) | ![](images/lena_seuil_rgb_64_128_192.jpg) | ![](images/lena_seuil_rgb_50_100_150_200.jpg) |

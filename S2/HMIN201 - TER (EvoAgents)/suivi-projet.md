@@ -57,8 +57,8 @@
 
 ##### Execution du jar
 
-- Se deplacer dans **EvoAgentMind**
-- java -jar ./EXE/EvoAgentApp_181125.jar ./Minds/Arnhulator/Tasks/CTF.simbatch
+- Se deplacer dans **EvoAgentMind/**
+- Executer : java -jar ./EXE/EvoAgentApp_181125.jar ./Minds/Arnhulator/Tasks/CTF.simbatch
 
 #### Plan du rapport
 
@@ -73,16 +73,8 @@
 ### Preparation
 
 - Var
-
 - Sensor
-
 - Skill
-	- Flee
-	- Shoot
-	- Avoid
-	- GoTo
-	- Hide
-
 - Actuator
 
 ### Pour la prochaine fois
