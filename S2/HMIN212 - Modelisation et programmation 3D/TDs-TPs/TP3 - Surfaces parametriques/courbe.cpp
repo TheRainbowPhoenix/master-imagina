@@ -3,21 +3,21 @@
 void draw_point(const Point3& point){
   glPointSize(4);
   glBegin(GL_POINTS);
-    glVertex3dv(point);
+    glVertex3d(point.x, point.y, point.z);
   glEnd();
 }
 
 void draw_line(const Point3& start, const Point3& end){
   glBegin(GL_LINES);
-    glVertex3dv(start);
-    glVertex3dv(end);
+    glVertex3d(start.x, start.y, start.z);
+    glVertex3d(end.x, end.y, end.z);
   glEnd();
 }
 
 void draw_curve(const std::vector<Point3>& points) {
 	glBegin(GL_LINE_STRIP);
 	for (size_t i = 0; i < points.size(); ++i) {
-		glVertex3dv(points[i]);		
+		glVertex3d(points[i].x, points[i].y, points[i].z);		
 	}
 	glEnd();
 }
@@ -140,38 +140,74 @@ void draw_surface_reglee(const std::vector<Point3>& courbe_bezier1, const std::v
 	return;
 }
 
-std::vector<Point3> bezier_surface_bernstein(const std::vector<std::vector<Point3> >& control_grid, long nb_u, long nb_v) {
+std::vector<std::vector<Point3> > bezier_surface_bernstein(const std::vector<std::vector<Point3> >& control_grid, long nb_u, long nb_v) {
 
-	std::vector<Point3> surface;
-	std::vector<std::vector<Point3> > courbes;
+	std::vector<std::vector<Point3> > surface;
 	
+	std::vector<std::vector<Point3> > control_u; // taille control_grid.size()
+	
+	glColor3f(1, 0, 0);
+
+	// Dessin des courbes de controle en rouge
+
 	for (size_t k = 0; k < control_grid.size(); ++k) {
-		courbes.push_back(bezier_curve_bernstein(control_grid[k], nb_u));
-		draw_curve(courbes[k]);
+		control_u.push_back(bezier_curve_bernstein(control_grid[k], nb_u));
+		//draw_curve(control_u[k]);
 	}
 
-	std::vector<Point3> surface_control(courbes.size());
+	std::vector<std::vector<Point3> > control_v; // taille nbu + 1
+
+	// Dessin de la surface de bezier en jaune
+
+	glColor3f(1, 1, 0);
 
 	for (int u = 0; u <= nb_u; ++u){
 
-		for (size_t l = 0; l < courbes.size(); ++l){
-			surface_control[l] = courbes[l][u];
-		}
+		control_v.push_back(std::vector<Point3>());
 
-		std::vector<Point3> res;
-		res = bezier_curve_bernstein(surface_control, nb_v);
-		draw_curve(res);
-
-		surface.insert(surface.end(), res.begin(), res.end());
+		for (size_t k = 0; k < control_u.size(); ++k)
+			control_v[u].push_back(control_u[k][u]);
+		
+		surface.push_back(bezier_curve_bernstein(control_v[u], nb_v));
 	}
 
 	return std::move(surface);
 }
 
-void draw_surface(const std::vector<Point3>& points){
-	glBegin(GL_POINTS); //	GL_QUAD_STRIP;
-	for (size_t i = 0; i < points.size(); ++i) {
-		glVertex3dv(points[i]);		
+void draw_surface(const std::vector<std::vector<Point3> >& surface) {
+	//glBegin(GL_QUADS); //	GL_QUAD_STRIP;
+	for (size_t u = 0; u < surface.size() - 1; ++u) {
+		for (size_t v = 0; v < surface[u].size() - 1; ++v) {
+			glBegin(GL_QUAD_STRIP); //	GL_QUAD_STRIP;
+				glVertex3d(surface[u][v].x, surface[u][v].y, surface[u][v].z);		
+				glVertex3d(surface[u][v+1].x, surface[u][v+1].y, surface[u][v+1].z);		
+				glVertex3d(surface[u+1][v].x, surface[u+1][v].y, surface[u+1][v].z);		
+				glVertex3d(surface[u+1][v+1].x, surface[u+1][v+1].y, surface[u+1][v+1].z);
+			glEnd();
+		}
 	}
-	glEnd();
+	//glEnd();
+}
+
+void draw_surface_grid(const std::vector<std::vector<Point3> >& surface) {
+
+	if (surface.empty())
+		return;
+
+	for (size_t u = 0; u < surface.size(); ++u) {
+		draw_curve(surface[u]);
+	}
+
+	std::vector<std::vector<Point3> > reverse;
+
+	for (size_t u = 0; u < surface[0].size(); ++u) {
+		
+		reverse.push_back(std::vector<Point3>());
+
+		for (size_t v = 0; v < surface.size(); ++v) {
+			reverse[u].push_back(surface[v][u]);
+		}
+
+		draw_curve(reverse[u]);
+	}
 }

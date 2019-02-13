@@ -77,15 +77,6 @@
 - Skill
 - Actuator
 
-### Pour la prochaine fois
-
-- Definir des règles strict pour le jeux
-	- 1 tir = 1 mort
-	- vitesse porteur drapeau div/2
-- Hierarchie de skills
-- Idées d'entrainement pour les skills
-- Lire les articles cité dans le sujet
-
 ### Skills
 
 #### Base
@@ -108,7 +99,7 @@
 
 - Hide
 	- ProcheEnv
-	- RepulsionTarget (Sensor ennemi)
+	- RepulsionTarget (< Sensor ennemi)
 
 - Fight
 
@@ -116,3 +107,87 @@
 
 - ProtectFlagOwner
 
+### Pour la prochaine fois
+
+- Definir des règles strict pour le jeux
+	- 1 tir = 1 mort
+	- vitesse porteur drapeau div/2
+- Hierarchie de skills
+- Idées d'entrainement pour les skills
+- Lire les articles cité dans le sujet
+
+### Regle du jeu
+
+- But
+	- Recuperer drapeau ennemi et ramener à la base (1 point)
+- Drapeau
+	- 2 dans chaques bases
+	- vitesse porteur drapeau div/2
+	- drapeau reste sur place si laché (pas de teleportation)
+- Map
+	- Obstacle généré aléatoirement (espacé, pas de cuvette, )
+	- 1 tir = 1 mort
+- Capteur
+	- Allié
+	- Barycentre
+		- Ennemi
+		- Allié
+
+#### Base
+
+- AttractByEnv (sensor)
+- RepulseByEnv (sensor)
+- AvoidEnv (sensor)
+
+- AttractByTarget (var)
+- RepulseByTarget (var)
+- AvoidTarget (var)
+
+- ShootTarget (var)
+
+#### Complex
+
+- NearEnv (< SENSOR_ENV_DIST)
+	- AttractByEnv (< SENSOR_ENV)
+	- RepulseByEnv (< SENSOR_ENV)
+
+- NearTarget (< VAR_TARGET_DIST)
+	- AttractByTarget (< VAR_TARGET)
+	- RepulseByTarget (< VAR_TARGET)
+
+- Hide (> VAR_TARGET)
+	- NearEnv (< SENSOR_ENV) 
+	- RepulseByTarget (< VAR_TARGET)
+
+- Flock (< SENSOR_ALLY_DIST, SENSOR_ENNEMI_DIST)
+	- NearTarget  (< VAR_ALLY)
+	- AvoidEnv    (< SENSOR_ENV)
+	- AvoidTarget (< VAR_ENNEMI)
+
+- Fight
+	- ShootTarget
+	- AvoidTarget
+
+- ProtectTarget
+	- Flock
+	- Fight
+
+- DefendBase
+	- 
+
+- CatchFlag
+
+- Master
+	- AvoidEnv
+	- DefendBase
+	- AttackEnnemiBase
+	- PreventEnnemiStealFlag
+	- StealEnnemiFlag
+
+
+- StealEnnemiFlag
+	- GotoEnnemiFlag
+		- AttractByTarget
+	- GotoBase 
+		- AttractByTarget 
+	- AvoidEnv

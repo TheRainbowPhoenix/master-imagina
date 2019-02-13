@@ -61,6 +61,12 @@ using namespace std;
 
 #define KEY_SPACE 32
 
+#define KEY_CTRL 114
+#define KEY_ENTR 13
+
+#define KEY_P 112
+#define KEY_A 97
+
 // Entêtes de fonctions
 void init_scene();
 void render_scene();
@@ -154,8 +160,9 @@ GLvoid window_reshape(GLsizei width, GLsizei height)
 Point3 point(-2 + random(4), -2 + random(4));
 
 vector<vector<Point3> > curve_controls = {
-  { Point3(1, 1), Point3(1, 3), Point3(4, 3), Point3(4, 1) },
-  { Point3(-4, -2), Point3(-4, 0), Point3(0, 0), Point3(0, -2) }
+  { Point3(1, 3), Point3(1, 4), Point3(4, 4), Point3(4, 3) },
+  { Point3(-3, 0), Point3(-3, 1), Point3(0, 1), Point3(0, 0) },
+  { Point3(-4, -4), Point3(-4, -3), Point3(-1, -3), Point3(-1, -4) }
 };
 
 size_t current_control_point = 0;
@@ -163,6 +170,13 @@ size_t current_curve_control = 0;
 
 long precision_courbe = 20;
 long precision_surface = 20;
+
+bool print_grid = true;
+bool select_all = true;
+
+void toggle(bool& b) {
+  b = !b;
+}
 
 size_t select_next_control_point(const vector<Point3>& control_points, size_t current){
   return ++current >= control_points.size() ? 0 : current;
@@ -183,6 +197,12 @@ GLvoid window_key(unsigned char key, int x, int y)
   case KEY_TAB:
     current_control_point = select_next_control_point(curve_controls[current_curve_control], current_control_point);
     break;
+  case KEY_P:
+    toggle(print_grid);
+    break;
+  case KEY_A:
+    toggle(select_all);
+    break;
   case KEY_U:
     precision_courbe =  --precision_courbe >= 0 ? precision_courbe : 0;  
     break;
@@ -196,18 +216,39 @@ GLvoid window_key(unsigned char key, int x, int y)
     precision_surface++;
     break;
   case KEY_I:
-    curve_controls[current_curve_control][current_control_point] += Vector3::up * 0.1;
+    if (!select_all) {
+      curve_controls[current_curve_control][current_control_point] += Vector3::up * 0.1;
+    } else {
+      for (Point3& p : curve_controls[current_curve_control]) {
+        p += Vector3::up * 0.1;
+      }
+    }
     break;
   case KEY_K:
-    curve_controls[current_curve_control][current_control_point] += Vector3::down * 0.1;
-    break;
+    if (!select_all) {
+      curve_controls[current_curve_control][current_control_point] += Vector3::down * 0.1;
+    } else {
+      for (Point3& p : curve_controls[current_curve_control]) {
+        p += Vector3::down * 0.1;
+      }
+    }    break;
   case KEY_J:
-    curve_controls[current_curve_control][current_control_point] += Vector3::left * 0.1;
-    break;
+    if (!select_all) {
+      curve_controls[current_curve_control][current_control_point] += Vector3::left * 0.1;
+    } else {
+      for (Point3& p : curve_controls[current_curve_control]) {
+        p += Vector3::left * 0.1;
+      }
+    }    break;
   case KEY_L:
-    curve_controls[current_curve_control][current_control_point] += Vector3::right * 0.1;
-    break;
-  case KEY_SPACE:
+    if (!select_all) {
+      curve_controls[current_curve_control][current_control_point] += Vector3::right * 0.1;
+    } else {
+      for (Point3& p : curve_controls[current_curve_control]) {
+        p += Vector3::right * 0.1;
+      }
+    }    break;
+  case KEY_ENTR:
     current_curve_control = select_next_curve_control(curve_controls, current_curve_control);
     break;
   default:
@@ -218,7 +259,7 @@ GLvoid window_key(unsigned char key, int x, int y)
 }
 
 GLvoid window_special_key(int key, int x, int y){
-  switch (key) {    
+  switch (key) {
   case KEY_ESC:  
     exit(1);                    
     break;
@@ -287,12 +328,6 @@ void render_scene() {
 */
 
 
-  glColor3f(1, 0, 0);
-  draw_curve(curve_controls[0]);
-  draw_curve(curve_controls[1]);
-
-  glColor3f(0, 0, 1);
-  
   //vector<Point3> courbe_bezier_bernstein;
   //courbe_bezier_bernstein = bezier_curve_bernstein(control_points, precision_courbe); 
   //draw_curve(courbe_bezier_bernstein);
@@ -310,21 +345,36 @@ void render_scene() {
   Point3 line_end(4, 2);
 
 
-  //draw_surface_cylindrique(courbe_bezier_casteljau, line_start, line_end, precision_surface);
-  draw_surface_reglee(courbe_bezier_casteljau, courbe_bezier_casteljau2, precision_surface);
+  draw_surface_cylindrique(courbe_bezier_casteljau, line_start, line_end, precision_surface);
+  //draw_surface_reglee(courbe_bezier_casteljau, courbe_bezier_casteljau2, precision_surface);
 */
-  
-  vector<Point3> surface;
+
+  vector<vector<Point3> > surface;
   surface = bezier_surface_bernstein(curve_controls, precision_courbe, precision_surface);
+  glColor3f(0, 0, 1);
 
-  draw_surface(surface);
+  if (print_grid)
+    draw_surface_grid(surface);
+  else
+    draw_surface(surface);
 
+  // INTERFACE DE CONTROLE
+  
+  glColor3f(1, 0, 0);
+  
+  for (auto& e : curve_controls)
+    draw_curve(e);
 
-
+  for (size_t k = 0; k < curve_controls.size() - 1; ++k) {
+    draw_line(curve_controls[k][0], curve_controls[k+1][0]);
+    draw_line(curve_controls[k][curve_controls[k].size()-1], curve_controls[k+1][curve_controls[k+1].size()-1]);
+  }
+  
   glColor3f(1, 1, 0);
-  draw_point(curve_controls[current_curve_control][current_control_point]);
-
-  //print_v(courbe_bezier_bernstein);
- // print_v(courbe_bezier_casteljau);
-  cout << "fin\n";
+  
+  if (select_all) {
+    draw_curve(curve_controls[current_curve_control]);
+  } else {
+    draw_point(curve_controls[current_curve_control][current_control_point]);
+  }
 }

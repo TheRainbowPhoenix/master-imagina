@@ -2,212 +2,254 @@
 
 ////////////////////////////////// ImageBase ////////////////////////////////////////
 
-ImageBase::ImageBase() : m_data(), m_height(0), m_width(0), m_is_valid(false) {}
+ImageBase::ImageBase() : m_height(0), m_width(0), m_valid(true) {}
 
-ImageBase::ImageBase(int width, int height) : ImageBase(width, height, width * height)  {}
+ImageBase::ImageBase(size_t width, size_t height) : m_height(width), m_width(height), m_valid(true) {}
 
-ImageBase::ImageBase(int width, int height, size_t data_size) : m_data(data_size), m_height(height), m_width(width) {
-	
-	if(m_data.size() == 0) {
-		std::cout << "Attention : la taille de l'image est nulle\n";
-		m_is_valid = false;
-	} else {
-		m_is_valid = true;
-	}
+ImageBase::ImageBase(const std::string& filename) {
+	this->load(filename);
 }
 
-OCTET* ImageBase::operator[](int raw) {
+size_t ImageBase::height() const {
+	return m_height;
+}
+
+size_t ImageBase::width() const {
+	return m_width;
+}
+
+size_t ImageBase::size() const {
+	return this->width() * this->height();
+}
+
+bool ImageBase::valid() const {
+	return m_valid;
+}
+
+bool ImageBase::on_bounds(size_t raw, size_t column) const {
+	return raw < this->height() && column < this->width();
+}
+
+bool ImageBase::same_resolution(const ImageBase& image) const {
+	return this->height() == image.height() && this->width() == image.width();
+}
+
+void ImageBase::load(const std::string& filename) {
+
+	std::ifstream in_file(filename);
 	
-	if(!is_valid()) {
-		printf("L'image courante n'est pas valide");
-		exit(0);
+	if (!in_file.is_open()) {
+		std::cerr << "Error : failure at load while opening file\n";
+		return;
 	}
-	
-	if(raw >= height()) {
-		printf("L'indice se trouve en dehors des limites de l'image");
-		exit(0);
+
+	this->load(in_file);
+	in_file.close();
+}
+
+void ImageBase::save(const std::string& filename) {
+
+	std::ofstream out_file(filename);
+
+	if (!out_file.is_open()) {
+		std::cerr << "Error : failure at save while opening file\n";
+		return;
 	}
-	
-	return this->data() + raw * this->width();
+
+	this->save(out_file);
+	out_file.close();
+}
+
+std::istream& operator>>(std::istream& is, ImageBase& image) {
+	image.load(is);
+	return is;
+}
+
+std::ostream& operator<<(std::ostream& os, const ImageBase& image) {
+	image.save(os);
+	return os;
 }
 
 ////////////////////////////////// ImagePGM ////////////////////////////////////////
 
-bool ImagePGM::load(const std::string& filename){
-
-	this->m_data.resize(0);
-	this->m_height = 0;
-	this->m_width = 0;
-	this->m_is_valid = false;
-
-	size_t l = filename.size();
-
-	// Le fichier ne peut pas etre que ".pgm" ou ".ppm"
-
-	if(l <= 4) {
-		printf("Chargement de l'image impossible : Le nom de fichier n'est pas conforme, il doit comporter l'extension, et celle ci ne peut être que '.pgm'");
-		return true;
-	}
-
-	if(strcmp(filename.c_str() + l - 3, "pgm") == 0) {
-
-		lire_nb_lignes_colonnes_image_pgm(filename.c_str(), &this->m_height, &this->m_width);
-		
-		this->m_data.resize(this->m_height * this->m_width);
-		
-		lire_image_pgm(filename.c_str(), this->m_data.data(), this->m_data.size());
-
-	} else {
-		printf("Chargement de l'image impossible : Le nom de fichier n'est pas conforme, il doit comporter l'extension, et celle ci ne peut être que .pgm");
-		return false;
-	}
-	
-	m_is_valid = true;
-
-	return true;
+void ImagePGM::resize(size_t width, size_t height) {
+	return m_data.resize(width * height);
 }
 
-bool ImagePGM::save(const std::string& filename){
+OCTET& ImagePGM::operator[](size_t n) {
+	return m_data[n];
+}
+
+const OCTET& ImagePGM::operator[](size_t n) const {
+	return m_data[n];
+}
+
+OCTET& ImagePGM::operator()(size_t raw, size_t column) {
+	return this->m_data[raw * this->width() + column]; 
+}
+
+const OCTET& ImagePGM::operator()(size_t raw, size_t column) const {
+	return (*this)(raw, column);
+}
+
+OCTET* ImagePGM::data() {
+	return m_data.data(); 
+}
+
+const OCTET* ImagePGM::data() const {
+	return m_data.data();
+}
+
+ImagePGM::iterator ImagePGM::begin() {
+	return this->data();
+}
+
+ImagePGM::const_iterator ImagePGM::begin() const {
+	return this->begin();
+}
+
+ImagePGM::iterator ImagePGM::end() {
+	return this->data() + this->size();
+}
+
+ImagePGM::const_iterator ImagePGM::end() const {
+	return this->end();
+}
+
+void ignore_comment(std::istream& is) {
+  OCTET c;
+  while ((c = is.get()) == '#')
+    while ((c = is.get()) != '\n')
+   		;
+  is.seekg(-sizeof(OCTET), is.cur);
+}
+
+void ImagePGM::load(std::istream& is) {
 	
-	if(!this->is_valid())
-		return false;
+	std::string fmt;
+	int max_grey_val;
 
-	ecrire_image_pgm(filename.c_str(), this->data(),  this->height(), this->width());
+	is >> fmt; //P5
+	ignore_comment(is);
+	is >> this->m_width >> this->m_height;
+	is >> max_grey_val;
 
-	return true;
+	this->m_data.resize(m_height * m_width);
+
+	for (OCTET& o : m_data)
+		is >> o;
+
+	m_valid = !is.bad();
+}
+
+void ImagePGM::save(std::ostream& os) const {
+
+	std::string fmt;
+
+	os << "P5\n";
+	os << this->width() << " " << this->height() << "\n";
+	os << "255\n";
+
+	for (OCTET o : m_data)
+		os << o;
+
+	if (os.bad())
+		std::cerr << "Error : failure at save while writing in file\n";
 }
 
 ////////////////////////////////// ImagePPM ////////////////////////////////////////
 
-ImagePPM::ImagePPM(int width, int height) : ImageBase(width, height, width * height * 3) {}
-
 ImagePPM::ImagePPM(const ImagePGM& red, const ImagePGM& green, const ImagePGM& blue) {
 	
-	if ( (red.width() == green.width() && red.width() == blue.width()) && (red.height() == green.height() && red.height() == blue.height()) ) {
-		ImagePPM(red.width(), red.height());
-		set_plan(PLAN_R, red);
-		set_plan(PLAN_G, green);
-		set_plan(PLAN_B, blue);
-	} else {
-		std::cout << "Attention : les images ne sont pas au meme format\n"; 
+	if (red.same_resolution(green) && red.same_resolution(blue)) {
+		this->m_red = red;
+		this->m_green = green;
+		this->m_blue = blue;
 	}
 }
 
-bool ImagePPM::load(const std::string& filename){
-
-	this->m_data.resize(0);
-	this->m_height = 0;
-	this->m_width = 0;
-	this->m_is_valid = false;
-	
-	size_t l = filename.size();
-
-	// Le fichier ne peut pas etre que ".ppm"
-
-	if(l <= 4) {
-		printf("Chargement de l'image impossible : Le nom de fichier n'est pas conforme, il doit comporter l'extension, et celle ci ne peut être que '.pgm' ou '.ppm'");
-		return false;
-	}
-
-	size_t nb_pixel = 0;
-
-	if(strcmp(filename.c_str() + l - 3, "ppm") == 0) {
-
-		lire_nb_lignes_colonnes_image_ppm(filename.c_str(), &this->m_height, &this->m_width);
-		
-		nb_pixel = this->m_height * this->m_width;
-  		this->m_data.resize(nb_pixel * 3); 
-
-		lire_image_ppm(filename.c_str(), this->m_data.data(), nb_pixel);
-
-	} else {
-		printf("Chargement de l'image impossible : Le nom de fichier n'est pas conforme, il doit comporter l'extension, et celle ci ne peut être que .ppm");
-		return false;
-	}
-	
-	m_is_valid = true;
-
-	return true;
+OCTET& ImagePPM::red(size_t raw, size_t column) {
+	return this->m_red(raw, column);
 }
 
-bool ImagePPM::save(const std::string& filename){
-	
-	if(!is_valid())
-		return false;
-
-	ecrire_image_ppm(filename.c_str(), this->data(),  this->height(), this->width());
-
-	return true;
+const OCTET& ImagePPM::red(size_t raw, size_t column) const {
+	return this->m_red(raw, column);
 }
 
-ImagePGM ImagePPM::get_plan(PLAN plan) {
-	
-	ImagePGM grey(width(), height());
-	
-	switch(plan) {
-
-	case PLAN_R:
-		planR(grey.data(), this->data(), this->height() * this->width());
-		break;
-	case PLAN_G:
-		planV(grey.data(), this->data(), this->height() * this->width());
-		break;
-	case PLAN_B:
-		planB(grey.data(), this->data(), this->height() * this->width());
-		break;
-	default:
-		printf("Il n'y a que 3 plans, les valeurs possibles ne sont donc que 'PLAN_R', 'PLAN_G', et 'PLAN_B'");
-		exit(0);
-		break;
-	}
-
-	return std::move(grey);
+OCTET& ImagePPM::green(size_t raw, size_t column) {
+	return this->m_green(raw, column);
 }
 
-void ImagePPM::set_plan(PLAN plan, const ImagePGM& grey_image) {
-
-	if (grey_image.width() != this->width() || grey_image.height() != this->height()) {
-		std::cout << "Attention : les images ne sont pas au meme format\n";
-		return;
-	}
-
-	switch(plan) {
-
-	case PLAN_R:
-		set_plan_R(this->data(), grey_image.data(), this->height() * this->width());
-		break;
-	case PLAN_G:
-		set_plan_G(this->data(), grey_image.data(), this->height() * this->width());
-		break;
-	case PLAN_B:
-		set_plan_B(this->data(), grey_image.data(), this->height() * this->width());
-		break;
-	default:
-		printf("Il n'y a que 3 plans, les valeurs possibles ne sont donc que 'PLAN_R', 'PLAN_G', et 'PLAN_B'");
-		exit(0);
-		break;
-	}
+const OCTET& ImagePPM::green(size_t raw, size_t column) const {
+	return this->m_green(raw, column);
 }
 
-////////////////////////////////// FONCTIONS ////////////////////////////////////////
-
-void set_plan_R(OCTET* image_data, const OCTET* plan_R, int taille_plan){
-  int i;
-  for (i=0; i<taille_plan; i++){
-    image_data[3*i] = plan_R[i];
-  }
+OCTET& ImagePPM::blue(size_t raw, size_t column) {
+	return this->m_blue(raw, column);
 }
 
-void set_plan_G(OCTET* image_data, const OCTET* plan_G, int taille_plan){
-  int i;
-  for (i=0; i<taille_plan; i++){
-    image_data[3*i+1] = plan_G[i];
-  }
+const OCTET& ImagePPM::blue(size_t raw, size_t column) const {
+	return this->m_blue(raw, column);
 }
 
-void set_plan_B(OCTET* image_data, const OCTET* plan_B, int taille_plan){
-  int i;
-  for (i=0; i<taille_plan; i++){
-    image_data[3*i+2] = plan_B[i];
-  }
+const ImagePGM& ImagePPM::red() const {
+	return this->red();
+}
+
+const ImagePGM& ImagePPM::green() const {
+	return this->green();
+}
+
+const ImagePGM& ImagePPM::blue() const {
+	return this->blue();
+}
+
+void ImagePPM::red(const ImagePGM& red) {
+	if (this->same_resolution(red))
+		this->m_red = red;
+}
+
+void ImagePPM::green(const ImagePGM& green) {
+	if (this->same_resolution(green))
+		this->m_green = green;
+}
+
+void ImagePPM::blue(const ImagePGM& blue) {
+	if (this->same_resolution(blue))
+		this->m_blue = blue;
+}
+
+void ImagePPM::load(std::istream& is) {
+
+	std::string fmt;
+	int max_grey_val;
+
+	is >> fmt; //P5
+	ignore_comment(is);
+	is >> this->m_width >> this->m_height;
+	is >> max_grey_val;
+
+	this->m_red.resize(this->width(), this->height());
+	this->m_green.resize(this->width(), this->height());
+	this->m_blue.resize(this->width(), this->height());
+
+	for (size_t i = 0 ; i < this->size(); ++i)
+		is >> this->m_red[i] >> this->m_green[i] >> this->m_blue[i];
+
+	m_valid = !is.bad();
+}
+
+void ImagePPM::save(std::ostream& os) const {
+
+	std::string fmt;
+
+	os << "P5\n";
+	os << this->width() << " " << this->height() << "\n";
+	os << "255\n";
+
+	for (size_t i = 0 ; i < this->size(); ++i)
+		os << this->m_red[i] << this->m_green[i] << this->m_blue[i];
+
+	if (os.bad())
+		std::cerr << "Error : failure at save while writing in file\n";
 }

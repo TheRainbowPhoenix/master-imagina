@@ -24,7 +24,10 @@ void draw_surface_cylindrique(const std::vector<Point3>& courbe_bezier, const Po
 
 void draw_surface_reglee(const std::vector<Point3>& courbe_bezier1, const std::vector<Point3> courbe_bezier2, long nb_u);
 
-std::vector<Point3> bezier_surface_bernstein(const std::vector<std::vector<Point3> >& control_grid, long nb_u, long nb_v); 
+std::vector<std::vector<Point3> > bezier_surface_bernstein(const std::vector<std::vector<Point3> >& control_grid, long nb_u, long nb_v); 
 
-void draw_surface(const std::vector<Point3>& points);
+void draw_surface(const std::vector<std::vector<Point3> >& surface);
+
+void draw_surface_grid(const std::vector<std::vector<Point3> >& surface);
+
 #endif

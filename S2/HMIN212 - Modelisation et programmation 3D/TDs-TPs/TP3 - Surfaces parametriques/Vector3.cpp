@@ -46,10 +46,6 @@ double Vector3::angle(Vector3& v) const {
 	return acos(dot(v) / (length() * v.length()));
 }
 
-Vector3::operator GLdouble*() const {
-	GLdouble vec3[] = {x, y, z};
-	return std::move(vec3);
-}
 Vector3::operator Point3() const {
 	return Point3(x, y, z);
 }

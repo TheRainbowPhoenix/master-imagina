@@ -16,9 +16,34 @@ to-report vect-multiply [vect factor]
   report (list (item 0 vect * factor) (item 1 vect * factor))
 end
 
+to-report multiply-vect [factor vect]
+  report (list (item 0 vect * factor) (item 1 vect * factor))
+end
+
 to-report vect-add [v1 v2]
   report (list (item 0 v1 + item 0 v2) (item 1 v1 + item 1 v2))
 end
+
+to-report add-vect [v1 v2]
+  report (list (item 0 v1 + item 0 v2) (item 1 v1 + item 1 v2))
+end
+
+to-report vect-length [vect]
+  report sqrt vect-length-squared
+end
+
+to-report vect-length-squared [vect]
+  let x item 0 vect
+  let y item 1 vect
+  report (x * x) + (y * y)
+end
+
+to-report vect-normalize [vect]
+	let l vect-length vect
+	report (list (item 0 vect / l) (item 1 vect / l))
+end
+
+;; present pour les compatibilité des programmes :
 
 to-report length-vect [vect]
   let x item 0 vect

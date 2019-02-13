@@ -52,5 +52,34 @@ toute application linéaire à une représenation par une matrice
 
 ### Transformations fisheye
 
-
 ## Géometrie discrete
+
+## Trioker
+
+- Point2 : (double x, y)
+	- translate(Vector2)
+	- rotate(Point2, double angle)
+
+- Vector2 : (double x, y)
+	- add(Vector2)
+	- soustract(Vector2)
+	- multiply(double)
+	- divide(double)
+	- equals(Vector2)
+	- normalize
+	- double angle()
+	- double lengthSquared()
+	- double length()
+	- double distanceSquared()
+	- double distance()
+
+- Triangle : (3 Point2)
+	- center()
+	- contains(Point2)
+	- translate(Vecteur2)
+	- rotate(double)
+
+- Trioker : (Triangle && String label)
+	- rotateLeft()
+	- rotateRight()
+	- invert()

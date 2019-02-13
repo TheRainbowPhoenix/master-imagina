@@ -135,3 +135,17 @@ champ de potientiel utilliser pour representer les repulstion et l'attraction
 
 - Essayer de combiner le mieux dans ces deux approches
   - Algorithme de A*
+
+(examen : ecrire les differents algorithmes et dire les différences)
+
+- On prend un noeud et on génere les noeuds voisins
+
+- terminaison : soit trouvé but soit liste des in-nodes vides
+
+- merge nodes fait beaucoup : 
+
+quand on genere la liste des voisins on réorganise les noeuds avec merge nodes
+  - si cout inferieur
+
+
+modification du A* possible en modifiant la puissance de la fonction de (cout de chemin)

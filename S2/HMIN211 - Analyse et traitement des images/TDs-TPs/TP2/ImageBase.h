@@ -2,56 +2,88 @@
 #define IMAGE_BASE_H
 
 #include <iostream>
+#include <fstream>
 #include <vector>
 
-#include "image_pgm_ppm.h"
+//#include "image_pgm_ppm.h"
+
+typedef unsigned char OCTET;
 
 class ImageBase {
-
-protected:
-
-	std::vector<OCTET> m_data;
-
-	int m_height;
-	int m_width;
-
-	bool m_is_valid;
-
-	ImageBase(int width, int height, size_t data_size);
 
 public:
 
 	ImageBase();
-	ImageBase(int width, int height);
+	ImageBase(size_t width, size_t height);
+	ImageBase(const std::string& filename);
 
-	int height() const { return m_height; };
-	int width() const { return m_width; };
-	int data_size() const { return m_data.size(); };
-	int is_valid() const { return m_is_valid; };
+	size_t height() const;
+	size_t width() const;
+	size_t size() const;
 
-	OCTET* data() { return m_data.data(); };
-	const OCTET* data() const { return m_data.data(); };
+	bool valid() const;
+	bool on_bounds(size_t raw, size_t column) const;
+	bool same_resolution(const ImageBase& image) const;
 
-	OCTET* operator[](int raw);
+	void load(const std::string& filename);
+	void save(const std::string& filename);
 
-	// ajouter iterateurs :
-	// begin() end()
-	
+	friend std::istream& operator>>(std::istream& is, ImageBase& image);
+	friend std::ostream& operator<<(std::ostream& os, const ImageBase& image);
+
+protected:
+
+	size_t m_height;
+	size_t m_width;
+	bool m_valid;
+
 	// charge une image en fonction de sont type (.ppm / .pgm)
-	virtual bool load(const std::string& filename) = 0;
-	virtual bool save(const std::string& filename) = 0;
+	virtual void load(std::istream& is) = 0;
+	virtual void save(std::ostream& os) const = 0;
 };
 
 ////////////////////////////////// ImagePGM ////////////////////////////////////////
 
 class ImagePGM : public ImageBase {
+
 public:
 
-	ImagePGM() : ImageBase() {}
-	ImagePGM(int width, int height) : ImageBase(width, height) {}
+	using ImageBase::load;
+	using ImageBase::save;
 
-	bool load(const std::string& filename);
-	bool save(const std::string& filename);
+	typedef OCTET* iterator;
+    typedef const OCTET* const_iterator;
+
+	ImagePGM() : ImageBase(), m_data() {}
+	ImagePGM(size_t width, size_t height) : ImageBase(width, height), m_data(height * width) {}
+	ImagePGM(const std::string& filename) : ImageBase(filename), m_data() {}
+
+	void resize(size_t width, size_t height);
+
+	// Access data in array style pgm(n)
+	OCTET& operator[](size_t n);
+	const OCTET& operator[](size_t n) const;
+
+	// Access data in matrix style pgm(i, j)
+	OCTET& operator()(size_t raw, size_t column);
+	const OCTET& operator()(size_t raw, size_t column) const;
+
+	// Accessor of internal data
+	OCTET* data();
+	const OCTET* data() const;
+
+	iterator begin();
+	const_iterator begin() const;
+
+	iterator end();
+	const_iterator end() const;
+
+protected:
+
+	std::vector<OCTET> m_data;
+
+	void load(std::istream& is);
+	void save(std::ostream& os) const;
 };
 
 ////////////////////////////////// ImagePPM ////////////////////////////////////////
@@ -60,29 +92,44 @@ class ImagePPM : public ImageBase {
 
 public:
 
-	typedef enum { PLAN_R, PLAN_G, PLAN_B} PLAN;
+	using ImageBase::ImageBase;
+	
+/* 
+	using ImageBase::ImageBase permet d'eviter d'ecrire ça :
 
 	ImagePPM() : ImageBase() {}
-	ImagePPM(int width, int height);
+	ImagePPM(size_t width, size_t height) : ImageBase(width, height) {}
+*/
+
 	ImagePPM(const ImagePGM& red, const ImagePGM& green, const ImagePGM& blue);
 
-	bool load(const std::string& filename);
-	bool save(const std::string& filename);
+	OCTET& red(size_t raw, size_t column);
+	const OCTET& red(size_t raw, size_t column) const;
 
-	ImagePGM get_plan(PLAN);
-	void set_plan(PLAN, const ImagePGM& grey_image);
+	OCTET& green(size_t raw, size_t column);
+	const OCTET& green(size_t raw, size_t column) const;
 
-	// ajouter iterateurs :
-	// red_begin() red_end()
-	// green_begin() green_end()
-	// blue_begin() blue_end()
+	OCTET& blue(size_t raw, size_t column);
+	const OCTET& blue(size_t raw, size_t column) const;
+
+	// Getters/Setters pour checker que les resolutions des parties R/G/B de l'image sont les mêmes.
+
+	const ImagePGM& red() const;
+	const ImagePGM& green() const;
+	const ImagePGM& blue() const;
+
+	void red(const ImagePGM& red);
+	void green(const ImagePGM& green);
+	void blue(const ImagePGM& blue);
+
+protected:
+
+	ImagePGM m_red;
+	ImagePGM m_green;
+	ImagePGM m_blue;
+
+	void load(std::istream& is);
+	void save(std::ostream& os) const;
 };
-
-////////////////////////////////// FONCTIONS ////////////////////////////////////////
-
-/* Assigne les données du plan à l'image coloré, dont la taille doit être 3 fois superieur à celle du plan */
-void set_plan_R(OCTET *image_data, const OCTET *plan_R, int taille_plan);
-void set_plan_G(OCTET *image_data, const OCTET *plan_G, int taille_plan);
-void set_plan_B(OCTET *image_data, const OCTET *plan_B, int taille_plan);
 
 #endif
