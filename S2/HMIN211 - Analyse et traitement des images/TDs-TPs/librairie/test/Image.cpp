@@ -81,7 +81,7 @@ ImagePGM::ImagePGM(const std::string& filename) : ImageBase(), m_data() {
 }
 
 void ImagePGM::resize(size_t width, size_t height) {
-	return m_data.resize(width * height);
+	m_data.resize(width * height);
 }
 
 OCTET& ImagePGM::operator[](size_t n) {
@@ -243,12 +243,19 @@ void ImagePPM::read(std::istream& is) {
 	is >> this->m_width >> this->m_height;
 	is >> max_grey_val;
 
+	std::vector<OCTET> data(this->width() * this->height() * 3);
+
+	is.read((char*)data.data(), data.size());
+
 	this->m_red.resize(this->width(), this->height());
 	this->m_green.resize(this->width(), this->height());
 	this->m_blue.resize(this->width(), this->height());
 
-	for (size_t i = 0 ; i < this->size(); ++i)
-		is >> this->m_red[i] >> this->m_green[i] >> this->m_blue[i];
+	for (size_t i = 0 ; i < this->size(); ++i) {
+		this->m_red[i] = data[i*3];
+		this->m_green[i] = data[i*3+1];
+		this->m_blue[i] = data[i*3+2];
+	}
 
 	m_valid = is.good();
 }
@@ -261,8 +268,17 @@ void ImagePPM::write(std::ostream& os) const {
 	os << this->width() << " " << this->height() << "\r";
 	os << "255\r";
 
-	for (size_t i = 0 ; i < this->size(); ++i)
-		os << this->m_red[i] << this->m_green[i] << this->m_blue[i];
+	std::vector<OCTET> data(this->width() * this->height() * 3);
+
+	for (size_t i = 0 ; i < this->size() ; ++i) {
+		data[i*3] = this->m_red[i];
+		data[i*3+1] = this->m_green[i];
+		data[i*3+2] = this->m_blue[i];
+	}
+
+	os.write((char*)data.data(), data.size());
+
+	os << "\n";
 
 	if (!os.good())
 		std::cerr << "Warning : failure at save while writing in file\n";

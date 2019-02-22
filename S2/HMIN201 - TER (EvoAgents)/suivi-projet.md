@@ -184,10 +184,57 @@
 	- PreventEnnemiStealFlag
 	- StealEnnemiFlag
 
-
 - StealEnnemiFlag
 	- GotoEnnemiFlag
 		- AttractByTarget
 	- GotoBase 
 		- AttractByTarget 
 	- AvoidEnv
+
+#### Hierarchie MIND V2
+
+```
+Avoid ≠ Repulse
+les paramètres sont entre crochet []
+je m'occupe pas de qui lit ou ecrit dans quoi
+```
+
+- Master
+	- AvoidEnv < [SENSOR_ENV] → "Evite les obstacles" (Je le met en hauteur dans la hierarchie pour ne pas qu'il se retrouve dans toutes les skills)
+
+	- Flocking < [GROUP_ALLY_DIRECTION, GROUP_ALLY_BARYCENTRE] → "Favorise les deplacements de groupes en general" (Possiblement à deplacer dans Surviving/Protecting/fighting)
+		- AlignWithDirection  < [GROUP_ALLY_DIRECTION] → "Prend la meme direction"
+		- NearTarget          < [GROUP_ALLY_BARYCENTRE] → "Reste à bonne distance"
+			- AttractByTarget < [GROUP_ALLY_BARYCENTRE] → "Est repoussé"
+			- RepulseByTarget < [GROUP_ALLY_BARYCENTRE]	→ "Est attiré"
+
+	- Positioning < [GROUP_ALLY_BARYCENTRE, ENNEMI_FLAG_POS, ALLY_FLAG_POS, ...] → "Choisi un role en adequation avec la situation" (Les choix doivent être binaire pour que ça marche, je sais pas si c'est possible)
+		- Defend < [ALLY_BASE] → "Protege la base allié, reste globalement dans la zone allié"
+			- OrbitAroundTarget < [ALLY_BASE] → "Tourne autour de la base (roder)"
+				- NearTarget    < [ALLY_BASE] 
+				- KeepMoving → "Oblige le bot à bouger"
+			- ???
+
+		- Support → "Soutiens les attaquant ou defendeurs en fonction des besoins, milieu de jeu"
+			- ???
+			- ???
+
+		- Attack < [ENNEMI_FLAG, ALLY_BASE] → "Essaye de prendre et ramener le drapeau ennemi, reste dans la zone du drapeau ennemi (tout le terrain)"
+			- AttractByTarget < [ENNEMI_FLAG]
+			- AttractByTarget < [ALLY_BASE]
+
+	- Surviving → "Assure ta propre survie"
+		- Hide                < [GROUP_ALLY_RATIO]
+			- NearEnv         < [SENSOR_ENV]
+			- RepulseByTarget < [ENNEMI]
+		- ???
+
+	- Protecting → "Protege les membres de ton equipe" (surtout le porteur de drapeau)
+		- AttractByTarget < [ALLY_FLAG_OWNER]
+		- Flocking 
+		- ???
+
+	- Fighting → "Combat l'ennemi"
+		- ShootTarget < [ENNEMI]
+		- AvoidTarget < [ENNEMI]
+

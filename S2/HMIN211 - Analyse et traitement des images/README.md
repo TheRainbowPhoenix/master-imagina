@@ -17,6 +17,20 @@
 	- [Suite du cours en pdf](#suite-du-cours-en-pdf)
 	- [Système visuel humain](#syst%C3%A8me-visuel-humain)
 	- [Erosion, dilatation, ouverture, fermeture](#erosion-dilatation-ouverture-fermeture)
+	- [Filtrage d'images](#filtrage-dimages)
+		- [Pretraitement d'images](#pretraitement-dimages)
+			- [Supprimer le bruit](#supprimer-le-bruit)
+		- [Filtre moyenneur](#filtre-moyenneur)
+		- [Filtre gaussien](#filtre-gaussien)
+		- [Filtre exponentiel](#filtre-exponentiel)
+		- [Filtre gaussien 3x3](#filtre-gaussien-3x3)
+		- [Filtre non linaires](#filtre-non-linaires)
+		- [Filtre median](#filtre-median)
+	- [Colorimetrie](#colorimetrie)
+	- [Filtres passe haut \(Détection de contours\)](#filtres-passe-haut-d%C3%A9tection-de-contours)
+		- [1) Interpretation](#1-interpretation)
+		- [2) Gradiant d'une image](#2-gradiant-dune-image)
+		- [3) Utilisation du gradient](#3-utilisation-du-gradient)
 
 <!-- /MarkdownTOC -->
 
@@ -191,3 +205,150 @@ fond de l'image en blanc et objet en noir
 
 - **fermeture** (DE): dilatation en premier puis erosion sur le resultat
 	- supprime les point du fond isolé dans l'objet
+
+### Filtrage d'images
+
+#### Pretraitement d'images
+ 
+##### Supprimer le bruit
+
+#### Filtre moyenneur
+
+\(h(x, y) = {1 \over t^2}\)
+
+#### Filtre gaussien
+
+\(h(x, y) = { {1 \over 2πθ^2} e^{-{x^2 + y^2 \over 2θ^2}} }\)
+
+avec θ taille de masque h.
+
+#### Filtre exponentiel
+
+\(h(x, y) = {{β \over 4} e^{-β(|x|+|y|)}}\)
+
+**Remarque** : 3 filtres doux
+- preserve les couleurs moyennes
+- supprime les hautes fréquences
+
+**Filtre passe bas** : FPB supprime les bruits (basse fréquences)
+
+#### Filtre gaussien 3x3
+
+\(h(m, n) = { {1 \over 16} \begin{bmatrix} 1 & 2 & 1\\ 2 & 4 & 2\\ 1 & 2 & 1 \end{bmatrix} }\)
+
+#### Filtre non linaires
+
+- filtre homomorphiques
+- filtre adaptatif
+- filtre morphologique
+
+#### Filtre median
+
+Trier les valeurs des pixels voinsins à p(i, j)
+
+\(p_1(i,j) <= p_2(i, j) <= ... <= p_n(i, j)\)
+
+\(h(m, n) = { {1 si p_5(i,j)} 0 sinon }\)  
+
+### Colorimetrie
+
+**Trichromie** : couleur perçue par un humain → 3 couleurs de base avec un spectre éloigné
+**Trivariance** : couleur Cx fonction de λ et des luminances de Cλ et de Cb
+**Synthèse soustractive** : en partant du blanc, on soustrait de couleurs jusqu'à atteindre le noir.
+**Synthèse additive** : inverse de la synthèse soustractive.
+
+Y = 0.3 * R + 0.6 * G + 0.1 * B
+Luminance Y = 0.299 * R + 0.587 * G + 0.114 * B
+
+**RGB to YUV**
+
+Y = ...
+U = 0.492 (B - Y) + 128
+V = 0.877 (R - Y) + 128
+
+**YUV to RGB**
+
+R = ((Cr - 128) / 0.877) + Y / 0.587
+G = (Y - O.299 * R - 0.114 * B)
+B = ((Cb - 128) / 0.877) + Y
+
+**RGB to YCrCb**
+
+Y = ...
+Cb = (B - Y) / (2 - 2 * 0.114 * B) + 128		(Cb = a * (B - Y))
+Cb = (R - Y) / (2 - 2 * 0.229 * R) + 128		(Cr = b * (R - Y))
+
+**RGB to YCrCb**
+
+Y = 0.299 * R + 0.587 * G + 0.114 * B
+...
+
+### Filtres passe haut (Détection de contours)
+
+#### 1) Interpretation
+
+Detection de formes avec les profils de ligne
+
+- Aucune variation
+- marche
+- rampe
+- pic
+- toit
+
+Example avec une courbe rampe, en uttilisant
+- une dérivé on aura une valeurs max sur le points d'inflexion
+- une dérivé seconde on cherche le passage par zero
+
+#### 2) Gradiant d'une image
+
+Image : I(x, y) → gradiant vertical
+
+
+\(I_x(x, y) = { dI(x, y) \over dx }\)
+
+\(I_y(x, y) = { dI(x, y) \over dy }\)
+
+**Module du gradiant**
+
+\(G = \sqrt{ I_x^2 + I_y^2 } = max(I_x, I_y)\)
+
+**Phase du gradiant**
+
+\(ϕ = \arctan{I_y \over I_x}\)
+
+**Discretisation**
+
+\({ dI(x, y) \over dx } = { δI[i, j] \over δj } = I_j[i, j] = I[i, j+1] - I[i, j]\)
+
+\({ dI(x, y) \over dy } = I_i[i, j] = I[i+1, j] - I[i, j]\)
+
+\(G = \sqrt{I_i[i, j]^2 + I_j[i, j]^2}\)
+
+#### 3) Utilisation du gradient
+
+- Filtrage de l'image
+- Calcul l'image du gradient
+- Recherche des maximums locaux dans l'image du gradiant dans la direction de la phase
+- Seuillage par hystéresis (analogie chauffage)
+
+```	
+si p(i,j) > T_h
+	alors maximum local
+si p(i,j) < T_b
+	alors non retenu
+2eme passe
+
+si T_b < p(i,j) < T_h et au moins N(p(i,j))
+	alors p(i,j) Maximum local
+```
+
+| Algo \ Verité   | Positif        | Négatif       |
+|-----------------|----------------|---------------|
+| Positif         | True positif   | False positif |
+| Negatif         | False negative | True negative |
+
+
+
+filter({1/9, 1/9, 1/9,
+		1/9, 1/9, 1/9,
+		1/9, 1/9, 1/9});

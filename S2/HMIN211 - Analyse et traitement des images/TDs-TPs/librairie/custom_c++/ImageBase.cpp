@@ -31,6 +31,10 @@ OCTET* ImageBase::operator[](int raw) {
 	return this->data() + raw * this->width();
 }
 
+const OCTET* ImageBase::operator[](int raw) const{
+	return (*this)[raw];
+}
+
 ////////////////////////////////// ImagePGM ////////////////////////////////////////
 
 bool ImagePGM::load(const std::string& filename){
@@ -211,3 +215,94 @@ void set_plan_B(OCTET* image_data, const OCTET* plan_B, int taille_plan){
     image_data[3*i+2] = plan_B[i];
   }
 }
+
+void seuillage(ImagePGM& image, const std::vector<int>& seuils){
+  
+  bool assigned = false;
+  
+  if(seuils.size() > 0) {
+
+    for (int i = 0; i < image.height(); ++i){
+      for (int j = 0; j < image.width(); ++j){
+        
+        assigned = false;
+
+        for (size_t k = 0; k < seuils.size(); ++k){
+          if (image[i][j] < seuils[k]){
+            image[i][j] = (255 / seuils.size()) * k ;
+            assigned = true;
+            break;
+          }
+        }
+
+        if (!assigned)
+          image[i][j] = 255;
+
+      }
+    }
+
+  }
+}
+
+std::vector<int> histo_grey(const ImagePGM& image) {
+
+	std::vector<int> grey_occurrences(256);
+
+	for (int i = 0; i < image.height(); ++i){
+		for (int j = 0; j < image.width(); ++j){
+			grey_occurrences[image[i][j]]++;
+		}
+	}
+
+	return std::move(grey_occurrences);
+/*
+	for (auto it = grey_occurrences.begin() ; it != grey_occurrences.end() ; ++it){
+		std::cout << it->first << " " << it->second / (double)(image.height() * image.width()) << "\n";
+	}
+*/
+}
+
+std::vector<std::array<int, 3> > histo_color(const ImagePPM& image) {
+
+  std::vector<std::array<int, 3> > RGB_occurrences(256);
+
+  ImagePGM R = image.get_plan(ImagePPM::PLAN_R);
+  ImagePGM G = image.get_plan(ImagePPM::PLAN_G);
+  ImagePGM B = image.get_plan(ImagePPM::PLAN_B);
+
+  for (int i = 0; i < image.height(); ++i){
+    for (int j = 0; j < image.width(); ++j){
+      RGB_occurrences[R[i][j]][0]++;
+      RGB_occurrences[G[i][j]][1]++;
+      RGB_occurrences[B[i][j]][2]++;
+    }
+  }
+
+  return std::move(RGB_occurrences);
+
+  //double nb_pixels = image.height() * image.width();
+/*
+  for (auto it = RGB_occurrences.begin() ; it != RGB_occurrences.end() ; ++it){
+    std::cout << it->first << " " << it->second[0] / nb_pixels << " " << it->second[1] / nb_pixels << " " << it->second[2] / nb_pixels << "\n";
+  }
+*/
+}
+
+void print_histo_grey(std::vector<int> histo_grey) {
+
+	//double nb_pixels = image.height() * image.width();
+
+	for (size_t i = 0 ; i < histo_grey.size() ; ++i){
+		std::cout << i << " " << histo_grey[i] << "\n";
+	}
+}
+
+void print_histo_color(std::vector<std::array<int, 3> > histo_color) {
+
+	//double nb_pixels = image.height() * image.width();
+
+	for (size_t i = 0 ; i < histo_color.size() ; ++i){
+		std::cout << i << " " << histo_color[i][0] << " " << histo_color[i][1] << " " << histo_color[i][2] << "\n";
+	}
+}
+

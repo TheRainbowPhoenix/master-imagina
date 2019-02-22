@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
+#include <array>
 
 #include "image_pgm_ppm.h"
 
@@ -33,6 +35,7 @@ public:
 	const OCTET* data() const { return m_data.data(); };
 
 	OCTET* operator[](int raw);
+	const OCTET* operator[](int raw) const;
 
 	// ajouter iterateurs :
 	// begin() end()
@@ -69,7 +72,7 @@ public:
 	bool load(const std::string& filename);
 	bool save(const std::string& filename);
 
-	ImagePGM get_plan(PLAN);
+	ImagePGM get_plan(PLAN) const;
 	void set_plan(PLAN, const ImagePGM& grey_image);
 
 	// ajouter iterateurs :
@@ -84,5 +87,14 @@ public:
 void set_plan_R(OCTET *image_data, const OCTET *plan_R, int taille_plan);
 void set_plan_G(OCTET *image_data, const OCTET *plan_G, int taille_plan);
 void set_plan_B(OCTET *image_data, const OCTET *plan_B, int taille_plan);
+
+void seuillage(ImagePGM& image, const std::vector<int>& seuils);
+
+std::vector<int> histo_grey(const ImagePGM& image);
+std::vector<std::array<int, 3> > histo_color(const ImagePPM& image);
+
+void print_histo_grey(std::vector<int> histo_grey);
+void print_histo_color(std::vector<std::array<int, 3> > histo_color);
+
 
 #endif

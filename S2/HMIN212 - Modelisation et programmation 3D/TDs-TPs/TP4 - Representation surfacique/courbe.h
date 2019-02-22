@@ -58,4 +58,11 @@ Vector3 rotate_around(const Vector3& axis, double angle);
 
 void draw_vect(const Point3& p, const Vector3& v);
 
+std::vector<std::vector<Point3> > facettes_cone(const Point3& line_start, const Point3& line_end, double rayon, size_t nb_meridiens);
+
+std::vector<std::vector<Point3> > facettes_sphere(const Point3& center, double radius, size_t meridiens, size_t paralleles);
+
+
+// TP5
+
 #endif

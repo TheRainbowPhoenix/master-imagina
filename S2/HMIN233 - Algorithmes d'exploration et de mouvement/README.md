@@ -149,3 +149,21 @@ quand on genere la liste des voisins on réorganise les noeuds avec merge nodes
 
 
 modification du A* possible en modifiant la puissance de la fonction de (cout de chemin)
+
+- Ajouter des poids sur le A*
+
+## Examen
+
+- meme choses
+- 2 parties
+theorie/cours
+pas de docs
+5 séances
+
+partie cours
+dessiner graphe exploration quels sont es noeuds executée
+qu'est ce que ça change quand on change les paramètres
+dessiner vecteur
+savoir ce qu'il se passe
+partie code netlogo
+

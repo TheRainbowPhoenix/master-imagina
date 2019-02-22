@@ -433,8 +433,9 @@ void render_scene() {
   glColor3f(0, 0, 1);
   
   vector<vector<Point3> > facettes;
-  facettes = facettes_cylindre(start, end, precision_courbe, precision_surface);
-  //facettes_cylindre(start, end, precision_courbe, precision_surface);
+  //facettes = facettes_cylindre(start, end, precision_courbe, precision_surface);
+  //facettes = facettes_cone(start, end, precision_courbe, precision_surface);
+  facettes = facettes_sphere(end, 2, precision_courbe, precision_courbe);
 
 
   if (print_grid)
@@ -452,9 +453,9 @@ void render_scene() {
   //draw_point(start);
   //draw_point(end);
   
-  double angle_x = axe_x * (M_PI / 180.0);
-  double angle_y = axe_y * (M_PI / 180.0);
-  double angle_z = axe_z * (M_PI / 180.0);
+  //double angle_x = axe_x * (M_PI / 180.0);
+  //double angle_y = axe_y * (M_PI / 180.0);
+  //double angle_z = axe_z * (M_PI / 180.0);
 
 /*  Point3 p = start;
 
@@ -475,7 +476,7 @@ void render_scene() {
   draw_line(p, p + z);
   draw_line(p, p + rot);
 */
-  std::cout << "angle_x : " << axe_x << ", angle_y: " << axe_y << ", angle_z: " << axe_z << "\n";
+  //std::cout << "angle_x : " << axe_x << ", angle_y: " << axe_y << ", angle_z: " << axe_z << "\n";
   
   /*
   for (auto& e : curve_controls)

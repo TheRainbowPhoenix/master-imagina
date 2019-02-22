@@ -282,35 +282,26 @@ std::vector<std::vector<Point3> > facettes_cylindre(const Point3& line_start, co
 
 	std::vector<std::vector<Point3> > facettes;
 
-	double angle = (360 / (double)nb_meridiens) * (M_PI / 180.0);
+	double angle = (M_PI * 2) / (double)nb_meridiens;
 	double length = (line_end - line_start).length();
 
-	Vector3 axis = (line_end - line_start).normalized();
-	//Vector3 perpendicular = rotate_around(axis, 90);
-
-	//axis.normalize();
-	//perpendicular.normalize();
+	//Vector3 axis = (line_end - line_start).normalized();
 	
-	for (size_t i = 0; i < nb_meridiens; ++i) {
+	for (size_t i = 0; i <= nb_meridiens; ++i) {
 		
 		facettes.push_back(std::vector<Point3>());
 		
 		double alpha = angle * i;
 		
-		Vector3 transform = rotate_around(axis, alpha);
+		//Vector3 transform = rotate_around(axis, alpha);
+		//Point3 p1 = line_start + transform;
+		//Point3 p2 = line_end + transform;
 		
-		//Point3 p1 = line_start + Vector3(rayon * cos(alpha), rayon * sin(alpha), -length/2);
-		//Point3 p2 = line_end + Vector3(rayon* cos(alpha), rayon * sin(alpha), length/2);
-		Point3 p1 = line_start + transform;
-		Point3 p2 = line_end + transform;
-
-		//Point3 p1 = Point3(rayon * cos(alpha), rayon * sin(alpha), -length/2) + Vector3(line_start);
-		//Point3 p2 = Point3(rayon * cos(alpha), rayon * sin(alpha), length/2) + Vector3(line_end);;
-		//Point3 start = line_start + translate * rayon;
-		//Point3 end = line_end + translate * rayon;
-
-		//std::cout << "start: " << start;
-		//std::cout << "end: " << end;
+		Point3 p1 = line_start + Vector3(rayon * cos(alpha), rayon * sin(alpha), -length/2);
+		Point3 p2 = line_end + Vector3(rayon* cos(alpha), rayon * sin(alpha), length/2);
+		
+		//std::swap(p1.x, p1.z);
+		//std::swap(p2.x, p2.z);
 
 		draw_point(p1);	
 		draw_point(p2);
@@ -325,16 +316,18 @@ std::vector<std::vector<Point3> > facettes_cylindre(const Point3& line_start, co
 void draw_facettes(const std::vector<std::vector<Point3> >& facettes) {
 	glBegin(GL_QUAD_STRIP); //	GL_QUAD_STRIP;
 	
-	for (size_t i = 0; i < facettes.size(); ++i) {
-		for (size_t j = 0; j < facettes[i].size() - 1; ++j) {
+	for (size_t i = 0; i < facettes.size() - 1; ++i) {
+		for (size_t j = 0; j < facettes[i].size(); ++j) {
 			glVertex3d(facettes[i][j].x, facettes[i][j].y, facettes[i][j].z);		
-			glVertex3d(facettes[i][j+1].x, facettes[i][j+1].y, facettes[i][j+1].z);
+			glVertex3d(facettes[i+1][j].x, facettes[i+1][j].y, facettes[i+1][j].z);
 		}
 	}
 
 	if (facettes.size() > 1){
-		glVertex3d(facettes[0][0].x, facettes[0][0].y, facettes[0][1].z);		
-		glVertex3d(facettes[0][1].x, facettes[0][1].y, facettes[0][1].z);
+		for (size_t j = 0; j < facettes[facettes.size() - 1].size(); ++j) {
+			glVertex3d(facettes[facettes.size() - 1][j].x, facettes[facettes.size() - 1][j].y, facettes[facettes.size() - 1][j].z);		
+			glVertex3d(facettes[0][j].x, facettes[0][j].y, facettes[0][j].z);
+		}
 	}
 
 	glEnd();
@@ -343,18 +336,22 @@ void draw_facettes(const std::vector<std::vector<Point3> >& facettes) {
 void draw_facettes_grid(const std::vector<std::vector<Point3> >& facettes) {
 	for (size_t i = 0; i < facettes.size() - 1; ++i) {
 		for (size_t j = 0; j < facettes[i].size() - 1; ++j) {
+			draw_line(facettes[i][j], facettes[i+1][j]);
 			draw_line(facettes[i][j], facettes[i][j+1]);
 
-			draw_line(facettes[i][j], facettes[i+1][j]);
 			draw_line(facettes[i][j+1], facettes[i+1][j+1]);
+			draw_line(facettes[i+1][j], facettes[i+1][j+1]);
 		}
 	}
 
 	if (facettes.size() > 1){
-		draw_line(facettes[facettes.size()-1][0], facettes[facettes.size()-1][1]);
+		for (size_t j = 0; j < facettes[facettes.size() - 1].size() - 1; ++j) {
+			draw_line(facettes[facettes.size() - 1][j], facettes[0][j]);
+			draw_line(facettes[facettes.size() - 1][j], facettes[facettes.size() - 1][j+1]);
 
-		draw_line(facettes[facettes.size()-1][0], facettes[0][0]);
-		draw_line(facettes[facettes.size()-1][1], facettes[0][1]);
+			draw_line(facettes[facettes.size() - 1][j+1], facettes[0][j+1]);
+			draw_line(facettes[0][j], facettes[0][j+1]);
+		}
 	}
 }
 
@@ -394,4 +391,96 @@ void draw_vect(const Point3& p, const Vector3& v) {
 	// Reset color
 	
 	glColor3f(current_color[0], current_color[1], current_color[2]);
+}
+
+std::vector<std::vector<Point3> > facettes_cone(const Point3& line_start, const Point3& line_end, double rayon, size_t nb_meridiens) {
+
+	std::vector<std::vector<Point3> > facettes;
+
+	double angle = (360 / (double)nb_meridiens) * (M_PI / 180.0);
+	double length = (line_end - line_start).length();
+
+	//Vector3 axis = (line_end - line_start).normalized();
+	
+	for (size_t i = 0; i < nb_meridiens; ++i) {
+		
+		facettes.push_back(std::vector<Point3>());
+		
+		double alpha = angle * i;
+		
+		//Vector3 transform = rotate_around(axis, alpha);
+		//Point3 p1 = line_start + transform;
+		//Point3 p2 = line_end + transform;
+		
+		Point3 p1 = line_start + Vector3(rayon * cos(alpha), rayon * sin(alpha), -length/2);
+		Point3 p2 = line_end;
+
+		std::swap(p1.x, p1.z);
+		std::swap(p2.x, p2.z);
+
+		draw_point(p1);	
+		draw_point(p2);
+		
+		facettes[i].push_back(p1);
+		facettes[i].push_back(p2);
+	}
+
+	return std::move(facettes);
+}
+
+std::vector<std::vector<Point3> > facettes_sphere(const Point3& center, double radius, size_t meridiens, size_t paralleles)  {
+
+	std::vector<std::vector<Point3> > facettes;
+
+	double angle_parallele = (M_PI * 2) / (double)paralleles;
+	double angle_meridien = M_PI / (double)meridiens;
+
+	for (size_t i = 0; i <= paralleles; ++i) {
+		
+		facettes.push_back(std::vector<Point3>());
+
+		double beta = angle_parallele * i;
+
+		for (size_t j = 0; j <= meridiens; ++j) {
+			
+			double alpha = (M_PI/2) - (angle_meridien * j);
+
+			//Point3 p = center + ( Vector3(cos(alpha), sin(alpha), 1) + Vector3(cos(beta), sin(beta)) ) * radius;
+			//Point3 p = center + Vector3(cos(beta)*cos(alpha), cos(beta) * sin(alpha), sin(beta)) * radius;
+			
+			Point3 p = center + Vector3(cos(alpha) * cos(beta), cos(alpha) * sin(beta), sin(alpha)) * radius;
+			std::swap(p.x, p.z);
+			//Point3 p = center + Vector3(radius, cos(beta), sin(alpha)) * radius;
+
+			draw_point(p);
+			//draw_point(p2);
+
+			facettes[i].push_back(p);
+		}
+	}
+
+	return std::move(facettes);
+}
+
+
+
+void draw_facettes_sphere(const std::vector<std::vector<Point3> >& facettes) {
+	
+	glBegin(GL_QUAD_STRIP);
+	
+	for (size_t i = 0; i < facettes.size(); ++i) {
+		for (size_t j = 0; j < facettes[i].size()-1; ++j) {
+			glVertex3d(facettes[i][j].x, facettes[i][j].y, facettes[i][j].z);		
+			glVertex3d(facettes[i][j+1].x, facettes[i][j+1].y, facettes[i][j+1].z);
+		}
+	}
+
+	if (facettes.size() > 1){
+		for (size_t j = 0; j < facettes[facettes.size()].size(); ++j) {
+			glVertex3d(facettes[facettes.size()-1][j].x, facettes[facettes.size()-1][j].y, facettes[facettes.size()-1][j].z);		
+			glVertex3d(facettes[0][j].x, facettes[0][j].y, facettes[0][j].z);
+		}
+	}
+
+	glEnd();
 }

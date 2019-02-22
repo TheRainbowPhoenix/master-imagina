@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
   //ImagePGM image_in;
   //image_in.load("../../images/01.pgm");
 
-  ImagePGM image_in;
+  ImagePPM image_in;
   cin >> image_in;
 
   if (!image_in.valid()) {
