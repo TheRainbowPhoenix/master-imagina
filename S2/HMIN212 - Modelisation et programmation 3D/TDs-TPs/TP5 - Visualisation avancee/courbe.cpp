@@ -449,10 +449,10 @@ std::vector<std::vector<Point3> > facettes_sphere(const Point3& center, double r
 			//Point3 p = center + Vector3(cos(beta)*cos(alpha), cos(beta) * sin(alpha), sin(beta)) * radius;
 			
 			Point3 p = center + Vector3(cos(alpha) * cos(beta), cos(alpha) * sin(beta), sin(alpha)) * radius;
-			std::swap(p.x, p.z);
+			//std::swap(p.x, p.z);
 			//Point3 p = center + Vector3(radius, cos(beta), sin(alpha)) * radius;
 
-			draw_point(p);
+			//draw_point(p);
 			//draw_point(p2);
 
 			facettes[i].push_back(p);
@@ -484,3 +484,38 @@ void draw_facettes_sphere(const std::vector<std::vector<Point3> >& facettes) {
 
 	glEnd();
 }
+
+/*
+std::vector<std::vector<Point3> > facettes_polygone(const Point3& center, double radius, size_t sides) {
+	std::vector<std::vector<Point3> > facettes;
+
+	double angle = (360 / (double)nb_meridiens) * (M_PI / 180.0);
+	double length = (line_end - line_start).length();
+
+	//Vector3 axis = (line_end - line_start).normalized();
+	
+	for (size_t i = 0; i < nb_meridiens; ++i) {
+		
+		facettes.push_back(std::vector<Point3>());
+		
+		double alpha = angle * i;
+		
+		//Vector3 transform = rotate_around(axis, alpha);
+		//Point3 p1 = line_start + transform;
+		//Point3 p2 = line_end + transform;
+		
+		Point3 p1 = line_start + Vector3(rayon * cos(alpha), rayon * sin(alpha), -length/2);
+		Point3 p2 = line_end;
+
+		std::swap(p1.x, p1.z);
+		std::swap(p2.x, p2.z);
+
+		draw_point(p1);	
+		draw_point(p2);
+		
+		facettes[i].push_back(p1);
+		facettes[i].push_back(p2);
+	}
+	return std::move(facettes);	
+}
+*/
