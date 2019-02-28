@@ -238,3 +238,18 @@ je m'occupe pas de qui lit ou ecrit dans quoi
 		- ShootTarget < [ENNEMI]
 		- AvoidTarget < [ENNEMI]
 
+- Gagner
+	- CaptureFlag
+		- CatchFlag
+			- AttractByTarget (EnnemiFlag)
+			- AvoidEnv
+		- BringBackFlag
+			- AttractByTarget (AllyBase)
+			- AvoidEnv
+	- BotherEnnemi
+		- Flocking
+
+# Variables 
+
+ratio ennemi allié dans champ de vision
+variable nous permettant de compter le nombre de signaux voisins

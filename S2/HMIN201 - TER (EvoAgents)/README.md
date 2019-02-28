@@ -20,3 +20,40 @@
 
 - [TER M1](http://www.lirmm.fr/~lafourcade/TERM1/index.php)
 - [François Suro - TER EvoAgent](https://www.lirmm.fr/~suro/TER2018_EVOAGENTS)
+
+
+EP
+	1er rdv : 
+		explication du professeur sur la hierarchie mind
+		application sur un exemple simple (GTO+Avoid)
+
+	2eme rdv :
+		comment concevoir une skill
+
+Tentative d'un design de skill simple : 
+	dans la semaine (details pour concevoir une skill)
+
+	3eme rdv :
+		comment concevoir une stratégie
+
+Determination des capacité necessaire pour les robots
+
+Tentative d'un design de hierarchie
+	dans la semaine conception d'une première hierarchie
+
+	4eme rdv : 
+		incrementation strat
+
+	5eme rdv :
+
+vacances
+
+departagement des skills à implementer
+
+decider d'une methode d'entrainement
+
+Entrainer l'agent sur le cluster
+
+Analyse tu comportement de l'agent entrainé
+
+reajustement si necessaire (boucle)
