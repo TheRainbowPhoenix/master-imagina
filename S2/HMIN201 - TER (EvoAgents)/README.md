@@ -57,3 +57,31 @@ Entrainer l'agent sur le cluster
 Analyse tu comportement de l'agent entrainé
 
 reajustement si necessaire (boucle)
+
+
+- Projet EvoAgent
+	- EP
+	- 
+	- SP : Strategie
+		- EP
+		- 
+	- SP : Skills
+		- EP
+		- Conception
+			Defensif
+			attaque
+			deplacement
+		- Programmation
+		- Test
+	- Integration
+	- Rapport
+	- Preparation de la soutenance
+
+
+but du ter : entrainement d'agent intelligents pouvant battre in stratégie codé
+
+
+Definition du jeux
+- regle
+- environnement
+- 

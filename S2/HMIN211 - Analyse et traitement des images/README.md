@@ -31,6 +31,13 @@
 		- [1) Interpretation](#1-interpretation)
 		- [2) Gradiant d'une image](#2-gradiant-dune-image)
 		- [3) Utilisation du gradient](#3-utilisation-du-gradient)
+- [Opérateurs dérivatifs du second ordre](#op%C3%A9rateurs-d%C3%A9rivatifs-du-second-ordre)
+	- [a) Laplacien sous forme discrète](#a-laplacien-sous-forme-discr%C3%A8te)
+	- [b) Filtres dérivatifs \(1er ordre, 2eme ordre\)](#b-filtres-d%C3%A9rivatifs-1er-ordre-2eme-ordre)
+		- [1) Filtre de dérivation double passe \(Sobel, hewit\)](#1-filtre-de-d%C3%A9rivation-double-passe-sobel-hewit)
+		- [2) Approximation du gradient](#2-approximation-du-gradient)
+		- [3) Filtre de renforcement](#3-filtre-de-renforcement)
+		- [4) Filtre pass haut](#4-filtre-pass-haut)
 
 <!-- /MarkdownTOC -->
 
@@ -45,6 +52,7 @@
 	- Examen 
 		- Question sur un article à lire
 		- Question de calcul de distance selon repère (0, 0) en haut à gauche
+		- Nouveauté : Même type d'exam avec en plus feuille mémo recto verso + question sur les presentations des autres
 
 ### Ressources [↺](#sommaire-)
 
@@ -331,7 +339,7 @@ Image : I(x, y) → gradiant vertical
 - Recherche des maximums locaux dans l'image du gradiant dans la direction de la phase
 - Seuillage par hystéresis (analogie chauffage)
 
-```	
+```
 si p(i,j) > T_h
 	alors maximum local
 si p(i,j) < T_b
@@ -347,8 +355,68 @@ si T_b < p(i,j) < T_h et au moins N(p(i,j))
 | Positif         | True positif   | False positif |
 | Negatif         | False negative | True negative |
 
-
-
 filter({1/9, 1/9, 1/9,
 		1/9, 1/9, 1/9,
 		1/9, 1/9, 1/9});
+
+## Opérateurs dérivatifs du second ordre
+
+dérivé premiere → valeur maximale
+dérivé seconde → valeur du point d'inflexion
+
+### a) Laplacien sous forme discrète
+
+\(\begin{bmatrix} 0 & -1 & 0\\ -1 & 4 & -1\\ 0 & -1 & 0 \end{bmatrix}\)
+
+**Utilisation** :
+
+- Filtrage de l'image : FPB
+- Pour chaque point : gradient → Norme, Phase
+- Calcul la carte du laplacien
+- Carte du laplacien : 
+	- Rechercher les passages par zéro dans la direction de la phase du gradient
+	- Affectation de la norme du gradiant au passage par zéro
+- Seuillage par hysérésis
+
+### b) Filtres dérivatifs (1er ordre, 2eme ordre)
+
+#### 1) Filtre de dérivation double passe (Sobel, hewit)
+
+\(I_j[i,j] = h_j[i,j] * I[i,j]\)
+
+\(I_i[i,j] = h_i[i,j] * I[i,j]\)
+
+\(h_j = { \begin{bmatrix} 1 & 0 & -1\\ C & 0 & -C\\ 1 & 0 & -1 \end{bmatrix} }\)
+
+\(h_i = { \begin{bmatrix} 1 & C & 1\\ 0 & 0 & 0\\ -1 & -C & -1 \end{bmatrix} }\)
+
+si C = 1 filtre de sobel, si c = 2 filtre de hewit
+
+#### 2) Approximation du gradient
+
+\(\begin{bmatrix} -1 & 1 \end{bmatrix}\) \(\begin{bmatrix} -1 & 2 & -1 \end{bmatrix}\) \(\begin{bmatrix} -1 & 0 & 1 \end{bmatrix}\)
+
+\(\begin{bmatrix} -1 \\ 1 \end{bmatrix}\) \(\begin{bmatrix} -1 \\ 2 \\ -1 \end{bmatrix}\) \(\begin{bmatrix} -1 \\ 0 \\ 1 \end{bmatrix}\)
+
+\(\begin{bmatrix} 0 & 1 & 0\\ 1 & 0 & -1\\ 0 & -1 & 0 \end{bmatrix}\)
+
+#### 3) Filtre de renforcement
+
+FPB : ∑ coefs = 1 
+
+\(\begin{bmatrix} 0 & -1 & 0\\ -1 & 5 & -1\\ 0 & -1 & 0 \end{bmatrix}\)
+
+#### 4) Filtre pass haut
+
+FPH : ∑ coefs = 0 
+
+\(\begin{bmatrix} -1 & -1 & -1\\ -1 & 8 & -1\\ -1 & -1 & -1 \end{bmatrix}\)
+
+ecart type → 0
+
+\(p(x) = { { 1 \over \sqrt{2π}θ } e^{- (x-m)^2 \over 2θ^2 } }\)
+
+m : valeur moyenne → 0
+
+\(p(x) = { { 1 \over \sqrt{2π}θ } e^{- x^2 \over 2θ^2 } }\)
+
