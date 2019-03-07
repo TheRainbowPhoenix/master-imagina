@@ -38,6 +38,7 @@
 		- [2) Approximation du gradient](#2-approximation-du-gradient)
 		- [3) Filtre de renforcement](#3-filtre-de-renforcement)
 		- [4) Filtre pass haut](#4-filtre-pass-haut)
+	- [Projet](#projet)
 
 <!-- /MarkdownTOC -->
 
@@ -420,3 +421,43 @@ m : valeur moyenne → 0
 
 \(p(x) = { { 1 \over \sqrt{2π}θ } e^{- x^2 \over 2θ^2 } }\)
 
+
+### Projet 
+
+avoir demarche recherche
+
+expliquer les choix
+
+pourquoi ça marche ou pas
+
+ne pas ce contenter du sujet donné
+
+1. Split and merge
+2. Inpainting
+
+
+3. Mosaïque
+4. biometrie / Eigenfaces
+5. Extraction de points caractériqtiques
+6. Bibliothèque de traitement d'image
+7. Fx (filtre un peu marrant)
+
+- 01/03 : lancement 
+- 05/04 : point d'avancement
+- 26/04 : présentation (~10 min + question)
+
+![](http://www.lgi2p.mines-ales.fr/~montesin/CoursPDF/corners_2010_04_15.pdf)
+
+
+- implementation d'un detecteur de points
+
+- correspondance de points
+  - detecter les points interressent (FAST, HARRIS(variation rapide d'intensité))
+  - les mettres en relation
+
+- Comparaison d'image
+	- test avec des spécification
+
+- essayer de reconstruire une image en 3D avec plusieurs image 2D
+	- tester avec 2 images différentes
+	- puis une multitudes

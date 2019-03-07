@@ -195,6 +195,35 @@ void ImagePGM::map(void (*func)(const OCTET&)) const {
 		func(o);
 }
 
+ImagePGM ImagePGM::filter(std::array<double, 9> f) {
+
+	
+	ImagePGM out(this->width(), this->height());
+
+	long pixel_value = 0;
+
+	for (size_t i = 1; i < this->height() - 1; ++i) {
+
+		for (size_t j = 1; j < this->width() - 1; ++j) {
+
+			pixel_value += (*this)(i-1, j-1);
+			pixel_value += (*this)(i-1, j);
+			pixel_value += (*this)(i-1, j+1);
+
+			pixel_value += (*this)(i, j+1);
+			pixel_value += (*this)(i, j);
+			pixel_value += (*this)(i, j-1);
+
+			pixel_value += (*this)(i+1, j-1);
+			pixel_value += (*this)(i+1, j);
+			pixel_value += (*this)(i+1, j+1);
+		}
+	}
+
+	return std::move(out);
+}
+
+
 ////////////////////////////////// ImagePPM ////////////////////////////////////////
 
 ImagePPM::ImagePPM() : ImageBase(), m_red(), m_green(), m_blue() {}

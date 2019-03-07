@@ -82,6 +82,8 @@ public:
 
 	void map(void (*func)(OCTET&));
 	void map(void (*func)(const OCTET&)) const;
+	
+	ImagePGM filter(std::array<double, 9> f);
 
 protected:
 

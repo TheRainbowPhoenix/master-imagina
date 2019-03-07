@@ -14,7 +14,7 @@
 - Note CC : 
 	- TP moodle (auto-correction) 14/02
 	- Planning previsionnel du TER 01/03
-	- Méta-rapport sur la gestion du TER (10 pages) ??
+	- Méta-rapport sur la gestion du TER (10 pages) 22/05
 	- Oral de la soutenance de TER (fin mai)
 
 ### Ressources [↺](#sommaire-)
