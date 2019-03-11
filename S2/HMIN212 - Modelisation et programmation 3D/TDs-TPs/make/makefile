@@ -2,7 +2,7 @@
 
 CC       = g++
 CC_FLAGS = -Wall -Wextra
-LD_FLAGS = -lglut -lGL -lGLU -lm
+LD_FLAGS = -lncursesw -lglut -lGL -lGLU -lm
 
 # Dossier de sortie pour les fichiers objets / binaires.
 
@@ -12,7 +12,7 @@ BIN_DIR = bin
 # Extension de sortie pour les fichiers objets / binaires (avec un point avant l'extension).
 
 OBJ_EXT = .o
-BIN_EXT = 
+BIN_EXT = .exe
 
 ##### RECHERCHE RECURSIVE DES SOURCES / HEADERS / LIBRARIES A TRAITER
 
@@ -24,9 +24,9 @@ LIB_SEARCH_EXTS = lib so a
 
 # Dossiers de depart pour la recherche (laisser vide pour ne pas faire de recherche).
 
-SRC_SEARCH_DIRS = . ../lib
-INC_SEARCH_DIRS = . ../lib
-LIB_SEARCH_DIRS = . ../lib
+SRC_SEARCH_DIRS = . ../lib\ lol\ spaces
+INC_SEARCH_DIRS = . ../lib\ lol\ spaces
+LIB_SEARCH_DIRS = . ../lib\ lol\ spaces
 
 ##### FICHIERS SOURCES / HEADERS / OBJETS / LIBRARIES A TRAITER EN PLUS DE LA RECHERCHE RECURSIVE
 
@@ -235,9 +235,6 @@ show-dependencies:
 
 show-version:
 	@echo 1.0
-
-auto-compile:
-	while true; do $(MAKE) show-sources show-headers --no-print-directory | entr -d $(MAKE) -j --no-print-directory; done
 
 # Fonctions permettant de tester si une evaluation renvoie bien le resultat attendu.
 

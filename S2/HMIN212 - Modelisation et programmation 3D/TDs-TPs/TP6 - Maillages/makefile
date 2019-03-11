@@ -2,21 +2,21 @@
 
 CC       = g++
 CC_FLAGS = -Wall -Wextra
-LD_FLAGS = -lncursesw
+LD_FLAGS = -lglut -lGL -lGLU -lm
 
 # Dossier de sortie pour les fichiers objets / binaires.
 
 OBJ_DIR = obj
 BIN_DIR = bin
 
-# Extension de sortie pour les fichiers objets / binaires.
+# Extension de sortie pour les fichiers objets / binaires (avec un point avant l'extension).
 
 OBJ_EXT = .o
 BIN_EXT = 
 
 ##### RECHERCHE RECURSIVE DES SOURCES / HEADERS / LIBRARIES A TRAITER
 
-# Extensions de fichiers à chercher.
+# Extensions de fichiers à chercher (sans point avant les extension).
 
 SRC_SEARCH_EXTS = c cc cp cpp c++ cxx
 INC_SEARCH_EXTS = h hh hp hpp h++ hxx
@@ -24,9 +24,9 @@ LIB_SEARCH_EXTS = lib so a
 
 # Dossiers de depart pour la recherche (laisser vide pour ne pas faire de recherche).
 
-SRC_SEARCH_DIRS = .
-INC_SEARCH_DIRS = .
-LIB_SEARCH_DIRS = .
+SRC_SEARCH_DIRS = . ../lib
+INC_SEARCH_DIRS = . ../lib
+LIB_SEARCH_DIRS = . ../lib
 
 ##### FICHIERS SOURCES / HEADERS / OBJETS / LIBRARIES A TRAITER EN PLUS DE LA RECHERCHE RECURSIVE
 
@@ -60,6 +60,10 @@ EXCLUDES     =
 
 ############################## PARTIE NON MODIFIABLE ##############################
 
+# Make ne peut pas gerer les noms avec des espaces, donc on remplace les espaces par autre chose puis une fois qu'on a fait le traitement on rajoute les espaces
+
+SPACE_REPLACER = §20!
+
 ##### DEFINITIONS DE FONCTIONS
 
 # Renvoie la tete / queue d'une liste passée en paramètre.
@@ -73,37 +77,46 @@ by-ext = $(if $(strip $(1)),$(shell echo "-iname '*.$(call head,$(1))'"; for i i
 
 # Genere une liste de fichiers à partir d'une liste de dossiers et une liste d'extensions (non vide).
 
-find-by-ext = $(if $(and $(strip $(1)),$(strip $(2))),$(shell realpath --relative-base . $(shell find $(1) $(call by-ext,$(2))) 2> /dev/null),)
+find-by-ext = $(if $(and $(strip $(1)),$(strip $(2))),$(shell realpath --relative-base . $(shell find $(1) $(call by-ext,$(2)) | sed 's/ /\\ /g') | sed 's/ /$(SPACE_REPLACER)/g' 2> /dev/null),)
 
 # Genere une liste de fichiers objets à partir d'une liste de fichiers binaires et inversement.
 
 attach-tail-with = $(if $(call head,$(2)),$(1)$(call head,$(2))$(call attach-tail-with,$(1),$(call tail,$(2)))) 
 attach-with = $(call head,$(2))$(call attach-tail-with,$(1),$(call tail,$(2)))
 
+src-to-obj = $(addsuffix $(OBJ_EXT),$(basename $(addprefix $(OBJ_DIR)/,$(1))))
 bin-to-obj = $(addsuffix $(OBJ_EXT),$(basename $(patsubst $(BIN_DIR)/%,$(OBJ_DIR)/%, $(1))))
 obj-to-bin = $(addsuffix $(BIN_EXT),$(basename $(patsubst $(OBJ_DIR)/%,$(BIN_DIR)/%, $(1))))
 bin-to-dep = $(addsuffix .d,$(basename $(patsubst $(BIN_DIR)/%,$(OBJ_DIR)/%, $(1))))
 
-headers-dep = $(shell cat $(call bin-to-dep,$(1)) | sed -E -n '/.($(call attach-with,|,$(INC_SEARCH_EXTS))):$$/p' | sed s/:// 2> /dev/null)
+headers-dep = $(shell cat $(call escape-space-char,$(call bin-to-dep,$(1))) | sed -E -n '/.($(call attach-with,|,$(INC_SEARCH_EXTS))):$$/p' | sed s/:// 2> /dev/null | sed 's/\\ /$(SPACE_REPLACER)/g' )
 maximum-possible-objects-dep = $(addprefix $(OBJ_DIR)/,$(addsuffix $(OBJ_EXT),$(basename $(call headers-dep,$(1)))))
 objects-dep = $(call bin-to-obj,$(1)) $(filter $(call maximum-possible-objects-dep,$(1)),$(OBJS_WITHOUT_MAIN))
 
+escape-space-char = $(shell echo '$(1)' | sed 's/$(SPACE_REPLACER)/\\ /g')
+restore-space-char = $(shell echo '$(1)' | sed 's/$(SPACE_REPLACER)/ /g')
+
+escape-space-directly = $(shell echo '$(1)' | sed 's/ /\\ /g')
+
+
+restore-spaces = sed 's/$(SPACE_REPLACER)/ /g'
+replace-spaces = sed 's/ /$(SPACE_REPLACER)/g'
 # Définition : template de règles pour la compilation, genere un objet en fonction de sa source correspondante.
 
 define template-rule-compile
-$$(OBJ_DIR)/%$(OBJ_EXT): %.$(1)
-	$$(CC) $$(CC_FLAGS) $$(INC_FLAGS) -c $$< -o $$@
-	@if [ -n "`nm "$$@" | grep -w 'main'`" ]; then \
-		if [ ! -f $(OBJS_WITH_MAIN_LOG_FILE) ] || [ ! -n "`cat $(OBJS_WITH_MAIN_LOG_FILE) | grep -w '$$@'`"  ]; then \
+$(call escape-space-char,$(call src-to-obj,$(1))): $(call escape-space-char,$(1))
+	$$(CC) $$(CC_FLAGS) $(call escape-space-char,$(INC_FLAGS)) -c $$(call escape-space-directly,$$<) -o $$(call escape-space-directly,$$@)
+	@if [ -n "`nm $$(call escape-space-directly,$$@) | grep -w 'main'`" ]; then \
+		if [ ! -f $(OBJS_WITH_MAIN_LOG_FILE) ] || [ ! -n "`cat $(OBJS_WITH_MAIN_LOG_FILE) | grep -w $$(call escape-space-directly,$$@)`"  ]; then \
 			echo '$$@' >> $(OBJS_WITH_MAIN_LOG_FILE); \
 		fi; \
 	else \
-		if [ -f $(OBJS_WITH_MAIN_LOG_FILE) ] && [ -n "`cat $(OBJS_WITH_MAIN_LOG_FILE) | grep -w '$$@'`"  ]; then \
-			sed -i '\ $$@  d' $(OBJS_WITH_MAIN_LOG_FILE); \
+		if [ -f $(OBJS_WITH_MAIN_LOG_FILE) ] && [ -n "`cat $(OBJS_WITH_MAIN_LOG_FILE) | grep -w $$(call escape-space-directly,$$@)`"  ]; then \
+			sed -i '\ $$(call escape-space-directly,$$@)  d' $(OBJS_WITH_MAIN_LOG_FILE); \
 		fi; \
-		if [ -f $$(call obj-to-bin, $$@) ]; then \
+		if [ -f $$(call escape-space-directly,$$(call obj-to-bin,$$@)) ]; then \
 			echo suppression du fichier...; \
-			rm $$(call obj-to-bin, $$@); \
+			rm $$(call escape-space-directly,$$(call obj-to-bin,$$@)); \
 		fi; \
 	fi
 endef
@@ -111,8 +124,8 @@ endef
 # Définition : template de règles pour la construction des binaires, genere un binaire en fonctions de ses dépendances d'objets.
 
 define template-rule-link
-$(1): $(call objects-dep,$(1))
-	$$(CC) -o $$@ $(call objects-dep,$(1)) $$(LIBS) $$(LD_EXTRAS) $$(LD_FLAGS)
+$(call escape-space-char,$(1)): $(call escape-space-char,$(call objects-dep,$(1)))
+	$$(CC) -o $$(call escape-space-directly,$$@) $(call escape-space-char,$(call objects-dep,$(1))) $$(LIBS) $$(LD_EXTRAS) $$(LD_FLAGS)
 endef
 
 # Detection des sources, includes et libraries selon leurs dossiers de recherche (sort enlève les doublons).
@@ -141,7 +154,7 @@ OBJS_WITH_MAIN_LOG_FILE := $(OBJ_DIR)/.main.log
 
 # Separations des objets en deux categories
 
-OBJS_WITH_MAIN    := $(shell cat $(OBJS_WITH_MAIN_LOG_FILE) 2> /dev/null)
+OBJS_WITH_MAIN    := $(shell cat $(OBJS_WITH_MAIN_LOG_FILE) | $(replace-spaces) 2> /dev/null)
 OBJS_WITHOUT_MAIN := $(filter-out $(OBJS_WITH_MAIN),$(OBJS))
 
 # Fichiers binaires à construire.
@@ -175,16 +188,16 @@ release: update-and-build-bins
 update-and-build-bins: $(OBJS_WITH_MAIN_LOG_FILE)
 	@$(MAKE) build-bins --no-print-directory | sed 's/\[1\]//'
 
-$(OBJS_WITH_MAIN_LOG_FILE): | $(PREREQ_OBJ_DIRS) $(OBJS)
+$(OBJS_WITH_MAIN_LOG_FILE): | $(call escape-space-char,$(PREREQ_OBJ_DIRS) $(OBJS))
 
-build-bins: | $(PREREQ_BIN_DIRS) $(BINS)
+build-bins: | $(call escape-space-char,$(PREREQ_BIN_DIRS) $(BINS))
 
-$(PREREQ_DIRS):
-	mkdir -p $@
+$(call escape-space-char,$(PREREQ_DIRS)):
+	mkdir -p $(call escape-space-directly,$@)
 
 # Genere les règles de compilation en fonction des extensions de sources definis.
 
-$(foreach EXT, $(SRC_SEARCH_EXTS), $(eval $(call template-rule-compile,$(EXT))))
+$(foreach SRC, $(SRCS), $(eval $(call template-rule-compile,$(SRC))))
 
 # Genere les règles d'édition de liens en fonction des binaires detectés
 
@@ -196,26 +209,35 @@ clean:
 clean-all:
 	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
+show-dirs:
+	@printf "$(call attach-with,\\n,$(PREREQ_DIRS))\n" | $(restore-spaces)
+
 show-sources:
-	@echo $(SRCS)
+	@printf "$(call attach-with,\\n,$(SRCS))\n" | $(restore-spaces)
 
 show-headers:
-	@echo $(INCS)
+	@printf "$(call attach-with,\\n,$(INCS))\n" | $(restore-spaces)
 
 show-objects:
-	@echo $(OBJS)
+	@printf "$(call attach-with,\\n,$(OBJS))\n" | $(restore-spaces)
 
 show-objects-with-main:
-	@echo $(OBJS_WITH_MAIN)
+	@printf "$(call attach-with,\\n,$(OBJS_WITH_MAIN))\n" | $(restore-spaces)
 
 show-objects-without-main:
-	@echo $(OBJS_WITHOUT_MAIN)
+	@printf "$(call attach-with,\\n,$(OBJS_WITHOUT_MAIN))\n" | $(restore-spaces)
 
 show-binaries:
-	@echo $(BINS)
+	@printf "$(call attach-with,\\n,$(BINS))\n" | $(restore-spaces)
+
+show-dependencies:
+	@printf "$(call attach-with,\\n,$(call objects-dep,$(call head,$(BIN)))) | $(restore-spaces)
 
 show-version:
 	@echo 1.0
+
+auto-compile:
+	while true; do $(MAKE) show-sources show-headers --no-print-directory | entr -d $(MAKE) -j --no-print-directory; done
 
 # Fonctions permettant de tester si une evaluation renvoie bien le resultat attendu.
 
@@ -277,8 +299,13 @@ test-all:
 
 # Inclusion des fichiers de dépendances des headers généré durant la compilation.
 
--include $(OBJS:%$(OBJ_EXT)=%.d)
+-include $(call escape-space-char,$(OBJS:%$(OBJ_EXT)=%.d))
 
 ### AMELIORATIONS ET POSSIBLE PROBLÈMES
 
 # - La regle show-binaries n'affichera pas de resultat si on supprime le fichier .main.log
+# - Possibilité que la commande sed block si elle ne peut pas lire un flux d'entrée
+# - problème quand realpath est vide
+# - problème si le nom chemin d'un fichier de sous-arboressence (relatif) à le meme chemin qu'un fichier de sur arborescence (absolue) (faut vraiment le faire exprès)
+# 	- potentielement resolu en passant tout en absolu mais ça devient chiant d'acceder aux fichiers après.
+# 	- les binaires ne doivent pas avoir le meme nom qu'un dossier (realisable en ajoutant une extension au binaire)

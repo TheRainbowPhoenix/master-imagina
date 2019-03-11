@@ -16,6 +16,7 @@
 #include <unistd.h>
 
 
+
 /* Dans les salles de TP, vous avez généralement accès aux glut dans C:\Dev. Si ce n'est pas le cas, téléchargez les .h .lib ...
 Vous pouvez ensuite y faire référence en spécifiant le chemin dans visual. Vous utiliserez alors #include <glut.h>. 
 Si vous mettez glut dans le répertoire courant, on aura alors #include "glut.h" 
@@ -522,6 +523,7 @@ void load_house_tex(GLuint* textures) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
   }
 
   BYTE* porte_img = load_tga(const_cast<char*>("textures/facade.tga"), &width, &height);
@@ -538,6 +540,7 @@ void load_house_tex(GLuint* textures) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
   }
 
   BYTE* toit_img = load_tga(const_cast<char*>("textures/toit.tga"), &width, &height);
@@ -554,7 +557,14 @@ void load_house_tex(GLuint* textures) {
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    // glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
   }
+}
+
+Vector3 normal(const Point3& A, const Point3& B, const Point3& C) {
+  Vector3 v1 = B - A;
+  Vector3 v2 = C - A;
+  return v1.cross(v2);
 }
 
 void render_scene() {
