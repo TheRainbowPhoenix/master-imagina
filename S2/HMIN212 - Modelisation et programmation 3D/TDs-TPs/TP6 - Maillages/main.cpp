@@ -25,6 +25,8 @@ using namespace std;
 #define KEY_SPACE 32
 #define KEY_ENTR 13
 
+#define ORTHO 15.0
+
 // PROGRAM VARIABLES
 
 size_t FRAMES = 0;
@@ -79,7 +81,7 @@ void windowReshape(int width, int height) {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	glOrtho(-15.0, 15.0, -15.0, 15.0, -15.0, 15.0);
+	glOrtho(-ORTHO, ORTHO, -ORTHO, ORTHO, -ORTHO, ORTHO);
 
 	glMatrixMode(GL_MODELVIEW);
 }
@@ -211,11 +213,11 @@ void initGL() {
 	glEnable(GL_COLOR_MATERIAL); // Active les couleurs
 	glEnable(GL_CULL_FACE);
 
-	//glCullFace(GL_BACK);
-	//glColor3d(0, 0, 1);
+	// glCullFace(GL_BACK);
+	// glColor3d(0, 0, 1);
 
-	//glCullFace(GL_FRONT);
-	//glColor3d(1, 0, 0);
+	// glCullFace(GL_FRONT);
+	// glColor3d(1, 0, 0);
 	
 	glEnable(GL_LIGHTING);    // Active l'éclairage met tout en noir par defaut
 	glEnable(GL_LIGHT0);
@@ -230,31 +232,6 @@ void initGL() {
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
 
 	// glPolygonMode(GL_FRONT, GL_LINE);
-
-	// float light0Diff[] = {1.0, 0.2, 0.2, 1.0}; 
-	// float light0Spec[] = {1.0, 0.2, 0.2, 1.0}; 
-	// float light0Amb[]  = {0.5, 0.5, 0.5, 1.0};
-
-	// float matDiff[] = {1.0, 1.0, 1.0, 1.0}; 
-	// float matSpec[] = {1.0, 1.0, 1.0, 1.0}; 
-	// float matAmb[]  = {1.0, 1.0, 1.0, 1.0}; 
-
-	// float matShininess[] = {5.0};
-
-	// glLightfv(GL_LIGHT0, GL_POSITION, light0Pos);
-
-	// glLightfv(GL_LIGHT0, GL_DIFFUSE, light0Diff);
-	// glLightfv(GL_LIGHT0, GL_SPECULAR, light0Spec);
-	// glLightfv(GL_LIGHT0, GL_AMBIENT, light0Amb);
-
-	// glMaterialfv(GL_FRONT, GL_DIFFUSE, matDiff);
-	// glMaterialfv(GL_FRONT, GL_SPECULAR, matSpec);
-	// glMaterialfv(GL_FRONT, GL_AMBIENT, matAmb);
-
-	// glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);
-
-	// GLfloat globalAmbient[] = { 0.2, 0.2, 0.2, 1.0 };
-	// glLightModelfv( GL_LIGHT_MODEL_AMBIENT, globalAmbient );
 }
 
 
@@ -264,6 +241,9 @@ int nb_aretes = 0;
 
 vector<Vector3> points;
 vector<Vector3> aretes;
+
+// float (*points_data)[3];
+// float (*aretes_data)[3];
 
 void initScene() {
 
@@ -285,22 +265,19 @@ void initScene() {
 		cin >> nb_cotes;
 		cin >> aretes[i];
 	}
-}
 
+	// glEnableClientState(GL_VERTEX_ARRAY);
+	// glEnableClientState(GL_NORMAL_ARRAY);
+
+	// glVertexPointer(3, GL_FLOAT, 0, points);
+	// glNormalPointer(GL_FLOAT, 0, normals);
+}
 
 void cameraOrbitAround(const Point3& target) {
 
   Vector3 pos = Vector3(sin(glutGet(GLUT_ELAPSED_TIME)/1000.0), 1, cos(glutGet(GLUT_ELAPSED_TIME)/1000.0));
 
   gluLookAt(pos.x, pos.y, pos.z, target.x, target.y, target.z, 0, 1, 0);
-}
-
-void cameraControlWithMouse() {
-	if (left_button_pressed) {
-		//camera_current_pos += (last_mouse_pos - current_mouse_pos);
-	}
-		Vector3 pos = camera_current_pos;
-  		gluLookAt(pos.x, pos.y, pos.z, 0, 0, 0, 0, 1, 0);
 }
 
 Vector3 normal(const Vector3& A, const Vector3& B, const Vector3& C) {
@@ -311,13 +288,17 @@ Vector3 normal(const Vector3& A, const Vector3& B, const Vector3& C) {
 
 void renderScene() {
 
+	// GESTION DE LA CAMERA
+
 	glOrtho(-gl_ortho_size, gl_ortho_size, -gl_ortho_size, gl_ortho_size, gl_ortho_size, -gl_ortho_size);
 	glRotatef(vert_angle, 1, 0, 0);
 	glRotatef(horiz_angle, 0, 1, 0);
 
+	// GESTION DES LUMIÈRES
+
 	glPointSize(5);
 
-	float radius = 15;
+	float radius = ORTHO * (gl_ortho_size);
 
 	light0Pos[0] = sin(glutGet(GLUT_ELAPSED_TIME)/1000.0) * radius;
 	light0Pos[1] = 1 * radius / 5;
@@ -327,8 +308,8 @@ void renderScene() {
 		glVertex3fv(light0Pos);
 	glEnd();
 
-	float light0Diff[] = {1.0, 0.2, 0.2, 1.0}; 
-	float light0Spec[] = {1.0, 0.2, 0.2, 1.0}; 
+	float light0Diff[] = {1.0, 0.2, 0.2, 1.0};
+	float light0Spec[] = {1.0, 0.2, 0.2, 1.0};
 	float light0Amb[]  = {0.5, 0.5, 0.5, 1.0};
 
 	float matDiff[] = {1.0, 1.0, 1.0, 1.0}; 
@@ -349,6 +330,8 @@ void renderScene() {
 
 	glMaterialfv(GL_FRONT, GL_SHININESS, matShininess);
 
+	// GESTION DES DESSINS
+
 	glBegin(GL_TRIANGLES);
 
 	glColor3d(0, 1, 0);
@@ -364,48 +347,4 @@ void renderScene() {
 	}
 
 	glEnd();
-
-
-
-/*
-	glBegin(GL_QUADS);
-
-	//1 face
-	glColor3d(1,0,0);glVertex3i(1,1,1);
-	glColor3d(0,1,0);glVertex3i(1,-1,1);
-	glColor3d(0,0,1);glVertex3i(-1,-1,1);
-	glColor3d(1,0,1);glVertex3i(-1,1,1);
-
-	//2 faces
-	glColor3d(1,1,0);glVertex3i(1,1,-1);
-	glColor3d(0,1,1);glVertex3i(1,-1,-1);
-	glColor3d(1,0,0);glVertex3i(-1,-1,-1);
-	glColor3d(1,1,1);glVertex3i(-1,1,-1);
-
-	//3 faces
-	glColor3d(1,0,0);glVertex3i(1,1,1);
-	glColor3d(0,1,0);glVertex3i(1,-1,1);
-	glColor3d(0,1,1);glVertex3i(1,-1,-1);
-	glColor3d(1,1,0);glVertex3i(1,1,-1);
-
-	//4 faces
-	glColor3d(1,0,1);glVertex3i(-1,1,1);
-	glColor3d(0,0,1);glVertex3i(-1,-1,1);
-	glColor3d(1,0,0);glVertex3i(-1,-1,-1);
-	glColor3d(1,1,1);glVertex3i(-1,1,-1);
-
-	//5 faces
-	glColor3d(1,1,1);glVertex3i(-1,1,-1);
-	glColor3d(1,0,1);glVertex3i(-1,1,1);
-	glColor3d(1,0,0);glVertex3i(1,1,1);
-	glColor3d(1,1,0);glVertex3i(1,1,-1);
-
-	//6 faces
-	glColor3d(1,0,0);glVertex3i(-1,-1,-1);
-	glColor3d(0,0,1);glVertex3i(-1,-1,1);
-	glColor3d(0,1,0);glVertex3i(1,-1,1);
-	glColor3d(0,1,1);glVertex3i(1,-1,-1);
-
-	glEnd();
-*/
 }

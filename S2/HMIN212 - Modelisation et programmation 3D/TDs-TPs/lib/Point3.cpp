@@ -49,6 +49,10 @@ Point3::operator Vector3() const{
 	return Vector3(x, y, z);
 }
 
+Point3::operator double*() {
+	return &x;
+}
+
 bool operator==(const Point3& left, const Point3& right){
 	return (left.x == right.x) && (left.y == right.y) && (left.z == right.z);
 }

@@ -50,6 +50,10 @@ Vector3::operator Point3() const {
 	return Point3(x, y, z);
 }
 
+Vector3::operator double*() {
+	return &x;
+}
+
 double Vector3::dot(const Vector3& left, const Vector3& right){
 	return (left.x * right.x) + (left.y * right.y) + (left.z * right.z); 
 }

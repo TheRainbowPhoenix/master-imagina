@@ -2,9 +2,33 @@
 
 ## Sommaire [↺](#sommaire-)
 
-- [Informations](#informations-)
-  - [Examens](#examens-)
-  - [Ressources](#ressources-)
+<!-- MarkdownTOC autolink=true -->
+
+- [Informations ↺](#informations-%E2%86%BA)
+	- [Examens ↺](#examens-%E2%86%BA)
+	- [Ressources ↺](#ressources-%E2%86%BA)
+- [Algorithmes géométriques](#algorithmes-g%C3%A9om%C3%A9triques)
+	- [Applications linéaires](#applications-lin%C3%A9aires)
+- [TD-TP-4 Exercice 2](#td-tp-4-exercice-2)
+	- [Applications affines](#applications-affines)
+	- [Transformations bifocales](#transformations-bifocales)
+	- [Transformations fisheye](#transformations-fisheye)
+- [Géometrie discrete](#g%C3%A9ometrie-discrete)
+- [Trioker](#trioker)
+- [Géométrie discrete](#g%C3%A9om%C3%A9trie-discrete)
+	- [Notion de distance](#notion-de-distance)
+		- [Axiome des distances](#axiome-des-distances)
+		- [Distance Hausdorff](#distance-hausdorff)
+		- [Norme](#norme)
+	- [TD - Les masques de Chamfrein](#td---les-masques-de-chamfrein)
+		- [Exercice 1](#exercice-1)
+		- [Exercice 2](#exercice-2)
+		- [Exercice 3](#exercice-3)
+		- [Exercice 4](#exercice-4)
+		- [Exercice 5](#exercice-5)
+
+<!-- /MarkdownTOC -->
+
 
 ## Informations [↺](#sommaire-)
 
@@ -83,3 +107,61 @@ toute application linéaire à une représenation par une matrice
 	- rotateLeft()
 	- rotateRight()
 	- invert()
+
+## Géométrie discrete
+
+### Notion de distance
+
+\(d_2(x, y) = \sqrt{ (x_1 - y_1)² + (x_2 - y_2)² }\)
+
+#### Axiome des distances
+
+1. Positive \(∀ p, q ∈ E, d(p, q) ≥ 0\)\)
+2. Definie \(∀ p, q ∈ E, d'p, q) = 0 ⇔ p = q\)
+3. Symétrique \(∀ p, q ∈ E, d(p, q) = d(q, p)\)
+4. Triangulaire \(∀ p, q ∈ E, d(p, q) ≤ d(p, r) + d(r, q)\)
+
+#### Distance Hausdorff
+
+\(d(p, X) = min(d(p, q) : q ∈ X))\)
+
+\(Hd(X, Y) = max(max(d(p, Y) : p ∈ X), max(d(p, X) : p ∈ Y))\)
+
+#### Norme
+
+1. Positive : \(∀ x ∈ E, g(x) ≥ 0\)\)
+2. Definie : \(∀ x ∈ E, g(x) = 0 ⇔ x = q\)
+3. Triangulaire : \(∀ x, y ∈ E, g(x, y) ≤ g(x) + g(y)\)
+4. Homogene : \(∀ x ∈ E, λ ∈ K, g(λ.x) = |λ|.g(x)\)
+5. Invariance par translation : \(∀ p, q, r ∈ E d(p + r, q + r) = d(p, q)\)
+6. Homogénéité : \(∀ p, q ∈ E, λ ∈ k d(λ.p, λq) = |λ|.d(p, q)\)
+
+Soit \(g : E → F\) une norme sur K
+
+Alors l'application \(D : E × E → F\)
+
+\((p, q) ↦ g(q - p)\)  est une distance
+
+### [TD - Les masques de Chamfrein](TDs/TD%20-%20Distance%20de%20Chamfrein.pdf)
+
+#### Exercice 1
+
+1. Distance de Manhattan
+2. Distance de l'échiquier
+
+#### Exercice 2
+
+1. L'inegalité triangulaire est la propriété qui nous permet cela
+
+2. \(\begin{vmatrix}2 & 1 & 2\\1 & 0 & 1\\2 & 1 & 4\end{vmatrix}\) et \(\begin{vmatrix}14 & 11 & 10 & 11 & 14\\11 & 7 & 5 & 7 & 11\\10 & 5 & 0 & 5 & 10\\11 & 7 & 5 & 7 & 11\\14 & 11 & 10 & 11 & 14\end{vmatrix}\)
+
+#### Exercice 3
+
+
+
+#### Exercice 4
+
+
+
+#### Exercice 5
+

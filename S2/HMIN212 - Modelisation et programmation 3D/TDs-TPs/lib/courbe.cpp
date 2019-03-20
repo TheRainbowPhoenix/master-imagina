@@ -485,37 +485,85 @@ void draw_facettes_sphere(const std::vector<std::vector<Point3> >& facettes) {
 	glEnd();
 }
 
-/*
-std::vector<std::vector<Point3> > facettes_polygone(const Point3& center, double radius, size_t sides) {
-	std::vector<std::vector<Point3> > facettes;
+std::vector<Point3> maillage_cylindre(const Point3& start, const Point3& end, double radius, size_t meridiens) {
 
-	double angle = (360 / (double)nb_meridiens) * (M_PI / 180.0);
-	double length = (line_end - line_start).length();
+	std::vector<Point3> facettes;
 
-	//Vector3 axis = (line_end - line_start).normalized();
+	double angle = (M_PI * 2) / (double)meridiens;
+	double length = (end - start).length();
 	
-	for (size_t i = 0; i < nb_meridiens; ++i) {
-		
-		facettes.push_back(std::vector<Point3>());
-		
+	for (size_t i = 0; i <= meridiens; ++i) {
+
 		double alpha = angle * i;
 		
-		//Vector3 transform = rotate_around(axis, alpha);
-		//Point3 p1 = line_start + transform;
-		//Point3 p2 = line_end + transform;
-		
-		Point3 p1 = line_start + Vector3(rayon * cos(alpha), rayon * sin(alpha), -length/2);
-		Point3 p2 = line_end;
+		Point3 p1 = start + Vector3(radius * cos(alpha), radius * sin(alpha), -length);
+		Point3 p2 = end + Vector3(radius* cos(alpha), radius * sin(alpha), length);
 
-		std::swap(p1.x, p1.z);
-		std::swap(p2.x, p2.z);
-
-		draw_point(p1);	
-		draw_point(p2);
-		
-		facettes[i].push_back(p1);
-		facettes[i].push_back(p2);
+		facettes.push_back(p1);
+		facettes.push_back(p2);
 	}
-	return std::move(facettes);	
+
+	return std::move(facettes);
 }
-*/
+
+Vector3 normal(const Vector3& A, const Vector3& B, const Vector3& C)  {
+  Vector3 v1 = B - A;
+  Vector3 v2 = C - A;
+  return v1.cross(v2);
+}
+
+void draw_maillage(std::vector<Point3> maillage) {
+	glBegin(GL_TRIANGLE_STRIP);
+
+	// Vector3 A = (Vector3)maillage[0];
+	// Vector3 B = (Vector3)maillage[1];
+	// Vector3 C = (Vector3)maillage[2];
+	glVertex3dv((double*)maillage[0]);
+	glVertex3dv((double*)maillage[1]);
+
+	for (size_t i = 2; i < maillage.size(); ++i) {
+		// Triangle({maillage[i], maillage[i-1], maillage[i-2]});
+		glVertex3dv((double*)maillage[i]);
+	}
+
+	glEnd();
+}
+
+std::vector<Point3> maillage_sphere(const Point3& center, double radius, size_t meridiens, size_t paralleles)  {
+
+	std::vector<Point3> maillage;
+
+	double angle_parallele = (M_PI * 2) / (double)paralleles;
+	double angle_meridien = M_PI / (double)meridiens;
+
+	for (size_t i = 0; i <= paralleles; ++i) {
+		
+		double beta1 = angle_parallele * i;
+		double beta2 = angle_parallele * (i+1);
+
+		for (size_t j = 0; j <= meridiens; ++j) {
+			
+			double alpha = (M_PI/2) - (angle_meridien * j);
+
+			Point3 p1 = center + Vector3(cos(alpha) * cos(beta1), cos(alpha) * sin(beta1), sin(alpha)) * radius;
+			Point3 p2 = center + Vector3(cos(alpha) * cos(beta2), cos(alpha) * sin(beta2), sin(alpha)) * radius;
+
+			maillage.push_back(p1);
+			maillage.push_back(p2);
+		}
+	}
+
+	return std::move(maillage);
+}
+
+void draw_maillage_sphere(std::vector<Point3> maillage, size_t meridiens, size_t paralleles) {
+
+	for (size_t i = 0; i <= paralleles; ++i) {
+		
+		glBegin(GL_TRIANGLE_STRIP);
+		for (size_t j = 0; j <= meridiens; ++j) {
+			glVertex3dv((double*)maillage[i * paralleles + j]);
+		}
+		glEnd();
+	}
+}

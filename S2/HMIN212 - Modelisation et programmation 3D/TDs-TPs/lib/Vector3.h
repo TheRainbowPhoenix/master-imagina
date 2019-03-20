@@ -36,7 +36,7 @@ public:
 	double angle(Vector3& v) const;
 
 	explicit operator Point3() const;
-	//operator GLdouble*() const;
+	explicit operator double*();
 
 	static double dot(const Vector3& left, const Vector3& right);
 	static double cross(const Vector3& left, const Vector3& right);

@@ -167,3 +167,53 @@ dessiner vecteur
 savoir ce qu'il se passe
 partie code netlogo
 
+# Algorithmes d'exploration
+
+## Examen
+
+- Voisinage et calcul du nombre
+
+## Question 1
+
+Le voisinnage doit pouvoir atteindre n'importe quelle solutions avec un infinité de temps.
+
+- **Voisinage 1**  : Echanger 2 voitures
+	- Nb voisins = n * (n - 1) / 2 
+- **Voisinage 1'** : Echanger 2 voitures en conflit
+	- Nb voisins = n - 1
+- **Voisinage 2**  : Couper en 2 et echanger les 2 sous-séquences
+	- Nb voisins = n 
+- **Voisinage 3**  : Echanger 2 voitures à la suite
+	- Nb voisins = n - 1 
+- **Voisinage 4**  : Renverser 1 sous-séquence de longueur k
+	- Nb voisins = n - k + 1
+
+## Question 2
+
+A B C B A C B
+
+viol : B C B, A C
+cout : 2
+
+## Question 3
+
+On atteind un minimum local.
+
+## Question 4
+
+**Marche en 7 :**
+
+A B C B A C B
+B A C B A C B
+B A B C A C B
+B A B C A B C
+B A C B A B C
+B C A B A B C
+C B A B A B C
+
+**Marche en 4 :**
+
+A B C B A B C
+B A C B A B C
+B C A B A B C
+C B A B A B C

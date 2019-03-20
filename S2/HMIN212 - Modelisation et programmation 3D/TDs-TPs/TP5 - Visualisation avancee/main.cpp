@@ -370,7 +370,6 @@ GLvoid window_special_key(int key, int x, int y){
   case KEY_CTRL:
     toggle(select_all);
     break;
-  // Default
   default:
     printf ("La touche %d n´est pas active.\n", key);
     break;

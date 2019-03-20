@@ -18,7 +18,7 @@ public:
 	Point3 project_on_plane(Point3 on_plane, Vector3 normal_of_plane);
 
 	explicit operator Vector3() const;
-	//operator GLdouble*() const;
+	explicit operator double*();
 };
 
 Vector3 operator-(const Point3& left, const Point3& right);
