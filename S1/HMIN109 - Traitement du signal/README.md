@@ -569,7 +569,7 @@ h_2 = y_2 = (1 / 3) . (-(5 / 9) + (2 / 3)) = (1 / 3) . ((-3 + 6) / 9) = (1 / 27)
 
 # Memo partie transmission signal
 
-# TD1 - codage/decodage d'un signal avec verrification d'erreur
+# TD1 - codage/decodage/transmission d'un signal avec verrification d'erreur
 
 **terme**
 	- bit parité : bit à 1 si message pair 0 sinon
@@ -590,11 +590,12 @@ h_2 = y_2 = (1 / 3) . (-(5 / 9) + (2 / 3)) = (1 / 3) . ((-3 + 6) / 9) = (1 / 27)
 	- bipolaire simple
 - (Ex5) resumé (memo)
 
-# TD2 - transmission d'un signal
+# TD2 - transmission d'une signal appliqué aux image
 
 **terme**
 	- bande passante (Hz) :
 	- rapport signal à bruit (dB = S/B) :
+	- capacité de transmission = B . log_2(1 + S/N)
 	- taux d'erreur binaire (Te = (nb_bits_erronnés/nb_bits_transmis)) :
 	- taux de transfert d'information (TTI = nb_bits_utiles / durée_transmission) :
 	- probabilité de transmission d'erreur (Pe = (1 -Te)^n avec n = nb_bits_msg)  
@@ -643,9 +644,6 @@ h_2 = y_2 = (1 / 3) . (-(5 / 9) + (2 / 3)) = (1 / 3) . ((-3 + 6) / 9) = (1 / 27)
 
 # Memo partie traitement signal
 
-
-
-
 Dans le partiel :
 
 Definir en traitement du signal :
@@ -667,3 +665,40 @@ Question:
 - pourquoi dit-on transformé de Laplace linéraire ?
 - si y(t) est la sortie du filtre de fonction de tranfert F(p), quel est le signal x(t) en entrée de ce filtre ?
 
+# AUTRE
+
+
+# Exam
+
+## Transmission
+
+> Je dois réussir à faire les exos machinalement (memos)
+
+- Transmission d'une image à partir d'un scanner #2018-2019 #2016-2017
+- Tables de routage #2018-2019 #2016-2017
+- Transmission d'un image TV #2018-2019 #2016-2017
+- Transmission d'une image compirlée (huffman)
+
+pixel → cm = px * 2.54 / dpi
+
+cm → pixel = cm * dpi / 2.54
+
+## Traitement
+
+> Je dois apprendre les définition et poser quelques questions à raph demain
+
+- Savoir différencier et definir les signaux (numeriques/analogiques) * 2
+- Donner la relation entre les deux * 2
+- Definir echelon
+- Definir système lineaire
+- Donner différentes fammilles de filtres fréquencielles
+- Definir transformation de fourier / discrète * 2
+- Definir transformé de Laplace
+	- toujours la meme chose on applique un transformation a notre systeme qui nous permet de le resoudre dans un autre espace puis on le fait repasser dasn l'espace originale pour l'utiliser.
+- Différences Laplace/Fourier
+	- Laplace est un cas particuler de la fonction de fourier
+- Definir reponse impulsionnelle * 2
+- Donnez la fonction de transferts d'une equation
+- Definir repliement de spectre
+- Definir filtre causal
+- Difference filtrage donmaine fréquentiel / temporel ? Comment s'applique chaque ?

@@ -1,0 +1,20 @@
+May 03, 2017 11:52:05 AM ClosedPatternTester main
+INFO: Instance = mushroom, Thereshold = 30.0% , Number of solutions = 293, Time = 0.22969027 s , Nodes = 585
+May 04, 2017 11:21:09 AM ClosedPatternTester main
+INFO: Instance = chess, Thereshold = 60.0% , Number of solutions = 98393, Time = 7.468998 s , Nodes = 196785
+May 04, 2017 11:24:27 AM ClosedPatternTester main
+INFO: Instance = chess, Threshold = 60.0% , Number of solutions = 98393, Time = 7.57858 s , Nodes = 196785, Memory = 1206289456, Propagations = 38342
+May 04, 2017 1:45:51 PM ClosedPatternTester main
+INFO: Instance = chess, Threshold = 40.0% , Number of solutions = 1366834, Time = 104.91788 s , Nodes = 2733667, Memory = 10017424, Propagations = 577478
+May 04, 2017 1:47:55 PM ClosedPatternTester main
+INFO: Instance = chess, Threshold = 60.0% , Number of solutions = 98393, Time = 7.571155 s , Nodes = 196785, Memory = 1206297536, Propagations = 38342
+May 04, 2017 1:51:05 PM ClosedPatternTester main
+INFO: Instance = chess, Threshold = 50.0% , Number of solutions = 369451, Time = 26.678999 s , Nodes = 738901, Memory = 410378352, Propagations = 122828
+May 04, 2017 2:33:32 PM ClosedPatternTester main
+INFO: Instance = mushroom, Threshold = 10.0% , Number of solutions = 3287, Time = 1.350876 s , Nodes = 6573, Memory = 257218640, Propagations = 5646
+May 04, 2017 2:35:35 PM ClosedPatternTester main
+INFO: Instance = mushroom, Threshold = 0.05% , Number of solutions = 186718, Time = 44.892822 s , Nodes = 373435, Memory = 194704512, Propagations = 117619
+May 04, 2017 2:49:17 PM ClosedPatternTester main
+INFO: Instance = chess, Threshold = 30.0% , Number of solutions = 5316468, Time = 386.72833 s , Nodes = 10632935, Memory = 41249720, Propagations = 1942344
+May 04, 2017 2:52:17 PM ClosedPatternTester main
+INFO: Instance = mushroom, Threshold = 0.05% , Number of solutions = 186718, Time = 45.353443 s , Nodes = 373435, Memory = 958106760, Propagations = 117619

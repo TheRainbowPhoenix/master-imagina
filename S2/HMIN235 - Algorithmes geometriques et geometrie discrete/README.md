@@ -112,7 +112,7 @@ toute application linéaire à une représenation par une matrice
 
 ### Notion de distance
 
-\(d_2(x, y) = \sqrt{ (x_1 - y_1)² + (x_2 - y_2)² }\)
+\(d_2(x, y) = \sqrt{ (x_2 - x_1)² + (y_2 - y_1)² }\)
 
 #### Axiome des distances
 

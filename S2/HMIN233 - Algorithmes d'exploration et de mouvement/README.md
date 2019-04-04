@@ -23,7 +23,8 @@
 
 ### Ressources [↺](#sommaire-)
 
-- [Cours et TDs-TPs](http://www.lirmm.fr/~ferber/GMIN20A-exploration/)
+- [Page Lirmm Ferber](http://www.lirmm.fr/~ferber/GMIN20A-exploration/)
+- [Page lirmm Lazaar](http://www.lirmm.fr/~lazaar/teaching.html)
 
 ## Mouvement [↺](#sommaire-)
 
@@ -217,3 +218,113 @@ A B C B A B C
 B A C B A B C
 B C A B A B C
 C B A B A B C
+
+## Data Mining
+
+Methodes permettant d'extraire des données pertinentes à partir d'une base de donnée.
+
+ensemble : pas d'ordre et pas de doublons
+liste : repétition et doublons possibles
+graphe : augmente encore la complexité
+
+remarque : plus on descend plus la complexité est elevé.
+
+### Propriété Anti-Monotone
+
+X ⊆ Y ⟹ cover(Y) ⊆ cover(X)
+
+# Exam = exercices TD
+
+### TD1 - Frequent itemset mining
+
+#### Exercice 1
+
+1)
+
+| A                       | B                       | C                  | D              | E                  | F                   |
+| ---                     | ---                     | ---                | ---            | ---                | ---                 |
+| t2, t3, t5, t6, t7, t10 | t1, t2, t3, t5, t7, t10 | t1, t2, t3, t6, t9 | t1, t3, t4, t8 | t2, t4, t6, t7, t9 | t3, t6, t7, t8, t10 |
+
+
+| _ | A | B | C | D | E | F |
+|---|---|---|---|---|---|---|
+|t1 | _ | x | x | x | _ | _ |
+|t2 | x | x | x | _ | x | _ |
+|t3 | x | x | x | x | _ | x |
+|t4 | _ | _ | _ | x | x | _ |
+|t5 | x | x | _ | _ | _ | _ |
+|t6 | x | _ | x | _ | x | x |
+|t7 | x | x | _ | _ | x | x |
+|t8 | _ | _ | _ | x | _ | x |
+|t9 | _ | _ | x | _ | x | _ |
+|t10| x | x | _ | _ | _ | x |
+
+2)
+
+- \(cover(ACD)  = { t3 }\)
+- \(cover(CE)   = { t2, t6, t9 }\)
+- \(cover(BCE)  = { t2 }\)
+- \(cover(ABCE) = { t2 }\)
+- \(cover(E)    = { t2, t4, t6, t7, t9 }\)
+- \(cover(D)    = { t1, t3, t4, t8 }\)
+- \(cover(BC)   = { t1, t2, t3 }\)
+- \(cover(F)    = { t3, t6, t7, t8, t10 }\)
+- \(cover(CDF)  = { t3 }\)
+- \(cover(EF)   = { t6, t7 }\)
+
+
+- \(freq(ACD)   = 1 (10\%)\)
+- \(freq(CE)    = 3 (30\%)\)
+- \(freq(BCE)   = 1 (10\%)\)
+- \(freq(ABCE)  = 1 (10\%)\)
+- \(freq(E)     = 5 (50\%)\)
+- \(freq(D)     = 4 (40\%)\)
+- \(freq(BC)    = 3 (30\%)\)
+- \(freq(F)     = 5 (50\%)\)
+- \(freq(CDF)   = 1 (10\%)\)
+- \(freq(EF)    = 2 (20\%)\)
+
+3)
+
+- L = { ACD¹, CE³, BCE¹, ABCE¹, E¹, D⁴, BC³, F⁵ }
+
+4)
+
+- Comparable : CE ⊆ BCE
+- Incomparable : E x D
+
+#### Exercice 2
+
+1) \(|Lᵢ| = 2⁶ = 64\)
+
+2)
+
+- \(X ⊆ Y ⟹ freq(Y) ≤ freq(X)\)
+- \(Soit X ⊆ Y\)
+	- \(∀ Tᵢ ∈ D : Y ⊆ Tᵢ ⟹ X ⊆ Tᵢ\) (transitivité)
+	- \(∀ Tᵢ ∈ D : Tᵢ ∈ cover(Y) ⟹ Tᵢ ∈ cover(X)\) (definition cover)
+	- \((freq(Y) = n ⟹ freq(X) ≥ n) ⟺ freq(Y) ≤ freq(X)\) (CQFD)
+
+3)
+
+- Premisse
+	- \(∀ X, Y ⊆ I : X ⊆ Y ⟹ freq(Y) ≤ freq(X)\)
+	- \(∀ X, Y ⊆ I : X ⊆ Y ⟹ (freq(Y) ≥ θ) ⟹ freq(X) ≥ θ\)
+
+- Construction
+	- \(∀ X, Y ⊆ I : X ⊆ Y ∧ (freq(Y) ≥ θ) ⟹ freq(X) ≥ θ\)
+	- \(∀ X, Y ⊆ I : X ⊆ Y ∧ (θ ≤ freq(Y) ≤ freq(X)) ⟹ freq(X) ≥ θ\)
+
+#### Exercice 3
+
+1) 
+
+- **Terminaison** : L'algo termine forcément le nombre d'element de l'itemset est fini et il n'y a que des boucles for dans l'algorithme. 
+- **Completude** (Il peut renvoyer toute les solutions possible et prevenir le cas ou il n'y a pas de solutions) : 
+- **Complexité** :
+	- time : O(2ⁿ) ?
+	- memory : O(2ⁿ)
+
+Completude ∧ Nombre finis de solution ⟹ termine
+
+2) Lₙ = 
