@@ -66,6 +66,14 @@ std::vector<std::vector<Point3> > facettes_sphere(const Point3& center, double r
 // renvoie les facettes d'un polygones sous formes de triangles
 std::vector<std::vector<Point3> > facettes_polygone(const Point3& center, double radius, size_t sides);
 
-// TP5
+// TP7
+
+Vector3 normal(const Vector3& A, const Vector3& B, const Vector3& C);
+
+std::vector<Point3> maillage_cylindre(const Point3& start, const Point3& end, double radius, size_t meridiens);
+
+void draw_maillage(std::vector<Point3> maillage);
+
+std::vector<Point3> maillage_sphere(const Point3& center, double radius, size_t meridiens, size_t paralleles);
 
 #endif

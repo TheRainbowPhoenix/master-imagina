@@ -70,7 +70,7 @@
 
 #### Backtrack [↺](#sommaire-)
 
-Pour resoudre un problème on prend une série de décisions, on fois la décision prise on peut se rendre que la décision n'est pas bonne, si c'est le cas, on retourne à la décision précedente pour voir si un peut en prendre une meilleure
+Pour resoudre un problème on prend une série de décisions, on fois la décision prise on peut se rendre compte que la décision n'est pas bonne, si c'est le cas, on retourne à la décision précedente pour voir si un peut en prendre une meilleure
 
 ```
 Algorithme Backtracking(Assignation A, Network R) : Booléen 
@@ -404,18 +404,18 @@ C : les atomes de A1 fournissent les contraintes, les atomes de A2 fournissent l
 
 transformations:
 si p(x, x) avec x variable
-	p(x, y) et x = y (y nouvelle variable)
+	p(x, y) et x = y (x = y : nouvelle contrainte et y : nouvelle variable)
 
 si p(x, a) avec x variable et a constante
-	p(x, y) avec Domaine(y) = {a} (y nouvelle variable)
+	p(x, y) avec Domaine(y) = {a} (y : nouvelle variable)
 
 #### CSP → HOM [↺](#sommaire-)
 
 A1 ← ensemble des variables de X
 A2 ← ensemble des valeurs des variables x ∈ X
 
-A1 = { Ci(x1, ..., xk) | Ci ∈ C et porte sur (x1, ..., ck)}
-A2 = { Ci(a1, ..., ak) | Ci ∈ C et (a1, ..., ak) est dans la définition de ci}
+A1 = { Ci(x1, ..., xk) | Ci ∈ C et porte sur (x1, ..., xk) }
+A2 = { Ci(a1, ..., ak) | Ci ∈ C et (a1, ..., ak) est dans la définition de ci }
 
 #### Negation Monde ouvert/clos [↺](#sommaire-)
 
@@ -456,5 +456,47 @@ Il faut ajouter des règles qui assurent que :
 
 un ensemble de règles est stratifiable ssi son graphe de précedence n'admet aucun circuit avec un arc négatif
 
+# A savoir 
 
+## TD1 - Espaces de recherce
 
+- Formaliser problème en terme d'états, actions, but.
+- Application d'algo (Recherche en largeur/profondeur)
+- Optimisation d'algo (largeur/profondeur)
+- Eviter les cycles (profondeur)
+
+## TD2 - Problèmes de satisfaction de contraintes
+
+- Application d'algo (Backtrack)
+- Optimisation d'algo (Ordre/Heuristique statiques)
+- Resoudre cryptogramme (CSP)
+- Resoudre N-reines (CSP)
+
+## TD3 - Arc-consistance et forward checking
+
+- Reconnaitre/Justifier réseau arc-consistant
+- Calculer fermeture arc-consistante réseau
+- Resoudre CSP (Backtrack/Forward checking/Arc-consistance)
+- Fermeture garantit-elle une solution ?
+- Resoudre configuration (CSP)
+
+## TD4 - Probleme SAT
+
+- CSP → SAT (Coloration de carte/Configuration)
+- Application d'algo (DPLL)
+- proposition logique → instance SAT
+- SAT → CSP
+- Resoudre reunions d'amis (SAT)
+
+## TD5 - Système à base de règles d'ordre 0
+
+- Calculer saturation d'un BF
+- Application d'algo (ForwardChaining/BackwardChaining) ordre 0
+- Dessin de graphe ET-OU
+- Arbre de recherche (echec, boucle, BF, déjà prouvé, ou déjà échec)
+- Négation du monde clos (semi-positif, stratifiable, non stratifiable)
+
+## TD6 - Système à base de règles d'ordre 1
+
+- Calcul d'homomorphisme
+- Applicatoin d'algo (ForwardChaining/BackwardChaining) ordre 1

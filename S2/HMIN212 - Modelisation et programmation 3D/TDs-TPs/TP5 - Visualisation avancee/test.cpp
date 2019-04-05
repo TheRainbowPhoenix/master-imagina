@@ -269,13 +269,13 @@ void draw_cube(const Point3& pos) {
 	glColor3d(1,1,0);glVertex3i(1,1,-1);
 
 
-	Vector3 normal1 = normal(Point3(1, 1, 1), Point3(1, -1, 1), Point3(-1, -1, 1)).normalized();
+	Vector3 normal1 = normal(Point3(-1, 1, 1), Point3(-1, -1, 1), Point3(1, -1, 1)).normalized();
 	glNormal3f(normal1.x, normal1.y, normal1.z);
 	
-	glColor3d(1,0,0);glVertex3i(1,1,1);
-	glColor3d(0,1,0);glVertex3i(1,-1,1);
-	glColor3d(0,0,1);glVertex3i(-1,-1,1);
 	glColor3d(1,0,1);glVertex3i(-1,1,1); // RB 
+	glColor3d(0,0,1);glVertex3i(-1,-1,1);
+	glColor3d(0,1,0);glVertex3i(1,-1,1);
+	glColor3d(1,0,0);glVertex3i(1,1,1);
 
 	Vector3 normal2 = normal(Point3(1, 1, -1), Point3(1, -1, -1), Point3(-1, -1, -1)).normalized();
 	glNormal3f(normal2.x, normal2.y, normal2.z);
@@ -295,17 +295,17 @@ void draw_cube(const Point3& pos) {
 	glColor3d(0,1,1);glVertex3i(1,-1,-1);
 	glColor3d(1,1,0);glVertex3i(1,1,-1);
 
-	Vector3 normal4 = normal(Point3(-1, 1, 1), Point3(-1, -1, 1), Point3(-1, -1, -1)).normalized();
+	Vector3 normal4 = normal(Point3(-1, 1, -1), Point3(-1, -1, -1), Point3(-1, -1, 1)).normalized();
 	glNormal3f(normal4.x, normal4.y, normal4.z);
 
 	//4 faces
-	glColor3d(1,0,1);glVertex3i(-1,1,1);
-	glColor3d(0,0,1);glVertex3i(-1,-1,1);
-	glColor3d(1,0,0);glVertex3i(-1,-1,-1);
 	glColor3d(1,1,1);glVertex3i(-1,1,-1); // RB
+	glColor3d(1,0,0);glVertex3i(-1,-1,-1);
+	glColor3d(0,0,1);glVertex3i(-1,-1,1);
+	glColor3d(1,0,1);glVertex3i(-1,1,1);
 
 
-	Vector3 normal6 = normal(Point3(-1, -1, -1), Point3(-1, -1, 1), Point3(1, -1, 1)).normalized();
+	Vector3 normal6 = normal(Point3(-1, -1, -1), Point3(1, -1, -1), Point3(1, -1, 1)).normalized();
 	glNormal3f(normal6.x, normal6.y, normal6.z);
 
 	// BOTTOM FACE
@@ -330,9 +330,9 @@ void renderScene() {
 
 	float radius = 15;
 
-	//light0Pos[0] = sin(glutGet(GLUT_ELAPSED_TIME)/1000.0) * radius;
-	//light0Pos[1] = 1 * radius / 5;
-	//light0Pos[2] = cos(glutGet(GLUT_ELAPSED_TIME)/1000.0) * radius;
+	light0Pos[0] = sin(glutGet(GLUT_ELAPSED_TIME)/1000.0) * radius;
+	light0Pos[1] = 1 * radius / 5;
+	light0Pos[2] = cos(glutGet(GLUT_ELAPSED_TIME)/1000.0) * radius;
 	
 
 	glBegin(GL_POINTS);
