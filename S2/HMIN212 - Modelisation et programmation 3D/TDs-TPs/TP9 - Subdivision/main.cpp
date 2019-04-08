@@ -517,6 +517,7 @@ Vector3 subdivide_butterfly_point_v2(vector<Vector3>& points, vector<Vector3>& a
 	triangles[5] = select_triangle(edge_triangles, triangles[1]);
 	summits[7] = summit(aretes[triangles[5]], summits[1], summits[3]);
 
+/*
 	cerr << "butterfly " << summits[0] << ", " << summits[1] << " :\n";
 	
 	cerr << "\ttriangles = { ";
@@ -548,7 +549,7 @@ Vector3 subdivide_butterfly_point_v2(vector<Vector3>& points, vector<Vector3>& a
 	}
 
 	cerr << "}\n";
-
+*/
 	// ajout du nouveau point
 
 	return (points[summits[0]] + points[summits[1]]) / 2 + (points[summits[2]] + points[summits[3]]) / 8 - (points[summits[4]] + points[summits[5]] + points[summits[6]] + points[summits[7]]) / 16;
