@@ -76,4 +76,12 @@ void draw_maillage(std::vector<Point3> maillage);
 
 std::vector<Point3> maillage_sphere(const Point3& center, double radius, size_t meridiens, size_t paralleles);
 
+void draw_vector(const Point3& position, const Vector3& vector);
+
+void draw_vector_components(const Point3& position, const Vector3& vector);
+
+void draw_mesh(std::vector<Vector3>& points, std::vector<Vector3> aretes, double normal_factor = 1)
+;
+void draw_mesh_normals(std::vector<Vector3>& points, std::vector<Vector3> aretes, double normal_factor = 1);
+
 #endif

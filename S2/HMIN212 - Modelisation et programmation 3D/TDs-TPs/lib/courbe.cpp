@@ -567,3 +567,85 @@ void draw_maillage_sphere(std::vector<Point3> maillage, size_t meridiens, size_t
 		glEnd();
 	}
 }
+
+void draw_vector(const Point3& position, const Vector3& vector)
+{
+	// Sauvegarde de la couleur initiale
+
+	GLfloat current_color[4] = {0};
+	glGetFloatv(GL_CURRENT_COLOR, current_color);
+
+	// Affiche le vecteur avec ça pointe
+	
+	glColor3f(1, 0, 1);
+	draw_line(position, position + vector);
+	draw_point(position + vector);
+
+	// Affiche le point de depart
+
+	glColor3f(1, 1, 1);
+	draw_point(position);
+
+	// Reset color
+	
+	glColor3f(current_color[0], current_color[1], current_color[2]);
+}
+
+void draw_vector_components(const Point3& position, const Vector3& vector)
+{
+	// Sauvegarde de la couleur initiale
+
+	GLfloat color_reset[4] = {0};
+	glGetFloatv(GL_CURRENT_COLOR, color_reset);
+
+	// Affiche les composantes du vecteur
+
+	Vector3 x = Vector3(vector.x, 0, 0);
+	Vector3 y = Vector3(0, vector.y, 0);
+	Vector3 z = Vector3(0, 0, vector.z);
+
+	glColor3f(1, 0, 0);
+	draw_line(position, position + x);
+	
+	glColor3f(0, 1, 0);
+	draw_line(position, position + y);
+
+	glColor3f(0, 0, 1);
+	draw_line(position, position + z);
+
+	// Reset color
+
+	glColor3f(color_reset[0], color_reset[1], color_reset[2]);
+}
+
+void draw_mesh(std::vector<Vector3>& points, std::vector<Vector3> aretes, double normal_factor)
+{
+	glBegin(GL_TRIANGLES);
+
+	glColor3d(0, 1, 0);
+
+	for (Vector3 index : aretes)
+	{
+		Vector3 triangleNorm = normal(points[index.x], points[index.y], points[index.z]).normalized();
+		
+		glNormal3dv((double*)(triangleNorm * normal_factor));
+
+		glVertex3dv((double *)points[index.x]);
+		glVertex3dv((double*)points[index.y]);
+		glVertex3dv((double*)points[index.z]);
+	}
+
+	glEnd();
+}
+
+void draw_mesh_normals(std::vector<Vector3>& points, std::vector<Vector3> aretes, double normal_factor)
+{
+	for (Vector3 index : aretes)
+	{	
+		Vector3 triangleNorm = normal(points[index.x], points[index.y], points[index.z]).normalized();
+		
+		Point3 triangle_center = (Point3)((points[index.x] + points[index.y] + points[index.z]) / 3);
+		
+		draw_vector(triangle_center, triangleNorm * normal_factor);
+	}
+}
