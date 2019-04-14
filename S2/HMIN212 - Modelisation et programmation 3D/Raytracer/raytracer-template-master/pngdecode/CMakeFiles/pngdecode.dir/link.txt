@@ -1,0 +1,2 @@
+/usr/bin/ar qc libpngdecode.a  CMakeFiles/pngdecode.dir/png.cpp.o CMakeFiles/pngdecode.dir/pngdec.cpp.o CMakeFiles/pngdecode.dir/pngenc.cpp.o CMakeFiles/pngdecode.dir/zdec.cpp.o CMakeFiles/pngdecode.dir/zenc.cpp.o CMakeFiles/pngdecode.dir/zss.cpp.o
+/usr/bin/ranlib libpngdecode.a

@@ -1,0 +1,286 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/CheckError.h
+common.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/common.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/ObjMesh.cpp
+common.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/common.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/ObjMesh.h
+common.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/common.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/Object.cpp
+common.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/common.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/Object.h
+common.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/common.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/SourcePath.cpp
+SourcePath.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/SourcePath.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/SourcePath.h
+string
+-
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/Trackball.cpp
+common.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/common.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/Trackball.h
+common.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/common.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/common.h
+vector
+-
+list
+-
+limits
+-
+string.h
+-
+assert.h
+-
+stdio.h
+-
+algorithm
+-
+cmath
+-
+iostream
+-
+cstdio
+-
+stdlib.h
+-
+glad/glad.h
+-
+GLFW/glfw3.h
+-
+pngenc.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/pngenc.h
+vec.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/vec.h
+mat.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/mat.h
+CheckError.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/CheckError.h
+ObjMesh.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/ObjMesh.h
+Object.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/Object.h
+Trackball.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/Trackball.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/mat.h
+common.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/common.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/vec.h
+common.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/common.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/main.cpp
+common.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common.h
+SourcePath.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/SourcePath.h
+
+glfw-3.2/deps/KHR/khrplatform.h
+stdint.h
+-
+inttypes.h
+-
+stdint.h
+-
+
+glfw-3.2/deps/glad/glad.h
+windows.h
+-
+stddef.h
+-
+KHR/khrplatform.h
+-
+inttypes.h
+-
+inttypes.h
+-
+inttypes.h
+-
+stdint.h
+-
+stdint.h
+-
+inttypes.h
+-
+
+glfw-3.2/deps/vulkan/vk_platform.h
+stddef.h
+-
+stdint.h
+-
+android/native_window.h
+-
+mir_toolkit/client_types.h
+-
+wayland-client.h
+-
+windows.h
+-
+X11/Xlib.h
+-
+xcb/xcb.h
+-
+
+glfw-3.2/deps/vulkan/vulkan.h
+vk_platform.h
+glfw-3.2/deps/vulkan/vk_platform.h
+X11/Xlib.h
+-
+xcb/xcb.h
+-
+wayland-client.h
+-
+mir_toolkit/client_types.h
+-
+android/native_window.h
+-
+windows.h
+-
+
+glfw-3.2/include/GLFW/glfw3.h
+stddef.h
+-
+stdint.h
+-
+OpenGL/gl3.h
+-
+OpenGL/gl3ext.h
+-
+OpenGL/gl.h
+-
+OpenGL/glu.h
+-
+GL/glcorearb.h
+-
+GLES/gl.h
+-
+GLES/glext.h
+-
+GLES2/gl2.h
+-
+GLES2/gl2ext.h
+-
+GLES3/gl3.h
+-
+GLES2/gl2ext.h
+-
+GLES3/gl31.h
+-
+GLES2/gl2ext.h
+-
+vulkan/vulkan.h
+-
+GL/gl.h
+-
+GL/glext.h
+-
+GL/glu.h
+-
+
+pngdecode/././zss.h
+
+pngdecode/./png.h
+
+pngdecode/./zenc.h
+./zss.h
+pngdecode/././zss.h
+
+pngdecode/pngenc.h
+./png.h
+pngdecode/./png.h
+./zenc.h
+pngdecode/./zenc.h
+
+source/common/CheckError.h
+common.h
+source/common/common.h
+
+source/common/ObjMesh.h
+common.h
+source/common/common.h
+
+source/common/Object.h
+common.h
+source/common/common.h
+
+source/common/SourcePath.h
+string
+-
+
+source/common/Trackball.h
+common.h
+source/common/common.h
+
+source/common/common.h
+vector
+-
+list
+-
+limits
+-
+string.h
+-
+assert.h
+-
+stdio.h
+-
+algorithm
+-
+cmath
+-
+iostream
+-
+cstdio
+-
+stdlib.h
+-
+glad/glad.h
+-
+GLFW/glfw3.h
+-
+pngenc.h
+source/common/pngenc.h
+vec.h
+source/common/vec.h
+mat.h
+source/common/mat.h
+CheckError.h
+source/common/CheckError.h
+ObjMesh.h
+source/common/ObjMesh.h
+Object.h
+source/common/Object.h
+Trackball.h
+source/common/Trackball.h
+
+source/common/mat.h
+common.h
+source/common/common.h
+
+source/common/vec.h
+common.h
+source/common/common.h
+

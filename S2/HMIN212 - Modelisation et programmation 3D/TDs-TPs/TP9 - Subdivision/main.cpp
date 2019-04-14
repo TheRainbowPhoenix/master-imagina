@@ -8,7 +8,9 @@
 #include <limits>
 #include <algorithm>
 
+extern "C" {
 #include <GL/glut.h>
+}
 
 #include "Vector3.h"
 #include "Point3.h"
@@ -432,10 +434,10 @@ Vector3 subdivide_butterfly_point(vector<Vector3>& points, vector<Vector3>& aret
 
 struct Edge
 {
-	int x, y;
+	long x, y;
 
 	Edge() : x(), y() {}
-	Edge(int x, int y) : x(x), y(y) {}
+	Edge(long x, long y) : x(x), y(y) {}
 
 	bool operator==(const Edge& other) const
 	{
@@ -453,7 +455,7 @@ struct Edge
 	}
 };
 
-int select_triangle(const array<int, 2>& edge_triangles, int unwanted_triangle)
+long select_triangle(const array<long, 2>& edge_triangles, long unwanted_triangle)
 {
 	for (int triangle : edge_triangles)
 	{
@@ -472,14 +474,16 @@ int select_triangle(const array<int, 2>& edge_triangles, int unwanted_triangle)
 	return -1;
 }
 
-Vector3 subdivide_butterfly_point_v2(vector<Vector3>& points, vector<Vector3>& aretes, map<Edge, array<int, 2> >& edge_to_triangles_map, Edge edge)
+Vector3 subdivide_butterfly_point_v2(vector<Vector3>& points, vector<Vector3>& aretes, map<Edge, array<long, 2> >& edge_to_triangles_map, Edge edge)
 {
-	int summits[8] = { -1 };
-	int triangles[6] = { -1 };
-	array<int, 2> edge_triangles;
+	long summits[8] = { -1 };
+	long triangles[6] = { -1 };
+	array<long, 2> edge_triangles;
 
 	summits[0] = edge.x;
 	summits[1] = edge.y;
+
+	//
 
 	edge_triangles = edge_to_triangles_map[edge];
 
@@ -495,22 +499,16 @@ Vector3 subdivide_butterfly_point_v2(vector<Vector3>& points, vector<Vector3>& a
 
 	triangles[2] = select_triangle(edge_triangles, triangles[0]);
 	summits[4] = summit(aretes[triangles[2]], summits[0], summits[2]);
-
-	//
 	
 	edge_triangles = edge_to_triangles_map[Edge(summits[1], summits[2])];
 
 	triangles[3] = select_triangle(edge_triangles, triangles[0]);	
 	summits[5] = summit(aretes[triangles[3]], summits[1], summits[2]);
-
-	//
 	
 	edge_triangles = edge_to_triangles_map[Edge(summits[0], summits[3])];
 
 	triangles[4] = select_triangle(edge_triangles, triangles[1]);
 	summits[6] = summit(aretes[triangles[4]], summits[0], summits[3]);
-
-	//
 	
 	edge_triangles = edge_to_triangles_map[Edge(summits[1], summits[3])];
 
@@ -589,8 +587,9 @@ void subdivide_butterfly_all(vector<Vector3>& points, vector<Vector3>& aretes, v
 void subdivide_butterfly_all_v2(vector<Vector3>& points, vector<Vector3>& aretes, vector<Vector3>& subdivision)
 {
 	cerr << "points : " << points.size() << ", aretes : " << aretes.size() << "\n";
-	map<Edge, size_t> edge_to_point_map;
-	map<Edge, array<int, 2> > edge_to_triangles_map;
+	
+	map<Edge, long> edge_to_point_map;
+	map<Edge, array<long, 2> > edge_to_triangles_map;
 
 	for (size_t i = 0 ; i < aretes.size() ; ++i)
 	{
@@ -599,9 +598,9 @@ void subdivide_butterfly_all_v2(vector<Vector3>& points, vector<Vector3>& aretes
 		for (Edge edge : triangle_edges)
 		{
 			if (edge_to_triangles_map.count(edge) == 0)
-				edge_to_triangles_map[edge] = { (int)i, -1 };
+				edge_to_triangles_map[edge] = { (long)i, -1 };
 			else
-				edge_to_triangles_map[edge][1] = (int)i;
+				edge_to_triangles_map[edge][1] = i;
 		}
 	}
 
@@ -615,6 +614,9 @@ void subdivide_butterfly_all_v2(vector<Vector3>& points, vector<Vector3>& aretes
 			{
 				edge_to_point_map[edge] = points.size();
 				points.push_back(subdivide_butterfly_point_v2(points, aretes, edge_to_triangles_map, edge));
+			}
+			else {
+				//cerr << "problem\n";
 			}
 		}
 	}

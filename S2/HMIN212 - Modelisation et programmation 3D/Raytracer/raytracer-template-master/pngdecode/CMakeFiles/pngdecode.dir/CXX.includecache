@@ -1,0 +1,112 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./././zss.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/././png.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/././zdec.h
+./zss.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./././zss.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/././zss.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./png.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./pngdec.h
+./png.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/././png.h
+./zdec.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/././zdec.h
+stdio.h
+-
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./zdec.h
+./zss.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/././zss.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./zenc.h
+./zss.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/././zss.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./zss.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/png.cpp
+./png.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./png.h
+stdlib.h
+-
+stdexcept
+-
+limits.h
+-
+string.h
+-
+stdio.h
+-
+errno.h
+-
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/pngdec.cpp
+./pngdec.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./pngdec.h
+string.h
+-
+stdio.h
+-
+stdlib.h
+-
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/pngenc.cpp
+pngenc.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/pngenc.h
+stdlib.h
+-
+stdio.h
+-
+time.h
+-
+string.h
+-
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/pngenc.h
+./png.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./png.h
+./zenc.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./zenc.h
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/zdec.cpp
+./zdec.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./zdec.h
+stdlib.h
+-
+stdio.h
+-
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/zenc.cpp
+./zenc.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./zenc.h
+stdlib.h
+-
+limits.h
+-
+string.h
+-
+
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/zss.cpp
+stdlib.h
+-
+./zss.h
+/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/./zss.h
+string.h
+-
+limits.h
+-
+stdio.h
+-
+

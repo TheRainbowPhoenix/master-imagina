@@ -1,0 +1,55 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_b258d/fast"
+/usr/bin/make -f CMakeFiles/cmTC_b258d.dir/build.make CMakeFiles/cmTC_b258d.dir/build
+make[1] : on entre dans le répertoire « /home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/CMakeFiles/CMakeTmp »
+Building C object CMakeFiles/cmTC_b258d.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_b258d.dir/CheckSymbolExists.c.o   -c "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/CMakeFiles/CMakeTmp/CheckSymbolExists.c"
+Linking C executable cmTC_b258d
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b258d.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_b258d.dir/CheckSymbolExists.c.o  -o cmTC_b258d 
+CMakeFiles/cmTC_b258d.dir/CheckSymbolExists.c.o : Dans la fonction « main » :
+CheckSymbolExists.c:(.text+0x1b) : référence indéfinie vers « pthread_create »
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_b258d.dir/build.make:97: recipe for target 'cmTC_b258d' failed
+make[1]: *** [cmTC_b258d] Error 1
+make[1] : on quitte le répertoire « /home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/CMakeFiles/CMakeTmp »
+Makefile:126: recipe for target 'cmTC_b258d/fast' failed
+make: *** [cmTC_b258d/fast] Error 2
+
+File /home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_e960f/fast"
+/usr/bin/make -f CMakeFiles/cmTC_e960f.dir/build.make CMakeFiles/cmTC_e960f.dir/build
+make[1] : on entre dans le répertoire « /home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/CMakeFiles/CMakeTmp »
+Building C object CMakeFiles/cmTC_e960f.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_e960f.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_e960f
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e960f.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_e960f.dir/CheckFunctionExists.c.o  -o cmTC_e960f -lpthreads 
+/usr/bin/ld : ne peut trouver -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_e960f.dir/build.make:97: recipe for target 'cmTC_e960f' failed
+make[1]: *** [cmTC_e960f] Error 1
+make[1] : on quitte le répertoire « /home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/CMakeFiles/CMakeTmp »
+Makefile:126: recipe for target 'cmTC_e960f/fast' failed
+make: *** [cmTC_e960f/fast] Error 2
+
+

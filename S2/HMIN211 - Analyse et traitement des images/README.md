@@ -57,7 +57,8 @@
 
 ### Ressources [↺](#sommaire-)
 
-- [Cours et TDs-TPs](http://www.lirmm.fr/~wpuech/enseignement/master_informatique/Analyse_Traitement_Image/)
+- [Cours puech et TDs-TPs](http://www.lirmm.fr/~wpuech/enseignement/master_informatique/Analyse_Traitement_Image/)
+- [Cours puech et TDs-TPs](http://www.lirmm.fr/~subsol/HMIN211/)
 
 ## Analyse d'une image [↺](#sommaire-)
 

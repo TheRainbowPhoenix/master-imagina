@@ -1,0 +1,137 @@
+[
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master",
+  "command": "/usr/bin/cc  -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/shaders\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/glad.dir/glfw-3.2/deps/glad.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps/glad.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps/glad.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/shaders\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/raytracer.dir/source/main.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/main.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/main.cpp"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/shaders\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/raytracer.dir/source/common/ObjMesh.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/ObjMesh.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/ObjMesh.cpp"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/shaders\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/raytracer.dir/source/common/SourcePath.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/SourcePath.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/SourcePath.cpp"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/shaders\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/raytracer.dir/source/common/Trackball.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/Trackball.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/Trackball.cpp"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/shaders\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/raytracer.dir/source/common/Object.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/Object.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/source/common/Object.cpp"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/context.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/context.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/context.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/init.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/init.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/init.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/input.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/input.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/input.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/monitor.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/monitor.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/monitor.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/vulkan.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/vulkan.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/vulkan.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/window.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/window.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/window.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/x11_init.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/x11_init.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/x11_init.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/x11_monitor.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/x11_monitor.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/x11_monitor.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/x11_window.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/x11_window.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/x11_window.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/xkb_unicode.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/xkb_unicode.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/xkb_unicode.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/linux_joystick.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/linux_joystick.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/linux_joystick.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/posix_time.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/posix_time.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/posix_time.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/posix_tls.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/posix_tls.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/posix_tls.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/glx_context.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/glx_context.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/glx_context.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src",
+  "command": "/usr/bin/cc -D_GLFW_USE_CONFIG_H -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src\"  -O3 -DNDEBUG -fPIC   -Wall -o CMakeFiles/glfw.dir/egl_context.c.o   -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/egl_context.c\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/src/egl_context.c"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/pngdecode.dir/png.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/png.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/png.cpp"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/pngdecode.dir/pngdec.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/pngdec.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/pngdec.cpp"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/pngdecode.dir/pngenc.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/pngenc.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/pngenc.cpp"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/pngdecode.dir/zdec.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/zdec.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/zdec.cpp"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/pngdecode.dir/zenc.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/zenc.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/zenc.cpp"
+},
+{
+  "directory": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode",
+  "command": "/usr/bin/c++   -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/deps\" -I\"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/glfw-3.2/include\"  -O3 -DNDEBUG   -o CMakeFiles/pngdecode.dir/zss.cpp.o -c \"/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/zss.cpp\"",
+  "file": "/home/thibault/Cours/Master/S2/HMIN212 - Modelisation et programmation 3D/Raytracer/raytracer-template-master/pngdecode/zss.cpp"
+}
+]
