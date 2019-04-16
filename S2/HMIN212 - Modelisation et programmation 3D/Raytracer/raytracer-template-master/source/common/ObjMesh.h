@@ -57,7 +57,6 @@ public:
     vec3 c;
   };
   
-  
   vec3 setLength(vec3 p1, float r){
     float rl = r/length(p1);
     return vec3(p1.x*rl, p1.y*rl, p1.z*rl);

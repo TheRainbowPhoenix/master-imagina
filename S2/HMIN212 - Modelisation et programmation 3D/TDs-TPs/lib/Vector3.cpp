@@ -33,7 +33,7 @@ double Vector3::length_squared() const {
 }
 
 double Vector3::dot(Vector3& v) const {
-	return (x * v.x) + (y * v.y) + (z + v.z);
+	return (x * v.x) + (y * v.y) + (z * v.z);
 }
 
 Vector3 Vector3::cross(Vector3& v) const {

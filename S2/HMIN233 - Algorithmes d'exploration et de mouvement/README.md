@@ -235,11 +235,11 @@ X ⊆ Y ⟹ cover(Y) ⊆ cover(X)
 
 # Exam = exercices TD
 
-### TD1 - Frequent itemset mining
+### [TD1 - Frequent itemset mining I](TDs/TD1%20-%20Frequent%20itemset%20mining%20I.pdf)
 
 #### Exercice 1
 
-1)
+**1)**
 
 | A                       | B                       | C                  | D              | E                  | F                   |
 | ---                     | ---                     | ---                | ---            | ---                | ---                 |
@@ -259,7 +259,7 @@ X ⊆ Y ⟹ cover(Y) ⊆ cover(X)
 |t9 | _ | _ | x | _ | x | _ |
 |t10| x | x | _ | _ | _ | x |
 
-2)
+**2)**
 
 - \(cover(ACD)  = { t3 }\)
 - \(cover(CE)   = { t2, t6, t9 }\)
@@ -284,20 +284,20 @@ X ⊆ Y ⟹ cover(Y) ⊆ cover(X)
 - \(freq(CDF)   = 1 (10\%)\)
 - \(freq(EF)    = 2 (20\%)\)
 
-3)
+**3)**
 
 - L = { ACD¹, CE³, BCE¹, ABCE¹, E¹, D⁴, BC³, F⁵ }
 
-4)
+**4)**
 
 - Comparable : CE ⊆ BCE
 - Incomparable : E x D
 
 #### Exercice 2
 
-1) \(|Lᵢ| = 2⁶ = 64\)
+**1)** \(|Lᵢ| = 2⁶ = 64\)
 
-2)
+**2)**
 
 - \(X ⊆ Y ⟹ freq(Y) ≤ freq(X)\)
 - \(Soit X ⊆ Y\)
@@ -305,7 +305,7 @@ X ⊆ Y ⟹ cover(Y) ⊆ cover(X)
 	- \(∀ Tᵢ ∈ D : Tᵢ ∈ cover(Y) ⟹ Tᵢ ∈ cover(X)\) (definition cover)
 	- \((freq(Y) = n ⟹ freq(X) ≥ n) ⟺ freq(Y) ≤ freq(X)\) (CQFD)
 
-3)
+**3)**
 
 - Premisse
 	- \(∀ X, Y ⊆ I : X ⊆ Y ⟹ freq(Y) ≤ freq(X)\)
@@ -317,7 +317,7 @@ X ⊆ Y ⟹ cover(Y) ⊆ cover(X)
 
 #### Exercice 3
 
-1) 
+**1)**
 
 - **Terminaison** : L'algo termine forcément le nombre d'element de l'itemset est fini et il n'y a que des boucles for dans l'algorithme. 
 - **Completude** (Il peut renvoyer toute les solutions possible et prevenir le cas ou il n'y a pas de solutions) : 
@@ -327,4 +327,38 @@ X ⊆ Y ⟹ cover(Y) ⊆ cover(X)
 
 Completude ∧ Nombre finis de solution ⟹ termine
 
-2) Lₙ = 
+**2)** Lₙ = 
+
+
+### [TD2 - Frequent itemset mining II](TDs/TD2%20-%20Frequent%20itemset%20mining%20II.pdf)
+
+Exam frequent / closed / maximal
+
+#### Exercice 1
+
+**1)** \(M_θ\) with \(θ = 1\) for any dataset
+
+reviens à retourner au moins la base plus les autres maximums.
+
+**2)** \(∀θ : F_θ = M_θ\)
+
+- \(|M_θ| = α |F_θ|\)
+- \(|C_θ| = β |F_θ|\)
+- \(α, β ∈ [0, 1]\)
+
+### Exercice 2
+
+**1)**
+
+- \(M_θ = \{ ABC^3, DE^2, EF^5 \}\)
+- \(C_θ = \{ ABC^3, ABE^5, DE^2, EF^5 \}\)
+
+**2)** Il est plus simple d'extraire les clos en premier puis maximum (sous-ensemble de clos) puis fréquents
+
+- \(C_{θ = 3} : \{ BE^5, AC^3, BCE^4, C^5 \}\) 
+- \(M_{θ = 3} : \{ BCE^4, AC^3 \}\)
+- \(F : \{ B^5, C^5, E^5, BC^4, BE^5, BCE^4, CE^4, A^3, AC^3 \}\)
+
+### Exercice 3
+
+

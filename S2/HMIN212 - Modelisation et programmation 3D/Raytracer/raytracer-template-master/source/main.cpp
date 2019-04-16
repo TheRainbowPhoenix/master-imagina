@@ -16,7 +16,7 @@ typedef vec4  point4;
 
 //Scene variables
 enum{_SPHERE, _SQUARE, _BOX};
-int scene = _SPHERE; //Simple sphere, square or cornell box
+int scene = _BOX; //Simple sphere, square or cornell box
 std::vector < Object * > sceneObjects;
 point4 lightPosition;
 color4 lightColor;
