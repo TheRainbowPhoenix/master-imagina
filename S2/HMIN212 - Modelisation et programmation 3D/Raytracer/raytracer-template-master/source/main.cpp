@@ -296,7 +296,7 @@ void initCornellBox(){
   { //Back Wall
     sceneObjects.push_back(new Square("Back Wall"));
     Object::ShadingValues _shadingValues;
-    _shadingValues.color = vec4(1.0,1.0,1.0,1.0);
+    _shadingValues.color = vec4(0.0,1.0,0.0,1.0);
     _shadingValues.Ka = 0.0;
     _shadingValues.Kd = 1.0;
     _shadingValues.Ks = 0.0;
@@ -338,7 +338,7 @@ void initCornellBox(){
   { //Floor
     sceneObjects.push_back(new Square("Floor"));
     Object::ShadingValues _shadingValues;
-    _shadingValues.color = vec4(1.0,1.0,1.0,1.0);
+    _shadingValues.color = vec4(1.0,1.0,0.0,1.0);
     _shadingValues.Ka = 0.0;
     _shadingValues.Kd = 1.0;
     _shadingValues.Ks = 0.0;
@@ -381,7 +381,7 @@ void initCornellBox(){
   {
   sceneObjects.push_back(new Sphere("Glass sphere"));
   Object::ShadingValues _shadingValues;
-  _shadingValues.color = vec4(1.0,0.0,0.0,1.0);
+  _shadingValues.color = vec4(0.0,0.0,1.0,1.0);
   _shadingValues.Ka = 0.0;
   _shadingValues.Kd = 0.0;
   _shadingValues.Ks = 0.0;

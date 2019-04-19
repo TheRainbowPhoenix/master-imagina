@@ -39,6 +39,7 @@
 		- [3) Filtre de renforcement](#3-filtre-de-renforcement)
 		- [4) Filtre pass haut](#4-filtre-pass-haut)
 	- [Projet](#projet)
+- [Visualisation volumique](#visualisation-volumique)
 
 <!-- /MarkdownTOC -->
 
@@ -449,7 +450,6 @@ ne pas ce contenter du sujet donné
 
 ![](http://www.lgi2p.mines-ales.fr/~montesin/CoursPDF/corners_2010_04_15.pdf)
 
-
 - implementation d'un detecteur de points
 
 - correspondance de points
@@ -462,3 +462,6 @@ ne pas ce contenter du sujet donné
 - essayer de reconstruire une image en 3D avec plusieurs image 2D
 	- tester avec 2 images différentes
 	- puis une multitudes
+
+## Visualisation volumique
+
